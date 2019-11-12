@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turalura/pages.dart';
+import 'package:turalura/views/home_view.dart';
 
 
 class Home extends StatefulWidget {
@@ -10,8 +11,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 int _currentIndex = 0;
 final List<Widget> _children = [
-  HomePage(),
-  Checklist(),
+  HomeView(),
+  Milestones(),
   Activities(),
   Gears(),
 ];
@@ -36,7 +37,7 @@ final List<Widget> _children = [
           ),
           BottomNavigationBarItem(
             icon: new Icon(Icons.check_circle_outline),
-            title: new Text("Checklist"),
+            title: new Text("Milestones"),
           ),
           BottomNavigationBarItem(
             icon: new Icon(Icons.accessibility_new),
