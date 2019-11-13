@@ -12,6 +12,7 @@ class _HomeState extends State<Home> {
 int _currentIndex = 0;
 final List<Widget> _children = [
   HomeView(),
+  Progress(),
   Milestones(),
   Activities(),
   Gears(),
@@ -34,6 +35,10 @@ final List<Widget> _children = [
           BottomNavigationBarItem(
             icon: new Icon(Icons.child_care,),
             title: new Text("home"),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.show_chart),
+            title: new Text("Progress"),
           ),
           BottomNavigationBarItem(
             icon: new Icon(Icons.check_circle_outline),
