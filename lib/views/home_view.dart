@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:turalura/Gear.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class HomeView extends StatelessWidget {
   final int age = 182;
@@ -7,11 +9,15 @@ class HomeView extends StatelessWidget {
   final int completedMilestones = 2;
   final double heightCm = 60.0;
   final double weightKg = 6.5;
-  final List<String> gearList = ["Uppababy Minu", "Babyzen Yoyo+", "Clek Fllo"];
+  final List<Gear> gearsList = [
+    Gear("Uppababy Minu", "Stroller", "purchaseUrl", "https://images-na.ssl-images-amazon.com/images/I/61KtJYa0LyL._SL1001_.jpg", "Good", 4.5),
+    Gear("Babyzen Yoyo+", "Stroller", "purchaseUrl", "https://images-na.ssl-images-amazon.com/images/I/61V5a4VsfYL._SL1500_.jpg", "Good", 4.0),
+    Gear("Clek Fllo", "Car Seat", "purchaseUrl", "https://images-na.ssl-images-amazon.com/images/I/81ZFHWAG1RL._SL1500_.jpg", "Good", 4.0),
+  ];
 
   Widget summaryCard() {
     return Container(
-      margin: EdgeInsets.only(top:10.0, right: 5.0, left: 5.0),
+      margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
       height: 145.0,
       child: Card(
         color: Colors.blue,
@@ -172,7 +178,7 @@ class HomeView extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(
                             top: 10.0,
-                            bottom: 10.0
+                            bottom: 10.0,
                           ),
                           child: Text(
                             "Last updated",
@@ -215,10 +221,7 @@ class HomeView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(
-                            top: 10.0,
-                            bottom: 10.0
-                          ),
+                          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                           child: Text(
                             "Height",
                             style: TextStyle(
@@ -260,10 +263,7 @@ class HomeView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(
-                            top: 10.0,
-                            bottom: 10.0
-                          ),
+                          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                           child: Text(
                             "Weight",
                             style: TextStyle(
@@ -335,14 +335,182 @@ class HomeView extends StatelessWidget {
     );
   }
 
+  Widget progressChartCard() {
+    return Container(
+      margin: EdgeInsets.only(right: 5.0, left: 5.0),
+      height: 150.0,
+      child: Card(
+        color: Colors.teal,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 10.0,
+                            bottom: 10.0,
+                          ),
+                          child: Text(
+                            "Height-for-age",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: <Widget>[],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            VerticalDivider(
+              color: Colors.white,
+              indent: 5.0,
+              endIndent: 5.0,
+            ),
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 10.0,
+                            bottom: 10.0,
+                          ),
+                          child: Text(
+                            "Weight-for-age",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: <Widget>[],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget teethingCard() {
+    return Container(
+      height: 125.0,
+      child: Card(
+        color: Colors.pink,
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("images/image.png"),
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.topCenter,
+            ),
+          ),
+          child: Text("YOUR TEXT"),
+        ),
+      ),
+    );
+  }
+
+  // Widget gearsCard() {
+  //   return Container(
+  //     height: 125.0,
+  //     child: Card(
+  //       color: Colors.brown,
+  //       child: Container(
+  //         decoration: BoxDecoration(
+  //           image: DecorationImage(
+  //             image: AssetImage("images/image.png"),
+  //             fit: BoxFit.fitWidth,
+  //             alignment: Alignment.topCenter,
+  //           ),
+  //         ),
+  //         child: Text("YOUR TEXT"),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Widget buildGearsCard(BuildContext context, int index) {
+    final gear = gearsList[index];
+    return new Container(
+      width: 110.0,
+      child: Card(
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 75.0,
+              width: 75.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: new DecorationImage(
+                  image: new NetworkImage(gear.imageUrl),
+                  fit: BoxFit.fitWidth,
+                  alignment: Alignment.topCenter,
+                ),
+              ),
+            ),
+            Text(gear.name),
+            Text(gear.rating.toString()),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Column(
-      children: <Widget>[
-        summaryCard(),
-        progressCard(),
-      ],
-    ));
+      child: Column(
+        children: <Widget>[
+          summaryCard(),
+          progressCard(),
+          progressChartCard(),
+          Container(
+            margin: EdgeInsets.only(right: 5.0, left: 5.0),
+            child: Row(
+              children: <Widget>[
+                Container(width: 250, child: teethingCard()),
+                Container(
+                  width: 150,
+                  height: 125,
+                  child: new ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: gearsList.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        buildGearsCard(context, index),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
