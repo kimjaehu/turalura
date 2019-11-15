@@ -1,10 +1,9 @@
 class Measurement {
   final DateTime measureDate;
-  final double heightCm;
-  final double heightIn;
-  final double weightKg;
-  final String weightLb;
+  final double height;
+  final double weight;
+  final double unit;
 
-  Measurement(this.measureDate, this.heightCm, this.heightIn, this.weightKg,
-      this.weightLb);
+
+  Measurement(this.measureDate, this.height, this.weight, this.unit);
 }

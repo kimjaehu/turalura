@@ -7,10 +7,8 @@ class NewMeasurementView extends StatefulWidget {
 
 class _NewMeasurementViewState extends State<NewMeasurementView> {
   List<bool> isSelected;
-  TextEditingController _heightCmController = new TextEditingController();
-  TextEditingController _heightInController = new TextEditingController();
-  TextEditingController _weightKgController = new TextEditingController();
-  TextEditingController _weightLbController = new TextEditingController();
+  TextEditingController _heightController = new TextEditingController();
+  TextEditingController _weightController = new TextEditingController();
 
   @override
   void initState() {
@@ -30,154 +28,82 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
           children: <Widget>[
             conversionToggleButton(),
             Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: isSelected[0]
-                    ? Card(
-                        color: Colors.lightBlue,
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                              child: TextField(
-                                style: TextStyle(color: Colors.white),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    labelText: "Height (cm)",
-                                    labelStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.teal),
-                                    ),
-                                    hintText: "cm",
-                                    hintStyle: TextStyle(
-                                        color: Colors.teal[100],
-                                        fontWeight: FontWeight.bold)),
-                                controller: _heightCmController,
-                                autofocus: true,
-                              ),
+              padding: EdgeInsets.only(top: 10.0),
+              child: Card(
+                color: isSelected[0] ? Colors.lightBlue : Colors.green,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+                      child: TextField(
+                        style: TextStyle(color: Colors.white),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                            labelText:
+                                isSelected[0] ? "Height (cm)" : "Height (in)",
+                            labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.lightBlue),
                             ),
-                          ],
-                        ),
-                      )
-                    : Card(
-                        color: Colors.green,
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                              child: TextField(
-                                style: TextStyle(color: Colors.white),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    labelText: "Height (in)",
-                                    labelStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.teal),
-                                    ),
-                                    hintText: "in",
-                                    hintStyle: TextStyle(
-                                        color: Colors.teal[100],
-                                        fontWeight: FontWeight.bold)),
-                                controller: _heightInController,
-                                autofocus: true,
-                              ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
                             ),
-                          ],
-                        ),
-                      )),
+                            hintText: isSelected[0] ? "cm" : "in",
+                            hintStyle: TextStyle(
+                                color: Colors.grey[400],
+                                fontWeight: FontWeight.bold)),
+                        controller: _heightController,
+                        autofocus: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: isSelected[0]
-                    ? Card(
-                        color: Colors.lightBlue,
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                              child: TextField(
-                                style: TextStyle(color: Colors.white),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    labelText: "Weight (kg)",
-                                    labelStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.teal),
-                                    ),
-                                    hintText: "kg",
-                                    hintStyle: TextStyle(
-                                        color: Colors.teal[100],
-                                        fontWeight: FontWeight.bold)),
-                                controller: _weightKgController,
-                                autofocus: true,
-                              ),
+              padding: EdgeInsets.only(top: 10.0),
+              child: Card(
+                color: isSelected[0] ? Colors.lightBlue : Colors.green,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+                      child: TextField(
+                        style: TextStyle(color: Colors.white),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                            labelText:
+                                isSelected[0] ? "Weight (kg)" : "Weight (lb)",
+                            labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.lightBlue),
                             ),
-                          ],
-                        ),
-                      )
-                    : Card(
-                        color: Colors.green,
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                              child: TextField(
-                                style: TextStyle(color: Colors.white),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    labelText: "Weight (lb)",
-                                    labelStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.teal),
-                                    ),
-                                    hintText: "lb",
-                                    hintStyle: TextStyle(
-                                        color: Colors.teal[100],
-                                        fontWeight: FontWeight.bold)),
-                                controller: _weightLbController,
-                                autofocus: true,
-                              ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
                             ),
-                          ],
-                        ),
-                      )),
+                            hintText: isSelected[0] ? "kg" : "lb",
+                            hintStyle: TextStyle(
+                                color: Colors.grey[400],
+                                fontWeight: FontWeight.bold)),
+                        controller: _weightController,
+                        autofocus: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             RaisedButton(
               color: Colors.deepPurple,
               textColor: Colors.white,
               child: Padding(
                 padding: EdgeInsets.only(left: 45.0, right: 45.0),
                 child: Text(
-                  "Save",
+                  "Next",
                   style: TextStyle(),
                 ),
               ),
@@ -185,7 +111,8 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
             ),
             Expanded(
               child: Padding(
-                  padding: EdgeInsets.only(top: 50.0, right: 5.0, left: 5.0, bottom: 10.0),
+                  padding: EdgeInsets.only(
+                      top: 20.0, right: 5.0, left: 5.0, bottom: 10.0),
                   child: Container(
                     color: Colors.pink,
                   )),
