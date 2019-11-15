@@ -28,7 +28,7 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Measurement'),
+        title: Text('New Measurements'),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
