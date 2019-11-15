@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:turalura/models/Measurement.dart';
+import 'package:turalura/views/new_measurement/date_view.dart';
 
 class NewMeasurementView extends StatefulWidget {
+  final Measurement measurement;
+  NewMeasurementView({Key key, @required this.measurement}) : super(key:key);
+
   @override
   _NewMeasurementViewState createState() => _NewMeasurementViewState();
 }
@@ -9,10 +14,13 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
   List<bool> isSelected;
   TextEditingController _heightController = new TextEditingController();
   TextEditingController _weightController = new TextEditingController();
+  String unit = 'metric';
 
   @override
   void initState() {
     isSelected = [true, false];
+    _heightController.text = (widget.measurement.height).toString();
+    _weightController.text = (widget.measurement.weight).toString();
     super.initState();
   }
 
@@ -20,7 +28,7 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New measurement'),
+        title: Text('New Measurement'),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
@@ -75,7 +83,7 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                             labelText:
-                                isSelected[0] ? "Weight (kg)" : "Weight (lb)",
+                                isSelected[0] ? "Weight (kg)" : "Weight (lbs)",
                             labelStyle: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -85,7 +93,7 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
-                            hintText: isSelected[0] ? "kg" : "lb",
+                            hintText: isSelected[0] ? "kg" : "lbs",
                             hintStyle: TextStyle(
                                 color: Colors.grey[400],
                                 fontWeight: FontWeight.bold)),
@@ -107,7 +115,21 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
                   style: TextStyle(),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                widget.measurement.unit = unit;
+
+                if (unit == "metric") {
+                  widget.measurement.height = double.parse(_heightController.text);
+                  widget.measurement.weight = double.parse(_weightController.text);
+                } else {
+                  widget.measurement.height = double.parse(_heightController.text) * 2.54;
+                  widget.measurement.weight = double.parse(_weightController.text) * 2.20462;
+                }
+                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NewMeasurementDateView(measurement: widget.measurement)));
+                
+                print("${widget.measurement.unit}, ${widget.measurement.height}, ${widget.measurement.weight}");
+              },
             ),
             Expanded(
               child: Padding(
@@ -157,11 +179,13 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
                 for (int i = 0; i < isSelected.length; i++) {
                   if (i == index) {
                     isSelected[i] = true;
+                    unit = "imperial";
                   } else {
                     isSelected[i] = false;
+                    unit = "metric";
                   }
                 }
-                print(isSelected);
+                print("$isSelected, $unit");
               });
             },
             isSelected: isSelected,

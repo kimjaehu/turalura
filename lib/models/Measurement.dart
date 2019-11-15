@@ -1,9 +1,8 @@
 class Measurement {
-  final DateTime measureDate;
-  final double height;
-  final double weight;
-  final double unit;
-
+  DateTime measureDate;
+  double height;
+  double weight;
+  String unit;
 
   Measurement(this.measureDate, this.height, this.weight, this.unit);
 }
