@@ -9,15 +9,6 @@ class Milestones extends StatelessWidget {
   }
 }
 
-class Progress extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.orange,
-    );
-  }
-}
-
 class Activities extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

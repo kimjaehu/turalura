@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turalura/pages.dart';
 import 'package:turalura/views/home_view.dart';
+import 'package:turalura/views/progress_view.dart';
 
 
 class Home extends StatefulWidget {
@@ -12,7 +13,7 @@ class _HomeState extends State<Home> {
 int _currentIndex = 0;
 final List<Widget> _children = [
   HomeView(),
-  Progress(),
+  ProgressView(),
   Milestones(),
   Activities(),
   Gears(),
