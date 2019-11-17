@@ -3,5 +3,5 @@ class Growth {
   int day;
   double value;
 
-  Growth(this.day, this.percentile, this.value);
+  Growth(this.day,  this.value);
 }

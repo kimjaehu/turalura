@@ -20,6 +20,7 @@ class ProgressView extends StatelessWidget {
               );
             },
           ),
+          GrowthChart()
         ],
       ),
     );

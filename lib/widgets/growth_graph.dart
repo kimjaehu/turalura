@@ -1,55 +1,114 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:turalura/models/Charts_data.dart';
 
-class GrowthGraph extends StatelessWidget {
+class GrowthChart extends StatefulWidget {
+  @override
+  _GrowthChartState createState() => _GrowthChartState();
+}
 
-  final List<charts.Series> seriesList;
-  final bool animate;
+class _GrowthChartState extends State<GrowthChart> {
+  List<charts.Series<Growth, int>> _heightSeriesLineData;
 
-  GrowthGraph(this.seriesList, {this.animate});
+  _generateData() {
+    final lineSeriesData1 = [
+      new Growth(1, 20),
+      new Growth(2, 30),
+      new Growth(3, 35),
+      new Growth(4, 40),
+      new Growth(5, 50),
+      new Growth(6, 40),
+      new Growth(7, 50),
+      new Growth(8, 50),
+    ];
 
-  /// Creates a [LineChart] with sample data and no transition.
-  factory GrowthGraph.withSampleData() {
-    return new GrowthGraph(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
+    final lineSeriesData2 = [
+      new Growth(1, 50),
+      new Growth(2, 40),
+      new Growth(3, 35),
+      new Growth(4, 20),
+      new Growth(5, 10),
+      new Growth(6, 20),
+      new Growth(7, 40),
+      new Growth(8, 50),
+    ];
+
+    var lineSeriesData3 = [
+      new Growth(1, 35),
+      new Growth(2, 45),
+    ];    
+
+    _heightSeriesLineData.add(
+      charts.Series(
+        domainFn: (Growth growth, _) => growth.day,
+        measureFn: (Growth growth, _) => growth.value,
+        id: '99th',
+        data: lineSeriesData1,
+        colorFn: (__, _) =>
+            charts.ColorUtil.fromDartColor(Colors.black),
+      ),
+    );
+    _heightSeriesLineData.add(
+      charts.Series(
+        domainFn: (Growth growth, _) => growth.day,
+        measureFn: (Growth growth, _) => growth.value,
+        id: '50th',
+        data: lineSeriesData2,
+        colorFn: (__, _) =>
+            charts.ColorUtil.fromDartColor(Colors.black),
+      ),
+    );
+    _heightSeriesLineData.add(
+      charts.Series(
+        domainFn: (Growth growth, _) => growth.day,
+        measureFn: (Growth growth, _) => growth.value,
+        id: 'height',
+        data: lineSeriesData3,
+        colorFn: (__, _) =>
+            charts.ColorUtil.fromDartColor(Colors.orangeAccent),
+      )
+      ..setAttribute(charts.rendererIdKey, 'babyName'),
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _heightSeriesLineData = List<charts.Series<Growth, int>>();
+    _generateData();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList,
-        animate: animate,
-        defaultRenderer: new charts.LineRendererConfig(includePoints: true));
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Card(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Text("Height-for-age"),
+              SizedBox(
+                width: 400.0,
+                height: 200.0,
+                child: charts.LineChart(
+                  _heightSeriesLineData,
+                  defaultRenderer: new charts.LineRendererConfig(
+                    stacked: true,
+                    strokeWidthPx: 1.0,
+                  ),
+                  customSeriesRenderers: [new charts.LineRendererConfig(
+                    customRendererId: 'babyName',
+                    includePoints: true
+                  )],
+                  animate: true,
+                  animationDuration: Duration(milliseconds: 250),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
-
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
-    final data = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 25),
-      new LinearSales(2, 100),
-      new LinearSales(3, 75),
-    ];
-
-    return [
-      new charts.Series<LinearSales, int>(
-        id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        data: data,
-      )
-    ];
-  }
-}
-
-/// Sample linear data type.
-class LinearSales {
-  final int year;
-  final int sales;
-
-  LinearSales(this.year, this.sales);
 }
