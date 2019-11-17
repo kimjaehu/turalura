@@ -1,23 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/models/Measurement.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NewMeasurementDateView extends StatefulWidget {
+
   final Measurement measurement;
-  NewMeasurementDateView({Key key, @required this.measurement}) : super(key:key);
+  NewMeasurementDateView({Key key, @required this.measurement})
+      : super(key: key);
 
   @override
   _NewMeasurementViewState createState() => _NewMeasurementViewState();
 }
 
 class _NewMeasurementViewState extends State<NewMeasurementDateView> {
+   final db = Firestore.instance;
 
   DateTime _date = new DateTime.now();
+  bool _dateValidator;
 
   @override
   void initState() {
-
     super.initState();
+    _dateValidator = true;
+    widget.measurement.measureDate = _date;
   }
 
   @override
@@ -32,31 +38,50 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
           children: <Widget>[
             SizedBox(
               height: 300.0,
-                          child: CupertinoDatePicker(
+              child: CupertinoDatePicker(
                 initialDateTime: _date,
                 minimumDate: _date,
                 maximumDate: _date,
                 maximumYear: _date.year,
                 mode: CupertinoDatePickerMode.date,
                 onDateTimeChanged: (pickedDate) {
-                  print(pickedDate);
-                },              
+                  print("$pickedDate, $_date");
+                  if (pickedDate.isBefore(_date) ) {
+                    setState(() {
+                      _dateValidator = true;
+                      widget.measurement.measureDate = pickedDate;
+                    });
+                  } else {
+                    setState(() {
+                      _dateValidator = false;
+                      widget.measurement.measureDate = null;
+                    });
+                  }
+                },
               ),
             ),
-            
-            
             RaisedButton(
-              color: Colors.deepPurple,
+              color: _dateValidator ? Colors.deepPurple : Colors.grey[400],
               textColor: Colors.white,
               child: Padding(
                 padding: EdgeInsets.only(left: 45.0, right: 45.0),
                 child: Text(
-                  "Save",
+                  _dateValidator ? "Save" : "Invalid date",
                   style: TextStyle(),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
+                _dateValidator ?
+                await db.collection("measurements").add({
+                  'measureDate': widget.measurement.measureDate,
+                  'height': widget.measurement.height,
+                  'weight': widget.measurement.weight,
+                  'unit': widget.measurement.unit,
+                }): 
                 
+                
+                
+                print("date wrong");
               },
             ),
             Expanded(
