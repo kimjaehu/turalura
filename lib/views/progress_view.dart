@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/views/new_measurement/measurement_view.dart';
 import 'package:turalura/models/Measurement.dart';
+import 'package:turalura/widgets/growth_graph.dart';
 
 class ProgressView extends StatelessWidget {
   @override
@@ -18,7 +19,7 @@ class ProgressView extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => NewMeasurementView(measurement: newMeasurement,)),
               );
             },
-          )
+          ),
         ],
       ),
     );

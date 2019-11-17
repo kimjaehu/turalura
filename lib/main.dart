@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turalura/widgets/home_widget.dart';
+import 'package:turalura/home_widget.dart';
 
 void main() => runApp(MyApp());
 
