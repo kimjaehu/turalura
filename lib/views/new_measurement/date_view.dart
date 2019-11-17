@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/models/Measurement.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class NewMeasurementDateView extends StatefulWidget {
 
@@ -71,18 +72,13 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                 ),
               ),
               onPressed: () async {
-                _dateValidator ?
-                await db.collection("measurements").add({
-                  'measureDate': widget.measurement.measureDate,
-                  'height': widget.measurement.height,
-                  'weight': widget.measurement.weight,
-                  'unit': widget.measurement.unit,
-                }): 
-                
-                
-                
-                print("date wrong");
-              },
+                if (_dateValidator) {
+                  await db.collection("measurements").add(widget.measurement.toJson());
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                } else {
+                  Text('');
+                }                
+                },
             ),
             Expanded(
               child: Padding(

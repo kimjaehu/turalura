@@ -6,7 +6,7 @@ import 'package:turalura/models/Measurement.dart';
 class ProgressView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final newMeasurement = new Measurement(null, null, null, null);
+    final newMeasurement = new Measurement(null, 4, null, null, null);
     return Container(
       child: Column(
         children: <Widget>[
