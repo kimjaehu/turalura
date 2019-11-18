@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Stream<String> get onAuthStateChanged => _firebaseAuth.onAuthStateChanged.map(
-    (FirebaseUser user) => user?.uid,
-  );
+        (FirebaseUser user) => user?.uid,
+      );
 
   // Google sign in
   Future<String> signInWithGoogle() async {
@@ -17,13 +18,11 @@ class AuthService {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-
-    return (await )
+    return (await _firebaseAuth.signInWithCredential(credential)).user.uid;
   }
 
   //Sign Out
   signOut() {
     return _firebaseAuth.signOut();
   }
-
 }
