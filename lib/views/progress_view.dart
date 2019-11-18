@@ -20,7 +20,8 @@ class ProgressView extends StatelessWidget {
               );
             },
           ),
-          GrowthChart()
+          GrowthChart(title: "Height-for-age",),
+          GrowthChart(title: "Weight-for-age",),
         ],
       ),
     );

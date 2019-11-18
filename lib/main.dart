@@ -13,6 +13,10 @@ class MyApp extends StatelessWidget {
         ),
         // theme: new ThemeData(brightness: Brightness.light),
         // darkTheme: new ThemeData(brightness: Brightness.dark),
-        home: Home());
+        home: Home(),
+        routes: <String, WidgetBuilder> {
+          '/signin': (BuildContext context) => Home(),
+          '/home': (BuildContext context) => Home(),
+        },);
   }
 }

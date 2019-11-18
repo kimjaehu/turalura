@@ -3,6 +3,9 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:turalura/models/Charts_data.dart';
 
 class GrowthChart extends StatefulWidget {
+  final String title;
+  GrowthChart({Key key, @required this.title}) : super(key: key);
+
   @override
   _GrowthChartState createState() => _GrowthChartState();
 }
@@ -36,7 +39,7 @@ class _GrowthChartState extends State<GrowthChart> {
     var lineSeriesData3 = [
       new Growth(1, 35),
       new Growth(2, 45),
-    ];    
+    ];
 
     _heightSeriesLineData.add(
       charts.Series(
@@ -44,8 +47,7 @@ class _GrowthChartState extends State<GrowthChart> {
         measureFn: (Growth growth, _) => growth.value,
         id: '99th',
         data: lineSeriesData1,
-        colorFn: (__, _) =>
-            charts.ColorUtil.fromDartColor(Colors.black),
+        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.black),
       ),
     );
     _heightSeriesLineData.add(
@@ -54,8 +56,7 @@ class _GrowthChartState extends State<GrowthChart> {
         measureFn: (Growth growth, _) => growth.value,
         id: '50th',
         data: lineSeriesData2,
-        colorFn: (__, _) =>
-            charts.ColorUtil.fromDartColor(Colors.black),
+        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.black),
       ),
     );
     _heightSeriesLineData.add(
@@ -64,10 +65,8 @@ class _GrowthChartState extends State<GrowthChart> {
         measureFn: (Growth growth, _) => growth.value,
         id: 'height',
         data: lineSeriesData3,
-        colorFn: (__, _) =>
-            charts.ColorUtil.fromDartColor(Colors.orangeAccent),
-      )
-      ..setAttribute(charts.rendererIdKey, 'babyName'),
+        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.orangeAccent),
+      )..setAttribute(charts.rendererIdKey, 'babyName'),
     );
   }
 
@@ -76,7 +75,6 @@ class _GrowthChartState extends State<GrowthChart> {
     super.initState();
     _heightSeriesLineData = List<charts.Series<Growth, int>>();
     _generateData();
-    
   }
 
   @override
@@ -87,20 +85,23 @@ class _GrowthChartState extends State<GrowthChart> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Text("Height-for-age"),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(widget.title, style: TextStyle(fontWeight: FontWeight.bold),),
+              ),
               SizedBox(
-                width: 400.0,
-                height: 200.0,
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.25,
                 child: charts.LineChart(
                   _heightSeriesLineData,
                   defaultRenderer: new charts.LineRendererConfig(
                     stacked: true,
                     strokeWidthPx: 1.0,
                   ),
-                  customSeriesRenderers: [new charts.LineRendererConfig(
-                    customRendererId: 'babyName',
-                    includePoints: true
-                  )],
+                  customSeriesRenderers: [
+                    new charts.LineRendererConfig(
+                        customRendererId: 'babyName', includePoints: true)
+                  ],
                   animate: true,
                   animationDuration: Duration(milliseconds: 250),
                 ),
