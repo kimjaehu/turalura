@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 
 class LandingView extends StatefulWidget {
-
   @override
   _LandingViewState createState() => _LandingViewState();
 }
 
 class _LandingViewState extends State<LandingView> {
   void submit() async {
-  try {
-    final auth = Provider.of(context).auth;
-    String uid = await auth.signInWithGoogle();
-    print("signed in with google: $uid");
-    Navigator.of(context).pushReplacementNamed('/home');
-    } catch(e) {
-    print(e);
+    try {
+      final auth = Provider.of(context).auth;
+      String uid = await auth.signInWithGoogle();
+      print("signed in with google: $uid");
+      Navigator.of(context).pushReplacementNamed('/home');
+    } catch (e) {
+      print(e);
+    }
   }
-}
-  
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +45,28 @@ class _LandingViewState extends State<LandingView> {
               RaisedButton(
                 child: Padding(
                     padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                    child: Text(
-                      "Sign in with Google",
-                      style:
-                          TextStyle(fontSize: 20.0, color: Colors.orangeAccent),
-                    )),
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'Sign in with ',
+                        style: TextStyle(
+                            fontSize: 20.0, color: Colors.orangeAccent),
+                        children: <TextSpan>[
+                          TextSpan(text: 'G', style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold)),
+                          TextSpan(text: 'o', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                          TextSpan(text: 'o', style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold)),
+                          TextSpan(text: 'g', style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold)),
+                          TextSpan(text: 'l', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+                          TextSpan(text: 'e', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                        ]
+                      ),
+                      
+                    )
+                    // Text(
+                    //   "Sign in with Google",
+                    //   style:
+                    //       TextStyle(fontSize: 20.0, color: Colors.orangeAccent),
+                    // ),
+                    ),
                 onPressed: submit,
                 color: Colors.white,
               ),

@@ -2,8 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/models/Gear.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:turalura/views/add_or_switch_baby/switch_view.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
+  @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   final int age = 182;
   final int milestoneAge = 3;
   final int milestones = 10;
@@ -447,45 +453,48 @@ class HomeView extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
       height: 100.0,
-      child: Card(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 3,
-              child: Center(
-                child: GestureDetector(
-                  onTap: (){print("tapped");},
-                                  child: Icon(
-                    Icons.child_care,
-                    size: 60.0,
-                    color: Colors.blueGrey[700],
-                  ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 3,
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SwitchView()),
+                  );
+                },
+                child: Icon(
+                  Icons.child_care,
+                  size: 60.0,
+                  color: Colors.blueGrey[700],
                 ),
               ),
             ),
-            VerticalDivider(
-              color: Colors.grey,
-              indent: 5.0,
-              endIndent: 5.0,
-            ),
-            Expanded(
-              flex: 7,
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(15.0),
-                                  child: AutoSizeText(
-                    "Baby Sean",
-                    maxLines: 2,
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.bold),
-                  ),
+          ),
+          VerticalDivider(
+            color: Colors.grey,
+            indent: 5.0,
+            endIndent: 5.0,
+          ),
+          Expanded(
+            flex: 7,
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: AutoSizeText(
+                  "Baby Sean",
+                  maxLines: 2,
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
