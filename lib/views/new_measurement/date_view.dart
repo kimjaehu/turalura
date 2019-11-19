@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:turalura/models/Measurement.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:turalura/widgets/provider_widget.dart';
 
 class NewMeasurementDateView extends StatefulWidget {
 
@@ -73,7 +74,9 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
               ),
               onPressed: () async {
                 if (_dateValidator) {
-                  await db.collection("measurements").add(widget.measurement.toJson());
+                  final uid = await Provider.of(context).auth.getCurrentUID();
+
+                  await db.collection("measurements").document(uid).collection('userMeasurements').add(widget.measurement.toJson());
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 } else {
                   Text('');

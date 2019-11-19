@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/models/Gear.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -10,9 +11,30 @@ class HomeView extends StatelessWidget {
   final double heightCm = 60.0;
   final double weightKg = 6.5;
   final List<Gear> gearsList = [
-    Gear("Uppababy Minu", "Stroller", "purchaseUrl", "https://images-na.ssl-images-amazon.com/images/I/61KtJYa0LyL._SL1001_.jpg", "Good", 4.5, 3),
-    Gear("Babyzen Yoyo+", "Stroller", "purchaseUrl", "https://images-na.ssl-images-amazon.com/images/I/61V5a4VsfYL._SL1500_.jpg", "Good", 4.0, 3),
-    Gear("Clek Fllo", "Car Seat", "purchaseUrl", "https://images-na.ssl-images-amazon.com/images/I/81ZFHWAG1RL._SL1500_.jpg", "Good", 4.0, 2),
+    Gear(
+        "Uppababy Minu",
+        "Stroller",
+        "purchaseUrl",
+        "https://images-na.ssl-images-amazon.com/images/I/61KtJYa0LyL._SL1001_.jpg",
+        "Good",
+        4.5,
+        3),
+    Gear(
+        "Babyzen Yoyo+",
+        "Stroller",
+        "purchaseUrl",
+        "https://images-na.ssl-images-amazon.com/images/I/61V5a4VsfYL._SL1500_.jpg",
+        "Good",
+        4.0,
+        3),
+    Gear(
+        "Clek Fllo",
+        "Car Seat",
+        "purchaseUrl",
+        "https://images-na.ssl-images-amazon.com/images/I/81ZFHWAG1RL._SL1500_.jpg",
+        "Good",
+        4.0,
+        2),
   ];
 
   Widget summaryCard() {
@@ -32,7 +54,7 @@ class HomeView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Icon(
-                          Icons.child_care,
+                          Icons.timer,
                           size: 75.0,
                           color: Colors.white,
                         ),
@@ -301,7 +323,7 @@ class HomeView extends StatelessWidget {
               child: Center(
                 child: GestureDetector(
                   onTap: () => print("tapped"),
-                                  child: Column(
+                  child: Column(
                     children: <Widget>[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -421,7 +443,51 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget teethingCard() {
+  Widget babyCard() {
+    return Container(
+      margin: EdgeInsets.only(right: 5.0, left: 5.0),
+      height: 100.0,
+      child: Card(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 3,
+              child: Center(
+                child: GestureDetector(
+                  onTap: (){print("tapped");},
+                                  child: Icon(
+                    Icons.child_care,
+                    size: 60.0,
+                    color: Colors.blueGrey[700],
+                  ),
+                ),
+              ),
+            ),
+            VerticalDivider(
+              color: Colors.grey,
+              indent: 5.0,
+              endIndent: 5.0,
+            ),
+            Expanded(
+              flex: 7,
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                                  child: AutoSizeText(
+                    "Baby Sean",
+                    maxLines: 2,
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildGearsCard(BuildContext context, int index) {
@@ -456,27 +522,10 @@ class HomeView extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
+          babyCard(),
           summaryCard(),
           progressCard(),
           progressChartCard(),
-          Container(
-            margin: EdgeInsets.only(right: 5.0, left: 5.0),
-            child: Row(
-              children: <Widget>[
-                Container(width: 250, child: teethingCard()),
-                Container(
-                  width: 150,
-                  height: 125,
-                  child: new ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: gearsList.length,
-                    itemBuilder: (BuildContext context, int index) =>
-                        buildGearsCard(context, index),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );

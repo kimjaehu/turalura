@@ -9,6 +9,11 @@ class AuthService {
         (FirebaseUser user) => user?.uid,
       );
 
+  // Get uid
+  Future<String> getCurrentUID() async {
+    return (await _firebaseAuth.currentUser()).uid;
+  }
+
   // Google sign in
   Future<String> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
