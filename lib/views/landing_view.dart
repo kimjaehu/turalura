@@ -44,29 +44,46 @@ class _LandingViewState extends State<LandingView> {
               ),
               RaisedButton(
                 child: Padding(
-                    padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Sign in with ',
-                        style: TextStyle(
-                            fontSize: 20.0, color: Colors.orangeAccent),
-                        children: <TextSpan>[
-                          TextSpan(text: 'G', style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold)),
-                          TextSpan(text: 'o', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-                          TextSpan(text: 'o', style: TextStyle(color: Colors.yellow, fontWeight: FontWeight.bold)),
-                          TextSpan(text: 'g', style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold)),
-                          TextSpan(text: 'l', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
-                          TextSpan(text: 'e', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-                        ]
-                      ),
-                      
-                    )
-                    // Text(
-                    //   "Sign in with Google",
-                    //   style:
-                    //       TextStyle(fontSize: 20.0, color: Colors.orangeAccent),
-                    // ),
+                  padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'Sign in with ',
+                      style: TextStyle(fontSize: 20.0, color: Colors.orange),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: 'G',
+                            style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text: 'o',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text: 'o',
+                            style: TextStyle(
+                                color: Colors.yellow,
+                                fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text: 'g',
+                            style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text: 'l',
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text: 'e',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold)),
+                      ],
                     ),
+                  ),
+                ),
                 onPressed: submit,
                 color: Colors.white,
               ),

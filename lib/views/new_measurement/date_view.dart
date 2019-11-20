@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 
 class NewMeasurementDateView extends StatefulWidget {
-
   final Measurement measurement;
   NewMeasurementDateView({Key key, @required this.measurement})
       : super(key: key);
@@ -16,7 +15,7 @@ class NewMeasurementDateView extends StatefulWidget {
 }
 
 class _NewMeasurementViewState extends State<NewMeasurementDateView> {
-   final db = Firestore.instance;
+  final db = Firestore.instance;
 
   DateTime _date = new DateTime.now();
   bool _dateValidator;
@@ -48,7 +47,7 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                 mode: CupertinoDatePickerMode.date,
                 onDateTimeChanged: (pickedDate) {
                   print("$pickedDate, $_date");
-                  if (pickedDate.isBefore(_date) ) {
+                  if (pickedDate.isBefore(_date)) {
                     setState(() {
                       _dateValidator = true;
                       widget.measurement.measureDate = pickedDate;
@@ -75,13 +74,16 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
               onPressed: () async {
                 if (_dateValidator) {
                   final uid = await Provider.of(context).auth.getCurrentUID();
-
-                  await db.collection("measurements").document(uid).collection('userMeasurements').add(widget.measurement.toJson());
+                  await db
+                      .collection("measurements")
+                      .document(uid)
+                      .collection('sean')
+                      .add(widget.measurement.toJson());
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 } else {
                   Text('');
-                }                
-                },
+                }
+              },
             ),
             Expanded(
               child: Padding(
