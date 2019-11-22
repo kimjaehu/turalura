@@ -53,19 +53,16 @@ class HomeController extends StatelessWidget {
 class UserInfoController extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final AuthService auth = Provider.of(context).auth;
     return StreamBuilder(
-      stream: getUserInfoSnapshot(context),
+      stream: auth.getUserInfoSnapshot(context),
       builder: (context, snapshot) {
         if (snapshot.hasData){
           if (!snapshot.data.exists) { 
             return OnboardView();
-          } else if (snapshot.data.exists && snapshot.data["currentBaby"] == null){
-              return AddView();
           }
           return Home();
-        }
-          // return (!snapshot.data.exists && snapshot.data["currentBaby"] == null) ?   OnboardView() : Home();
-        
+        }  
         return CircularProgressIndicator();
       },
     );

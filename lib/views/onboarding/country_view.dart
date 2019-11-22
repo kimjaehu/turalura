@@ -60,7 +60,7 @@ class _CountryViewState extends State<CountryView> {
                     .document(uid)
                     .setData({'country': country, 'currentBaby': null});
                 
-                Navigator.of(context).pushReplacementNamed('/home');
+                Navigator.of(context).pushReplacementNamed('/add');
 
               },
               color: Colors.white,

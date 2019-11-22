@@ -41,4 +41,9 @@ class AuthService {
     return doc;
   }
 
+  Stream<DocumentSnapshot> getUserInfoSnapshot(BuildContext context) async* {
+  String uid = (await _firebaseAuth.currentUser()).uid;
+  yield* Firestore.instance.collection('users').document(uid).snapshots();
+}
+
 }

@@ -18,6 +18,7 @@ class _AddViewState extends State<AddView> {
   List<bool> isSelected;
   String gender = 'boy';
   final _formKey = GlobalKey<FormState>();
+  
 
   @override
   void initState() {
@@ -105,7 +106,7 @@ class _AddViewState extends State<AddView> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Measurement Date'),
+        title: Text('New Baby'),
       ),
       body: SingleChildScrollView(
         child: GestureDetector(
@@ -200,6 +201,14 @@ class _AddViewState extends State<AddView> {
                             'dob': _dateOfBirth,
                             'gender': gender,
                           });
+                      await db
+                          .collection("users")
+                          .document(uid)
+                          .updateData({
+                            'currentBaby': _nameController.text,
+                          });
+
+                      Navigator.of(context).pushReplacementNamed('/home');
                     } else {
                       Text('');
                     }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/services/auth_service.dart';
+import 'package:turalura/views/onboarding/add_view.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 
 class SwitchView extends StatelessWidget {
@@ -33,9 +34,10 @@ class SwitchView extends StatelessWidget {
             icon: Icon(Icons.usb),
             onPressed: () async {
               try {
-                AuthService auth = Provider.of(context).auth;
-                DocumentSnapshot doc =(await auth.getUserInfo());
-                print(doc.data["country"]);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddView()),
+                  );
               } catch (e) {
                 print(e);
               }
