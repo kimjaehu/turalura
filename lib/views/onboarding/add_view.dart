@@ -207,7 +207,18 @@ class _AddViewState extends State<AddView> {
                           .updateData({
                             'currentBaby': _nameController.text,
                           });
-
+                      await db.collection("summaries").document(uid).collection((_nameController.text).toLowerCase()).add({
+                        'dob': _dateOfBirth,
+                        'gender': gender,
+                        'milestonesCompleted': null,
+                        'milestonesCount': null,
+                        'lastUpdatedDate': null,
+                        'unit': null,
+                        'height': null,
+                        'weight': null,
+                        'heightPercentile': null,
+                        'weightPercentile': null,
+                      });
                       Navigator.of(context).pushReplacementNamed('/home');
                     } else {
                       Text('');
