@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/models/Gear.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:turalura/views/add_or_switch_baby/switch_view.dart';
+import 'package:turalura/views/onboarding/switch_view.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -46,26 +46,26 @@ class _HomeViewState extends State<HomeView> {
   Widget summaryCard() {
     return Container(
       margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
-      height: 145.0,
-      child: Card(
-        color: Colors.blue,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 5,
+      height: 85.0,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: Card(
+              color: Colors.blue,
               child: Center(
                 child: Column(
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.timer,
-                          size: 75.0,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     Icon(
+                    //       Icons.timer,
+                    //       size: 75.0,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -74,13 +74,16 @@ class _HomeViewState extends State<HomeView> {
                             top: 5.0,
                           ),
                           child: Text(
-                            "Since birth",
+                            "Days ince birth",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 10.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -110,26 +113,24 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
             ),
-            VerticalDivider(
-              color: Colors.white,
-              indent: 5.0,
-              endIndent: 5.0,
-            ),
-            Expanded(
-              flex: 5,
+          ),
+          Expanded(
+            flex: 5,
+            child: Card(
+              color: Colors.pink,
               child: Center(
                 child: Column(
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.check_circle_outline,
-                          size: 75.0,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     Icon(
+                    //       Icons.check_circle_outline,
+                    //       size: 75.0,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -145,6 +146,9 @@ class _HomeViewState extends State<HomeView> {
                           ),
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 10.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -181,8 +185,8 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -451,7 +455,7 @@ class _HomeViewState extends State<HomeView> {
 
   Widget babyCard() {
     return Container(
-      margin: EdgeInsets.only(right: 5.0, left: 5.0),
+      margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
       height: 100.0,
       child: Row(
         children: <Widget>[
@@ -467,7 +471,7 @@ class _HomeViewState extends State<HomeView> {
                 },
                 child: Icon(
                   Icons.child_care,
-                  size: 60.0,
+                  size: 50.0,
                   color: Colors.blueGrey[700],
                 ),
               ),
@@ -488,7 +492,7 @@ class _HomeViewState extends State<HomeView> {
                   maxLines: 2,
                   style: TextStyle(
                       color: Colors.blue,
-                      fontSize: 40.0,
+                      fontSize: 25.0,
                       fontWeight: FontWeight.bold),
                 ),
               ),

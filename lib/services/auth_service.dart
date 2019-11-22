@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
@@ -33,14 +34,11 @@ class AuthService {
     return _firebaseAuth.signOut();
   }
 
-  // Get user country
+  // Get user information
   Future<DocumentSnapshot> getUserInfo() async { 
     String uid = (await _firebaseAuth.currentUser()).uid;
     DocumentSnapshot doc = await db.collection('users').document(uid).get();
     return doc;
   }
-
-  // Get user current baby
-
 
 }
