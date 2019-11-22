@@ -64,8 +64,6 @@ class UserInfoController extends StatelessWidget {
           }
           return Home();
         }
-            
-          
           // return (!snapshot.data.exists && snapshot.data["currentBaby"] == null) ?   OnboardView() : Home();
         
         return CircularProgressIndicator();

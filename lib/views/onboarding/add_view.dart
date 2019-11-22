@@ -11,14 +11,13 @@ class AddView extends StatefulWidget {
 class _AddViewState extends State<AddView> {
   final db = Firestore.instance;
   TextEditingController _nameController = new TextEditingController();
-  String _name;
   DateTime _date = new DateTime.now();
   DateTime _dateOfBirth;
   bool _dateValidator;
   bool _nameValidator;
   List<bool> isSelected;
   String gender = 'boy';
-  
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -27,7 +26,6 @@ class _AddViewState extends State<AddView> {
     _dateValidator = true;
     _nameValidator = false;
     _dateOfBirth = _date;
-    _name = _nameController.text;
   }
 
 
@@ -122,6 +120,7 @@ class _AddViewState extends State<AddView> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
                   child: TextField(
+                    key: _formKey,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.orange,fontWeight: FontWeight.bold, fontSize: 35.0),
                     keyboardType: TextInputType.text,
@@ -141,7 +140,7 @@ class _AddViewState extends State<AddView> {
                             color: Colors.grey[400],
                             fontWeight: FontWeight.bold, fontSize: 35.0)),
                     controller: _nameController,
-                    autofocus: true,
+                    // autofocus: true,
                   ),
                 ),
                 Padding(
