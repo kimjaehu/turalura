@@ -429,7 +429,12 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget babyCard() {
+  Widget babyCard(context, snapshot) {
+    if (!snapshot.hasData) {
+      return Text("Loading...");
+    }
+    String currentBaby = snapshot.data['currentBaby'];
+    
     return Container(
       margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
       height: 100.0,
@@ -464,7 +469,7 @@ class _HomeViewState extends State<HomeView> {
               child: Padding(
                 padding: EdgeInsets.all(15.0),
                 child: AutoSizeText(
-                  "Baby Sean",
+                  currentBaby,
                   maxLines: 2,
                   style: TextStyle(
                       color: Colors.blue,
@@ -531,15 +536,21 @@ class _HomeViewState extends State<HomeView> {
     return StreamBuilder<Object>(
       stream: null,
       builder: (context, snapshot) {
-        return Container(
-          child: Column(
-            children: <Widget>[
-              babyCard(),
-              summaryCard(),
-              progressCard(),
-              progressChartCard(),
-            ],
-          ),
+        return StreamBuilder<Object>(
+          stream: getUserStreamSnapshots(context),
+          builder: (context, snapshot) {
+            
+            return Container(
+              child: Column(
+                children: <Widget>[
+                  babyCard(context, snapshot),
+                  summaryCard(),
+                  progressCard(),
+                  progressChartCard(),
+                ],
+              ),
+            );
+          }
         );
       }
     );
