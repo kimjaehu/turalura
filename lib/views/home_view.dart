@@ -18,8 +18,63 @@ class _HomeViewState extends State<HomeView> {
   final double heightCm = 60.0;
   final double weightKg = 6.5;
 
+    Widget babyCard(context, userSnapshot) {
+    if (!userSnapshot.hasData) {
+      return Text("");
+    }
+    String currentBaby = userSnapshot.data['currentBaby'];
+
+    return Container(
+      margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
+      height: 100.0,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 3,
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SwitchView()),
+                  );
+                },
+                child: Icon(
+                  Icons.child_care,
+                  size: 50.0,
+                  color: Colors.blueGrey[700],
+                ),
+              ),
+            ),
+          ),
+          VerticalDivider(
+            color: Colors.grey,
+            indent: 5.0,
+            endIndent: 5.0,
+          ),
+          Expanded(
+            flex: 7,
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: AutoSizeText(
+                  currentBaby,
+                  maxLines: 2,
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget summaryCard(context, summarySnapshot) {
-    if (!summarySnapshot.hasData) return Text('Loading...');
+    if (!summarySnapshot.hasData) return Text('');
     print(summarySnapshot.data['dob']);
 
     DateTime dob =
@@ -179,7 +234,7 @@ class _HomeViewState extends State<HomeView> {
   Widget progressCard(context, summarySnapshot) {
     String height, weight;
     DateTime lastUpdated;
-    if (!summarySnapshot.hasData) return Text('Loading...');
+    if (!summarySnapshot.hasData) return Text('');
 
     if (summarySnapshot.data['unit'] == 'metric') {
       height = '${summarySnapshot.data['height'].toStringAsFixed(1)} cm';
@@ -380,7 +435,7 @@ class _HomeViewState extends State<HomeView> {
   Widget progressPercentileCard(context, summarySnapshot) {
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
-      height: 150.0,
+      height: 100.0,
       child: Card(
         color: Colors.teal,
         child: Row(
@@ -456,61 +511,6 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget babyCard(context, userSnapshot) {
-    if (!userSnapshot.hasData) {
-      return Text("Loading...");
-    }
-    String currentBaby = userSnapshot.data['currentBaby'];
-
-    return Container(
-      margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
-      height: 100.0,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 3,
-            child: Center(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SwitchView()),
-                  );
-                },
-                child: Icon(
-                  Icons.child_care,
-                  size: 50.0,
-                  color: Colors.blueGrey[700],
-                ),
-              ),
-            ),
-          ),
-          VerticalDivider(
-            color: Colors.grey,
-            indent: 5.0,
-            endIndent: 5.0,
-          ),
-          Expanded(
-            flex: 7,
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.all(15.0),
-                child: AutoSizeText(
-                  currentBaby,
-                  maxLines: 2,
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

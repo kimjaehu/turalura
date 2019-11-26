@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:turalura/home_widget.dart';
 import 'package:turalura/services/auth_service.dart';
 import 'package:turalura/views/landing_view.dart';
+import 'package:turalura/views/navigation_view.dart';
 import 'package:turalura/views/onboard_view.dart';
 import 'package:turalura/views/onboarding/add_view.dart';
 import 'package:turalura/views/onboarding/country_view.dart';

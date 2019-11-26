@@ -19,8 +19,8 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
   @override
   void initState() {
     isSelected = [true, false];
-    _heightController.text = (widget.measurement.height).toString();
-    _weightController.text = (widget.measurement.weight).toString();
+    // _heightController.text = (widget.measurement.height).toString();
+    // _weightController.text = (widget.measurement.weight).toString();
     super.initState();
   }
 

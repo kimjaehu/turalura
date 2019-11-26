@@ -13,8 +13,10 @@ class GrowthChart extends StatefulWidget {
 class _GrowthChartState extends State<GrowthChart> {
   List<charts.Series<Growth, int>> _heightSeriesLineData;
 
+  List<Object> dataArray = [{'day': 0, '5th':  46.084,}];
+
   _generateData() {
-    final lineSeriesData1 = [
+    final fifth = [
       new Growth(1, 20),
       new Growth(2, 30),
       new Growth(3, 35),
@@ -25,7 +27,7 @@ class _GrowthChartState extends State<GrowthChart> {
       new Growth(8, 50),
     ];
 
-    final lineSeriesData2 = [
+    final fiftieth = [
       new Growth(1, 50),
       new Growth(2, 40),
       new Growth(3, 35),
@@ -36,18 +38,20 @@ class _GrowthChartState extends State<GrowthChart> {
       new Growth(8, 50),
     ];
 
-    var lineSeriesData3 = [
+    final ninetyfifth = [
       new Growth(1, 35),
       new Growth(2, 45),
     ];
+
+    var babyHeight =[new Growth(3, 45),];
 
     _heightSeriesLineData.add(
       charts.Series(
         domainFn: (Growth growth, _) => growth.day,
         measureFn: (Growth growth, _) => growth.value,
-        id: '99th',
-        data: lineSeriesData1,
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.black),
+        id: '5th',
+        data: fifth,
+        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.grey),
       ),
     );
     _heightSeriesLineData.add(
@@ -55,8 +59,17 @@ class _GrowthChartState extends State<GrowthChart> {
         domainFn: (Growth growth, _) => growth.day,
         measureFn: (Growth growth, _) => growth.value,
         id: '50th',
-        data: lineSeriesData2,
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.black),
+        data: fiftieth,
+        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.grey),
+      ),
+    );
+    _heightSeriesLineData.add(
+      charts.Series(
+        domainFn: (Growth growth, _) => growth.day,
+        measureFn: (Growth growth, _) => growth.value,
+        id: '95th',
+        data: ninetyfifth,
+        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.grey),
       ),
     );
     _heightSeriesLineData.add(
@@ -64,7 +77,7 @@ class _GrowthChartState extends State<GrowthChart> {
         domainFn: (Growth growth, _) => growth.day,
         measureFn: (Growth growth, _) => growth.value,
         id: 'height',
-        data: lineSeriesData3,
+        data: babyHeight,
         colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.orangeAccent),
       )..setAttribute(charts.rendererIdKey, 'babyName'),
     );
@@ -96,14 +109,14 @@ class _GrowthChartState extends State<GrowthChart> {
                   _heightSeriesLineData,
                   defaultRenderer: new charts.LineRendererConfig(
                     stacked: true,
-                    strokeWidthPx: 1.0,
+                    strokeWidthPx: 2.0,
                   ),
                   customSeriesRenderers: [
                     new charts.LineRendererConfig(
-                        customRendererId: 'babyName', includePoints: true)
+                        customRendererId: 'babyName')
                   ],
                   animate: true,
-                  animationDuration: Duration(milliseconds: 250),
+                  animationDuration: Duration(milliseconds: 200),
                 ),
               )
             ],
