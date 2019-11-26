@@ -74,12 +74,31 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
               onPressed: () async {
                 if (_dateValidator) {
                   final uid = await Provider.of(context).auth.getCurrentUID();
+                  final userInfo = await Firestore.instance
+                      .collection('users')
+                      .document(uid)
+                      .get();
+                  String userBaby = userInfo.data['currentBaby'].toString();
+
                   await db
                       .collection("measurements")
                       .document(uid)
-                      .collection('sean')
+                      .collection(userBaby.toLowerCase())
                       .add(widget.measurement.toJson());
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+
+                  await db
+                      .collection("summaries")
+                      .document(uid)
+                      .collection(userBaby.toLowerCase())
+                      .document('summary')
+                      .updateData({
+                        'height': widget.measurement.height,
+                        'weight': widget.measurement.weight,
+                        'lastUpdated': widget.measurement.measureDate,
+                        'unit': widget.measurement.unit
+                      });
+                  Navigator.of(context).pushReplacementNamed('/home');
+                  
                 } else {
                   Text('');
                 }

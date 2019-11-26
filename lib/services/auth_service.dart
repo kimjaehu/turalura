@@ -35,11 +35,6 @@ class AuthService {
   }
 
   // Get user information
-  Future<DocumentSnapshot> getUserInfo() async { 
-    String uid = (await _firebaseAuth.currentUser()).uid;
-    DocumentSnapshot doc = await db.collection('users').document(uid).get();
-    return doc;
-  }
 
   Stream<DocumentSnapshot> getUserInfoSnapshot(BuildContext context) async* {
   String uid = (await _firebaseAuth.currentUser()).uid;

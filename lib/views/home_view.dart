@@ -1,10 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:turalura/models/Gear.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:turalura/views/onboarding/switch_view.dart';
 import 'package:turalura/widgets/provider_widget.dart';
+import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -23,7 +22,8 @@ class _HomeViewState extends State<HomeView> {
     if (!summarySnapshot.hasData) return Text('Loading...');
     print(summarySnapshot.data['dob']);
 
-    DateTime dob = DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
+    DateTime dob =
+        DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
     DateTime toDate = DateTime.now();
     int dateDifference = toDate.difference(dob).inDays;
     print(dob);
@@ -177,6 +177,27 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget progressCard(context, summarySnapshot) {
+    String height, weight;
+    DateTime lastUpdated;
+    if (!summarySnapshot.hasData) return Text('Loading...');
+
+    if (summarySnapshot.data['unit'] == 'metric') {
+      height = '${summarySnapshot.data['height'].toStringAsFixed(1)} cm';
+      weight = '${summarySnapshot.data['weight'].toStringAsFixed(1)} kg';
+      lastUpdated = DateTime.parse(
+          summarySnapshot.data['lastUpdated'].toDate().toString());
+    } else if (summarySnapshot.data['unit'] == 'imperial') {
+      height =
+          '${(summarySnapshot.data['height'] / 2.54).toStringAsFixed(1)} in';
+      weight =
+          '${(summarySnapshot.data['weight'] * 2.205).toStringAsFixed(1)} lbs';
+      lastUpdated = DateTime.parse(
+          summarySnapshot.data['lastUpdated'].toDate().toString());
+    } else {
+      height = '-';
+      weight = '-';
+      lastUpdated = null;
+    }
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
       height: 70.0,
@@ -212,7 +233,7 @@ class _HomeViewState extends State<HomeView> {
                       textBaseline: TextBaseline.alphabetic,
                       children: <Widget>[
                         Text(
-                          "Sep. 20, 2019",
+                          lastUpdated == null ? "No data yet" : new DateFormat('MMM. d, yyyy').format(lastUpdated),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 15.0,
@@ -254,7 +275,7 @@ class _HomeViewState extends State<HomeView> {
                       textBaseline: TextBaseline.alphabetic,
                       children: <Widget>[
                         Text(
-                          "${heightCm.toString()} cm",
+                          height,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 15.0,
@@ -296,7 +317,7 @@ class _HomeViewState extends State<HomeView> {
                       textBaseline: TextBaseline.alphabetic,
                       children: <Widget>[
                         Text(
-                          "${weightKg.toString()} kg",
+                          weight,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 15.0,
@@ -308,54 +329,55 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
             ),
-            VerticalDivider(
-              color: Colors.white,
-              indent: 5.0,
-              endIndent: 5.0,
-            ),
-            Expanded(
-              flex: 2,
-              child: Center(
-                child: GestureDetector(
-                  onTap: () => print("tapped"),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.show_chart,
-                            size: 35.0,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: <Widget>[
-                          Text(
-                            "Progress",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // VerticalDivider(
+            //   color: Colors.white,
+            //   indent: 5.0,
+            //   endIndent: 5.0,
+            // ),
+            // Expanded(
+            //   flex: 2,
+            //   child: Center(
+            //     child: GestureDetector(
+            //       onTap: () => print("tapped"),
+            //       child: Icon(Icons.assignment),
+            //       // child: Column(
+            //       //   children: <Widget>[
+            //       //     Row(
+            //       //       mainAxisAlignment: MainAxisAlignment.center,
+            //       //       children: <Widget>[
+            //       //         Icon(
+            //       //           Icons.add,
+            //       //           size: 35.0,
+            //       //           color: Colors.white,
+            //       //         ),
+            //       //       ],
+            //       //     ),
+            //       //     Row(
+            //       //       mainAxisAlignment: MainAxisAlignment.center,
+            //       //       crossAxisAlignment: CrossAxisAlignment.baseline,
+            //       //       textBaseline: TextBaseline.alphabetic,
+            //       //       children: <Widget>[
+            //       //         Text(
+            //       //           "Add new",
+            //       //           style: TextStyle(
+            //       //               color: Colors.white,
+            //       //               fontSize: 15.0,
+            //       //               fontWeight: FontWeight.bold),
+            //       //         ),
+            //       //       ],
+            //       //     ),
+            //       //   ],
+            //       // ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
     );
   }
 
-  Widget progressChartCard(context, summarySnapshot) {
+  Widget progressPercentileCard(context, summarySnapshot) {
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
       height: 150.0,
@@ -552,7 +574,7 @@ class _HomeViewState extends State<HomeView> {
                       babyCard(context, userSnapshot),
                       summaryCard(context, summarySnapshot),
                       progressCard(context, summarySnapshot),
-                      progressChartCard(context, summarySnapshot),
+                      progressPercentileCard(context, summarySnapshot),
                     ],
                   ),
                 );

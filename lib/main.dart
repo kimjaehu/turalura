@@ -69,7 +69,7 @@ class UserInfoController extends StatelessWidget {
   }
 }
 
-Stream<DocumentSnapshot> getUserInfoSnapshot(BuildContext context) async* {
-  final uid = await Provider.of(context).auth.getCurrentUID();
-  yield* Firestore.instance.collection('users').document(uid).snapshots();
-}
+// Stream<DocumentSnapshot> getUserInfoSnapshot(BuildContext context) async* {
+//   final uid = await Provider.of(context).auth.getCurrentUID();
+//   yield* Firestore.instance.collection('users').document(uid).snapshots();
+// }
