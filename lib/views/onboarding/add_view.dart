@@ -31,7 +31,7 @@ class _AddViewState extends State<AddView> {
 
 
 
-  Widget conversionToggleButton() {
+  Widget genderToggleButton() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -172,7 +172,7 @@ class _AddViewState extends State<AddView> {
                   ),
                 ),
                 SizedBox(height: height * 0.05,),
-                conversionToggleButton(),
+                genderToggleButton(),
                 SizedBox(height: height * 0.05,),
                 RaisedButton(
                   color: _dateValidator ? Colors.deepPurple : Colors.grey[400],
@@ -200,6 +200,7 @@ class _AddViewState extends State<AddView> {
                             'name': _nameController.text,
                             'dob': _dateOfBirth,
                             'gender': gender,
+                            'timestamp': _date,
                           });
                       await db
                           .collection("users")

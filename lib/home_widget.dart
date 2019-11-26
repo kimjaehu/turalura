@@ -24,6 +24,7 @@ final List<Widget> _children = [
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Turalura", style: TextStyle(color: Colors.amber[800]),),
       ),
       body: _children[_currentIndex],

@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/models/Gear.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:turalura/views/onboarding/switch_view.dart';
+import 'package:turalura/widgets/provider_widget.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -16,32 +18,6 @@ class _HomeViewState extends State<HomeView> {
   final int completedMilestones = 2;
   final double heightCm = 60.0;
   final double weightKg = 6.5;
-  final List<Gear> gearsList = [
-    Gear(
-        "Uppababy Minu",
-        "Stroller",
-        "purchaseUrl",
-        "https://images-na.ssl-images-amazon.com/images/I/61KtJYa0LyL._SL1001_.jpg",
-        "Good",
-        4.5,
-        3),
-    Gear(
-        "Babyzen Yoyo+",
-        "Stroller",
-        "purchaseUrl",
-        "https://images-na.ssl-images-amazon.com/images/I/61V5a4VsfYL._SL1500_.jpg",
-        "Good",
-        4.0,
-        3),
-    Gear(
-        "Clek Fllo",
-        "Car Seat",
-        "purchaseUrl",
-        "https://images-na.ssl-images-amazon.com/images/I/81ZFHWAG1RL._SL1500_.jpg",
-        "Good",
-        4.0,
-        2),
-  ];
 
   Widget summaryCard() {
     return Container(
@@ -503,44 +479,70 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget buildGearsCard(BuildContext context, int index) {
-    final gear = gearsList[index];
-    return new Container(
-      width: 110.0,
-      child: Card(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 75.0,
-              width: 75.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: new DecorationImage(
-                  image: new NetworkImage(gear.imageUrl),
-                  fit: BoxFit.fitWidth,
-                  alignment: Alignment.topCenter,
-                ),
-              ),
-            ),
-            Text(gear.name),
-            Text(gear.rating.toString()),
-          ],
-        ),
-      ),
-    );
+  // Widget buildGearsCard(BuildContext context, int index) {
+  //   final gear = gearsList[index];
+  //   return new Container(
+  //     width: 110.0,
+  //     child: Card(
+  //       child: Column(
+  //         children: <Widget>[
+  //           Container(
+  //             height: 75.0,
+  //             width: 75.0,
+  //             decoration: BoxDecoration(
+  //               shape: BoxShape.circle,
+  //               image: new DecorationImage(
+  //                 image: new NetworkImage(gear.imageUrl),
+  //                 fit: BoxFit.fitWidth,
+  //                 alignment: Alignment.topCenter,
+  //               ),
+  //             ),
+  //           ),
+  //           Text(gear.name),
+  //           Text(gear.rating.toString()),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Stream<DocumentSnapshot> getUserStreamSnapshots(
+      BuildContext context) async* {
+    final uid = await Provider.of(context).auth.getCurrentUID();
+    yield* Firestore.instance
+        .collection('users')
+        .document(uid)
+        .snapshots();
   }
 
+    Stream<QuerySnapshot> getUserBabySummaryStreamSnapshots(
+      BuildContext context) async* {
+    final uid = await Provider.of(context).auth.getCurrentUID();
+    yield* Firestore.instance
+        .collection('babies')
+        .document(uid)
+        .collection('userBabies')
+        .orderBy('timestamp', descending: false)
+        .snapshots();
+  }
+  
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          babyCard(),
-          summaryCard(),
-          progressCard(),
-          progressChartCard(),
-        ],
-      ),
+    return StreamBuilder<Object>(
+      stream: null,
+      builder: (context, snapshot) {
+        return Container(
+          child: Column(
+            children: <Widget>[
+              babyCard(),
+              summaryCard(),
+              progressCard(),
+              progressChartCard(),
+            ],
+          ),
+        );
+      }
     );
   }
 }
+
