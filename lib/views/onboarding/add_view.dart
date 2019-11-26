@@ -18,7 +18,6 @@ class _AddViewState extends State<AddView> {
   List<bool> isSelected;
   String gender = 'boy';
   final _formKey = GlobalKey<FormState>();
-  
 
   @override
   void initState() {
@@ -28,8 +27,6 @@ class _AddViewState extends State<AddView> {
     _nameValidator = false;
     _dateOfBirth = _date;
   }
-
-
 
   Widget genderToggleButton() {
     return Center(
@@ -99,7 +96,6 @@ class _AddViewState extends State<AddView> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -117,19 +113,26 @@ class _AddViewState extends State<AddView> {
             margin: EdgeInsets.only(right: 5.0, left: 5.0),
             child: Column(
               children: <Widget>[
-                SizedBox(height: height * 0.05,),
+                SizedBox(
+                  height: height * 0.05,
+                ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
                   child: TextField(
                     key: _formKey,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.orange,fontWeight: FontWeight.bold, fontSize: 35.0),
+                    style: TextStyle(
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 35.0),
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         // labelText: "My Baby's Name",
                         alignLabelWithHint: false,
-                        errorText: _nameValidator ? 'Name can\'t be empty' : null,
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                        errorText:
+                            _nameValidator ? 'Name can\'t be empty' : null,
+                        labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20.0),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
@@ -139,14 +142,20 @@ class _AddViewState extends State<AddView> {
                         hintText: "Enter Baby's Name",
                         hintStyle: TextStyle(
                             color: Colors.grey[400],
-                            fontWeight: FontWeight.bold, fontSize: 35.0)),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 35.0)),
                     controller: _nameController,
                     // autofocus: true,
                   ),
                 ),
                 Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text("Date of birth", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),),
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    "Date of birth",
+                    style:
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                  ),
+                ),
                 SizedBox(
                   height: height * 0.20,
                   child: CupertinoDatePicker(
@@ -171,9 +180,13 @@ class _AddViewState extends State<AddView> {
                     },
                   ),
                 ),
-                SizedBox(height: height * 0.05,),
+                SizedBox(
+                  height: height * 0.05,
+                ),
                 genderToggleButton(),
-                SizedBox(height: height * 0.05,),
+                SizedBox(
+                  height: height * 0.05,
+                ),
                 RaisedButton(
                   color: _dateValidator ? Colors.deepPurple : Colors.grey[400],
                   textColor: Colors.white,
@@ -186,9 +199,11 @@ class _AddViewState extends State<AddView> {
                   ),
                   onPressed: () async {
                     setState(() {
-                      _nameController.text.isEmpty ? _nameValidator = true : _nameValidator = false;
+                      _nameController.text.isEmpty
+                          ? _nameValidator = true
+                          : _nameValidator = false;
                     });
-                    
+
                     if (_dateValidator || _nameValidator) {
                       final uid =
                           await Provider.of(context).auth.getCurrentUID();
@@ -197,23 +212,25 @@ class _AddViewState extends State<AddView> {
                           .document(uid)
                           .collection('userBabies')
                           .add({
-                            'name': _nameController.text,
-                            'dob': _dateOfBirth,
-                            'gender': gender,
-                            'timestamp': _date,
-                          });
+                        'name': _nameController.text,
+                        'dob': _dateOfBirth,
+                        'gender': gender,
+                        'timestamp': _date,
+                      });
+                      await db.collection("users").document(uid).updateData({
+                        'currentBaby': _nameController.text,
+                      });
                       await db
-                          .collection("users")
+                          .collection("summaries")
                           .document(uid)
-                          .updateData({
-                            'currentBaby': _nameController.text,
-                          });
-                      await db.collection("summaries").document(uid).collection((_nameController.text).toLowerCase()).add({
+                          .collection((_nameController.text).toLowerCase())
+                          .document('summary')
+                          .setData({
                         'dob': _dateOfBirth,
                         'gender': gender,
                         'milestonesCompleted': null,
                         'milestonesCount': null,
-                        'lastUpdatedDate': null,
+                        'lastUpdated': null,
                         'unit': null,
                         'height': null,
                         'weight': null,

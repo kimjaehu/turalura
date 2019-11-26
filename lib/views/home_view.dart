@@ -19,7 +19,16 @@ class _HomeViewState extends State<HomeView> {
   final double heightCm = 60.0;
   final double weightKg = 6.5;
 
-  Widget summaryCard() {
+  Widget summaryCard(context, summarySnapshot) {
+    if (!summarySnapshot.hasData) return Text('Loading...');
+    print(summarySnapshot.data['dob']);
+
+    DateTime dob = DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
+    DateTime toDate = DateTime.now();
+    int dateDifference = toDate.difference(dob).inDays;
+    print(dob);
+    print(dateDifference);
+
     return Container(
       margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
       height: 85.0,
@@ -50,7 +59,7 @@ class _HomeViewState extends State<HomeView> {
                             top: 5.0,
                           ),
                           child: Text(
-                            "Days ince birth",
+                            "Days Since birth",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -67,7 +76,7 @@ class _HomeViewState extends State<HomeView> {
                       textBaseline: TextBaseline.alphabetic,
                       children: <Widget>[
                         Text(
-                          age.toString(),
+                          dateDifference.toString(),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 30.0,
@@ -167,7 +176,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget progressCard() {
+  Widget progressCard(context, summarySnapshot) {
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
       height: 70.0,
@@ -346,7 +355,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget progressChartCard() {
+  Widget progressChartCard(context, summarySnapshot) {
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
       height: 150.0,
@@ -429,12 +438,12 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget babyCard(context, snapshot) {
-    if (!snapshot.hasData) {
+  Widget babyCard(context, userSnapshot) {
+    if (!userSnapshot.hasData) {
       return Text("Loading...");
     }
-    String currentBaby = snapshot.data['currentBaby'];
-    
+    String currentBaby = userSnapshot.data['currentBaby'];
+
     return Container(
       margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
       height: 100.0,
@@ -511,49 +520,43 @@ class _HomeViewState extends State<HomeView> {
   //   );
   // }
 
-  Stream<DocumentSnapshot> getUserStreamSnapshots(
-      BuildContext context) async* {
+  Stream<DocumentSnapshot> getUserStreamSnapshots(BuildContext context) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
+    yield* Firestore.instance.collection('users').document(uid).snapshots();
+  }
+
+  Stream<DocumentSnapshot> getUserBabySummaryStreamSnapshots(
+      BuildContext context, userSnapshot) async* {
+    final uid = await Provider.of(context).auth.getCurrentUID();
+    String currentBaby = userSnapshot.data['currentBaby'];
+    print(currentBaby);
     yield* Firestore.instance
-        .collection('users')
+        .collection('summaries')
         .document(uid)
+        .collection(currentBaby.toLowerCase())
+        .document('summary')
         .snapshots();
   }
 
-    Stream<QuerySnapshot> getUserBabySummaryStreamSnapshots(
-      BuildContext context) async* {
-    final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* Firestore.instance
-        .collection('babies')
-        .document(uid)
-        .collection('userBabies')
-        .orderBy('timestamp', descending: false)
-        .snapshots();
-  }
-  
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
-      stream: null,
-      builder: (context, snapshot) {
-        return StreamBuilder<Object>(
-          stream: getUserStreamSnapshots(context),
-          builder: (context, snapshot) {
-            
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  babyCard(context, snapshot),
-                  summaryCard(),
-                  progressCard(),
-                  progressChartCard(),
-                ],
-              ),
-            );
-          }
-        );
-      }
-    );
+        stream: getUserStreamSnapshots(context),
+        builder: (context, userSnapshot) {
+          return StreamBuilder<Object>(
+              stream: getUserBabySummaryStreamSnapshots(context, userSnapshot),
+              builder: (context, summarySnapshot) {
+                return Container(
+                  child: Column(
+                    children: <Widget>[
+                      babyCard(context, userSnapshot),
+                      summaryCard(context, summarySnapshot),
+                      progressCard(context, summarySnapshot),
+                      progressChartCard(context, summarySnapshot),
+                    ],
+                  ),
+                );
+              });
+        });
   }
 }
-
