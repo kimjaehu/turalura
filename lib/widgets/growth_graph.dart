@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:turalura/models/Charts_data.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 
 class GrowthChart extends StatefulWidget {
   final String title;
@@ -13,18 +15,17 @@ class GrowthChart extends StatefulWidget {
 class _GrowthChartState extends State<GrowthChart> {
   List<charts.Series<Growth, int>> _heightSeriesLineData;
 
-  List<Object> dataArray = [{'day': 0, '5th':  46.084,}];
+  Future<List<Object>> parseJsonFromAssets(String assetsPath) async {
+    return rootBundle.loadString(assetsPath)
+        .then((jsonStr) => jsonDecode(jsonStr));
+  }
 
-  _generateData() {
+  _generateData() async {
+      // new Growth(1, 20),
+    List<Object> dmap = await parseJsonFromAssets('assets/data_repo/growth_data.json');
+
     final fifth = [
-      new Growth(1, 20),
-      new Growth(2, 30),
-      new Growth(3, 35),
-      new Growth(4, 40),
-      new Growth(5, 50),
-      new Growth(6, 40),
-      new Growth(7, 50),
-      new Growth(8, 50),
+
     ];
 
     final fiftieth = [
@@ -88,6 +89,7 @@ class _GrowthChartState extends State<GrowthChart> {
     super.initState();
     _heightSeriesLineData = List<charts.Series<Growth, int>>();
     _generateData();
+
   }
 
   @override

@@ -7,7 +7,7 @@ import 'package:turalura/widgets/growth_graph.dart';
 class ProgressView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final newMeasurement = new Measurement(null, 4, null, null, null);
+    final newMeasurement = new Measurement(null, null, null, null, null);
     return Container(
       child: Column(
         children: <Widget>[
