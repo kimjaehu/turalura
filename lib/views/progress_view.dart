@@ -11,17 +11,61 @@ class ProgressView extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
-          RaisedButton(
-            child: Text("data"),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NewMeasurementView(measurement: newMeasurement,)),
-              );
-            },
+          Container(
+            height: 50.0,
+            child: RaisedButton(
+              child: Text("data"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NewMeasurementView(
+                            measurement: newMeasurement,
+                          )),
+                );
+              },
+            ),
           ),
-          GrowthChart(title: "Height-for-age",),
-          GrowthChart(title: "Weight-for-age",),
+          Expanded(
+            child: DefaultTabController(
+              length: 3,
+              initialIndex: 0,
+              child: Column(
+                children: <Widget>[
+                  TabBar(
+                    tabs: <Widget>[
+                      Tab(
+                        text: 'Height',
+                      ),
+                      Tab(
+                        text: 'Weight',
+                      ),
+                      Tab(
+                        text: 'Data',
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: <Widget>[
+                        Center(
+                          child: GrowthChart(
+                            title: "Height-for-age",
+                          ),
+                        ),
+                        Center(
+                          child: GrowthChart(
+                            title: "Weight-for-age",
+                          ),
+                        ),
+                        Center(child: Text('Summary')),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
