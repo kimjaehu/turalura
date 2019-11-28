@@ -87,11 +87,11 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                 ),
               ),
               onPressed: () async {
+                setState(() {
+                  int dateDifference = _date.difference(dob).inDays;
+                  widget.measurement.day = dateDifference;
+                });
                 if (_dateValidator) {
-                  
-
-                  
-
                   final uid = await Provider.of(context).auth.getCurrentUID();
                   final userInfo = await Firestore.instance
                       .collection('users')
