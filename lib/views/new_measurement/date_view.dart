@@ -84,7 +84,8 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                       .collection("measurements")
                       .document(uid)
                       .collection(userBaby.toLowerCase())
-                      .add(widget.measurement.toJson());
+                      .document(DateFormat('yyyyMMdd').format(widget.measurement.measureDate))
+                      .setData(widget.measurement.toJson());
 
                   await db
                       .collection("summaries")

@@ -219,6 +219,7 @@ class _AddViewState extends State<AddView> {
                       });
                       await db.collection("users").document(uid).updateData({
                         'currentBaby': _nameController.text,
+                        'dob': _dateOfBirth,
                       });
                       await db
                           .collection("summaries")

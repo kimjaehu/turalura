@@ -55,13 +55,14 @@ class SwitchView extends StatelessWidget {
     }
     String babyName = snapshot.data.documents[index - 1]['name'];
     String gender = snapshot.data.documents[index - 1]['gender'];
+    DateTime dob = snapshot.data.documents[index -1]['dob'];
     return GestureDetector(
       onTap: () async {
         final uid = await Provider.of(context).auth.getCurrentUID();
         await Firestore.instance
             .collection('users')
             .document(uid)
-            .updateData({'currentBaby': babyName});
+            .updateData({'currentBaby': babyName, 'dob': dob});
         Navigator.of(context).pushReplacementNamed('/home');
         print('switch button');
       },

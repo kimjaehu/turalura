@@ -58,7 +58,7 @@ class _CountryViewState extends State<CountryView> {
                 await db
                     .collection("users")
                     .document(uid)
-                    .setData({'country': country, 'currentBaby': null});
+                    .setData({'country': country, 'currentBaby': null, 'dob': null});
                 
                 Navigator.of(context).pushReplacementNamed('/add');
 
