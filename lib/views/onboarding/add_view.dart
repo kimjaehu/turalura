@@ -237,6 +237,7 @@ class _AddViewState extends State<AddView> {
                         'weight': null,
                         'heightPercentile': null,
                         'weightPercentile': null,
+                        'name': _nameController.text,
                       });
                       Navigator.of(context).pushReplacementNamed('/home');
                     } else {

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:turalura/models/Charts_data.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:turalura/widgets/provider_widget.dart';
+import 'package:intl/intl.dart';
 
 class GrowthChart extends StatefulWidget {
   final String title;
   final String category;
-  GrowthChart({Key key, @required this.title, this.category}) : super(key: key);
+  final AsyncSnapshot summarySnapshot, measurementSnapshot;
+  GrowthChart(
+      {Key key,
+      @required this.title,
+      this.category,
+      this.summarySnapshot,
+      this.measurementSnapshot})
+      : super(key: key);
 
   @override
   _GrowthChartState createState() => _GrowthChartState();
@@ -20,7 +26,7 @@ class _GrowthChartState extends State<GrowthChart> {
 
   int daysSinceBirth = 60;
 
-  List<FlSpot> _boyHeightFifthData() {
+  List<FlSpot> _boyHeightFifthData(dateDifference) {
     List<FlSpot> _boyHeightListFifth = [
       new FlSpot(0, 46.77),
       new FlSpot(1, 46.943),
@@ -1880,10 +1886,13 @@ class _GrowthChartState extends State<GrowthChart> {
       new FlSpot(1855, 102.801),
       new FlSpot(1856, 102.816),
     ];
-    return _boyHeightListFifth.where((x) => x.x < daysSinceBirth).toList();
+    print('heightfifth: $dateDifference');
+    return _boyHeightListFifth
+        .where((x) => x.x < dateDifference * 1.25)
+        .toList();
   }
 
-  List<FlSpot> _boyHeightFiftiethData() {
+  List<FlSpot> _boyHeightFiftiethData(dateDifference) {
     List<FlSpot> _boyHeightListFiftieth = [
       new FlSpot(0, 49.884),
       new FlSpot(1, 50.06),
@@ -3743,10 +3752,12 @@ class _GrowthChartState extends State<GrowthChart> {
       new FlSpot(1855, 110.479),
       new FlSpot(1856, 110.497),
     ];
-    return _boyHeightListFiftieth.where((x) => x.x < daysSinceBirth).toList();
+    return _boyHeightListFiftieth
+        .where((x) => x.x < dateDifference * 1.25)
+        .toList();
   }
 
-  List<FlSpot> _boyHeightNinetyfifthData() {
+  List<FlSpot> _boyHeightNinetyfifthData(dateDifference) {
     List<FlSpot> _boyHeightListNinetyfifth = [
       new FlSpot(0, 52.998),
       new FlSpot(1, 53.177),
@@ -5607,11 +5618,11 @@ class _GrowthChartState extends State<GrowthChart> {
       new FlSpot(1856, 118.178),
     ];
     return _boyHeightListNinetyfifth
-        .where((x) => x.x < daysSinceBirth)
+        .where((x) => x.x < dateDifference * 1.25)
         .toList();
   }
 
-  List<FlSpot> _boyWeightFifthData() {
+  List<FlSpot> _boyWeightFifthData(dateDifference) {
     List<FlSpot> _boyWeightListFifth = [
       new FlSpot(0, 2.604),
       new FlSpot(1, 2.58),
@@ -7471,10 +7482,12 @@ class _GrowthChartState extends State<GrowthChart> {
       new FlSpot(1855, 14.846),
       new FlSpot(1856, 14.85),
     ];
-    return _boyWeightListFifth.where((x) => x.x < daysSinceBirth).toList();
+    return _boyWeightListFifth
+        .where((x) => x.x < dateDifference * 1.25)
+        .toList();
   }
 
-  List<FlSpot> _boyWeightFiftiethData() {
+  List<FlSpot> _boyWeightFiftiethData(dateDifference) {
     List<FlSpot> _boyWeightListFiftieth = [
       new FlSpot(0, 3.346),
       new FlSpot(1, 3.317),
@@ -9334,10 +9347,12 @@ class _GrowthChartState extends State<GrowthChart> {
       new FlSpot(1855, 18.491),
       new FlSpot(1856, 18.497),
     ];
-    return _boyWeightListFiftieth.where((x) => x.x < daysSinceBirth).toList();
+    return _boyWeightListFiftieth
+        .where((x) => x.x < dateDifference * 1.25)
+        .toList();
   }
 
-  List<FlSpot> _boyWeightNinetyfifthData() {
+  List<FlSpot> _boyWeightNinetyfifthData(dateDifference) {
     List<FlSpot> _boyWeightListNinetyfifth = [
       new FlSpot(0, 4.215),
       new FlSpot(1, 4.188),
@@ -11198,59 +11213,38 @@ class _GrowthChartState extends State<GrowthChart> {
       new FlSpot(1856, 23.217),
     ];
     return _boyWeightListNinetyfifth
-        .where((x) => x.x < daysSinceBirth)
+        .where((x) => x.x < dateDifference * 1.25)
         .toList();
   }
 
   List<FlSpot> _boyHeightData() {
-    List<FlSpot> _boyHeight = [
-      new FlSpot(0, 50.4),
-      new FlSpot(1, 50.943),
-      new FlSpot(2, 51.117),
-      new FlSpot(3, 52.291),
-      new FlSpot(4, 52.464),
-      new FlSpot(5, 53.637),
-      new FlSpot(6, 53.811),
-      new FlSpot(7, 53.985),
-      new FlSpot(8, 54.158),
-      new FlSpot(9, 54.332),
-      new FlSpot(10, 54.506),
-      new FlSpot(11, 54.68),
-      new FlSpot(12, 54.854),
-      new FlSpot(13, 55.028),
-    ];
-    return _boyHeight.where((x) => x.x < daysSinceBirth).toList();
+    return widget.measurementSnapshot.data.documents
+        .map<FlSpot>((snapshot) => new FlSpot(
+            snapshot["day"].toDouble(), snapshot["height"]))
+        .toList();
   }
 
   List<FlSpot> _boyWeightData() {
-    List<FlSpot> _boyWeight = [
-      new FlSpot(0, 2.74),
-      new FlSpot(1, 2.6),
-      new FlSpot(2, 2.597),
-      new FlSpot(3, 2.619),
-      new FlSpot(4, 2.744),
-      new FlSpot(5, 2.77),
-      new FlSpot(6, 2.797),
-      new FlSpot(7, 2.826),
-      new FlSpot(8, 2.855),
-      new FlSpot(9, 2.886),
-      new FlSpot(10, 2.817),
-      new FlSpot(11, 2.849),
-      new FlSpot(12, 2.883),
-      new FlSpot(13, 2.917),
-      new FlSpot(28, 4.917),
-    ];
-    return _boyWeight.where((x) => x.x < daysSinceBirth).toList();
+    return widget.measurementSnapshot.data.documents
+        .map<FlSpot>((snapshot) => new FlSpot(
+            snapshot["day"].toDouble(), snapshot["weight"]))
+        .toList();
   }
 
   List<LineChartBarData> _growthData() {
+    DateTime dob =
+        DateTime.parse(widget.summarySnapshot.data['dob'].toDate().toString());
+    DateTime toDate = DateTime.now();
+    int dateDifference = toDate.difference(dob).inDays;
+    print(dateDifference);
+
     LineChartBarData boyFifth = LineChartBarData(
       spots: (widget.category == 'height')
-          ? _boyHeightFifthData()
-          : _boyWeightFifthData(),
+          ? _boyHeightFifthData(dateDifference)
+          : _boyWeightFifthData(dateDifference),
       isCurved: true,
       colors: [
-        Colors.grey,
+        Colors.red[100],
       ],
       barWidth: 4,
       isStrokeCapRound: true,
@@ -11264,11 +11258,11 @@ class _GrowthChartState extends State<GrowthChart> {
 
     LineChartBarData boyFiftieth = LineChartBarData(
       spots: widget.category == 'height'
-          ? _boyHeightFiftiethData()
-          : _boyWeightFiftiethData(),
+          ? _boyHeightFiftiethData(dateDifference)
+          : _boyWeightFiftiethData(dateDifference),
       isCurved: true,
       colors: [
-        Colors.grey,
+        Colors.grey[300],
       ],
       barWidth: 4,
       isStrokeCapRound: true,
@@ -11282,11 +11276,11 @@ class _GrowthChartState extends State<GrowthChart> {
 
     LineChartBarData boyNinetyfifth = LineChartBarData(
       spots: widget.category == 'height'
-          ? _boyHeightNinetyfifthData()
-          : _boyWeightNinetyfifthData(),
+          ? _boyHeightNinetyfifthData(dateDifference)
+          : _boyWeightNinetyfifthData(dateDifference),
       isCurved: true,
       colors: [
-        Colors.grey,
+        Colors.red[100],
       ],
       barWidth: 4,
       isStrokeCapRound: true,
@@ -11302,13 +11296,11 @@ class _GrowthChartState extends State<GrowthChart> {
       spots: widget.category == 'height' ? _boyHeightData() : _boyWeightData(),
       isCurved: true,
       colors: [
-        Colors.red,
+        Colors.teal,
       ],
       barWidth: 4,
       isStrokeCapRound: true,
-      dotData: FlDotData(
-        show: false,
-      ),
+      dotData: FlDotData(show: true, dotSize: 2),
       belowBarData: BarAreaData(
         show: false,
       ),
@@ -11372,7 +11364,6 @@ class _GrowthChartState extends State<GrowthChart> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.category);
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(8.0),
@@ -11387,10 +11378,12 @@ class _GrowthChartState extends State<GrowthChart> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: LineChart(_growthChartData()),
-                )
+                !widget.measurementSnapshot.hasData
+                    ? CircularProgressIndicator()
+                    : Container(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        child: LineChart(_growthChartData()),
+                      )
               ],
             ),
           ),

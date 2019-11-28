@@ -4,7 +4,8 @@ import 'package:turalura/views/new_measurement/date_view.dart';
 
 class NewMeasurementView extends StatefulWidget {
   final Measurement measurement;
-  NewMeasurementView({Key key, @required this.measurement}) : super(key:key);
+  AsyncSnapshot summarySnapshot;
+  NewMeasurementView({Key key, @required this.measurement, this.summarySnapshot}) : super(key:key);
 
   @override
   _NewMeasurementViewState createState() => _NewMeasurementViewState();
@@ -126,7 +127,7 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
                   widget.measurement.weight = double.parse(_weightController.text) * 2.20462;
                 }
                 
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NewMeasurementDateView(measurement: widget.measurement)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NewMeasurementDateView(measurement: widget.measurement, summarySnapshot: widget.summarySnapshot)));
                 
                 print("${widget.measurement.unit}, ${widget.measurement.height}, ${widget.measurement.weight}");
               },

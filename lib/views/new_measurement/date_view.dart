@@ -7,7 +7,8 @@ import 'package:turalura/widgets/provider_widget.dart';
 
 class NewMeasurementDateView extends StatefulWidget {
   final Measurement measurement;
-  NewMeasurementDateView({Key key, @required this.measurement})
+  AsyncSnapshot summarySnapshot;
+  NewMeasurementDateView({Key key, @required this.measurement, this.summarySnapshot})
       : super(key: key);
 
   @override
@@ -29,6 +30,15 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.summarySnapshot.hasData) {
+      return CircularProgressIndicator();
+    }
+    print('dob ${widget.summarySnapshot.data['dob']}');
+    DateTime dob =
+    DateTime.parse(widget.summarySnapshot.data['dob'].toDate().toString());
+    
+    print(dob);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('New Measurement Date'),
@@ -41,21 +51,26 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
               height: 300.0,
               child: CupertinoDatePicker(
                 initialDateTime: _date,
-                minimumDate: _date,
+                minimumDate: dob,
+                minimumYear: dob.year,
                 maximumDate: _date,
                 maximumYear: _date.year,
                 mode: CupertinoDatePickerMode.date,
                 onDateTimeChanged: (pickedDate) {
+                  
                   print("$pickedDate, $_date");
-                  if (pickedDate.isBefore(_date)) {
+                  if (pickedDate.isBefore(_date) && pickedDate.isAfter(dob.subtract(new Duration(days: 1)))) {
+                    int dateDifference = pickedDate.difference(dob).inDays;
                     setState(() {
                       _dateValidator = true;
                       widget.measurement.measureDate = pickedDate;
+                      widget.measurement.day = dateDifference;
                     });
                   } else {
                     setState(() {
                       _dateValidator = false;
                       widget.measurement.measureDate = null;
+                      widget.measurement.day = null;
                     });
                   }
                 },
@@ -73,6 +88,10 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
               ),
               onPressed: () async {
                 if (_dateValidator) {
+                  
+
+                  
+
                   final uid = await Provider.of(context).auth.getCurrentUID();
                   final userInfo = await Firestore.instance
                       .collection('users')
