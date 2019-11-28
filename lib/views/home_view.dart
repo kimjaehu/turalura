@@ -542,31 +542,13 @@ class _HomeViewState extends State<HomeView> {
   //   );
   // }
 
-  Stream<DocumentSnapshot> getUserStreamSnapshots(BuildContext context) async* {
-    final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* Firestore.instance.collection('users').document(uid).snapshots();
-  }
-
-  Stream<DocumentSnapshot> getUserBabySummaryStreamSnapshots(
-      BuildContext context, userSnapshot) async* {
-    final uid = await Provider.of(context).auth.getCurrentUID();
-    String currentBaby = userSnapshot.data['currentBaby'];
-    print(currentBaby);
-    yield* Firestore.instance
-        .collection('summaries')
-        .document(uid)
-        .collection(currentBaby.toLowerCase())
-        .document('summary')
-        .snapshots();
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
-        stream: getUserStreamSnapshots(context),
+        stream: Provider.of(context).auth.getUserInfoSnapshot(),
         builder: (context, userSnapshot) {
           return StreamBuilder<Object>(
-              stream: getUserBabySummaryStreamSnapshots(context, userSnapshot),
+              stream: Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
               builder: (context, summarySnapshot) {
                 return Container(
                   child: Column(

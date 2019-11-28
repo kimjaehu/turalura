@@ -55,7 +55,7 @@ class UserInfoController extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthService auth = Provider.of(context).auth;
     return StreamBuilder(
-      stream: auth.getUserInfoSnapshot(context),
+      stream: auth.getUserInfoSnapshot(),
       builder: (context, snapshot) {
         if (snapshot.hasData){
           if (!snapshot.data.exists) { 

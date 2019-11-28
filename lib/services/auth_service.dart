@@ -36,9 +36,22 @@ class AuthService {
 
   // Get user information
 
-  Stream<DocumentSnapshot> getUserInfoSnapshot(BuildContext context) async* {
+  Stream<DocumentSnapshot> getUserInfoSnapshot() async* {
   String uid = (await _firebaseAuth.currentUser()).uid;
   yield* Firestore.instance.collection('users').document(uid).snapshots();
 }
+
+Stream<DocumentSnapshot> getUserBabySummaryStreamSnapshots() async* {
+    String uid = (await _firebaseAuth.currentUser()).uid;
+    DocumentSnapshot users = await Firestore.instance.collection('users').document(uid).get();
+    String currentBaby = users.data['currentBaby'];
+    print(currentBaby);
+    yield* Firestore.instance
+        .collection('summaries')
+        .document(uid)
+        .collection(currentBaby.toLowerCase())
+        .document('summary')
+        .snapshots();
+  }
 
 }

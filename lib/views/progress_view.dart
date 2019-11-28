@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/views/new_measurement/measurement_view.dart';
 import 'package:turalura/models/Measurement.dart';
-import 'package:turalura/widgets/growth_graph.dart';
+import 'package:turalura/widgets/growth_chart.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 
 class ProgressView extends StatelessWidget {
@@ -11,7 +11,7 @@ class ProgressView extends StatelessWidget {
   Widget build(BuildContext context) {
     final newMeasurement = new Measurement(null, null, null, null, null);
     return StreamBuilder<Object>(
-      stream: null,
+      stream: Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
       builder: (context, snapshot) {
         return Container(
           child: Column(
@@ -79,16 +79,5 @@ class ProgressView extends StatelessWidget {
         );
       }
     );
-  }
-    Stream<QuerySnapshot> getUserBabySummaryStreamSnapshots(
-      BuildContext context, userSnapshot) async* {
-    final uid = await Provider.of(context).auth.getCurrentUID();
-    String currentBaby = userSnapshot.data['currentBaby'];
-    print(currentBaby);
-    yield* Firestore.instance
-        .collection('summaries')
-        .document(uid)
-        .collection(currentBaby.toLowerCase())
-        .snapshots();
   }
 }

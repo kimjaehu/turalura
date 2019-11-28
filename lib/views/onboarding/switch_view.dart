@@ -55,7 +55,7 @@ class SwitchView extends StatelessWidget {
     }
     String babyName = snapshot.data.documents[index - 1]['name'];
     String gender = snapshot.data.documents[index - 1]['gender'];
-    DateTime dob = snapshot.data.documents[index -1]['dob'];
+    Timestamp dob = snapshot.data.documents[index -1]['dob'];
     return GestureDetector(
       onTap: () async {
         final uid = await Provider.of(context).auth.getCurrentUID();
@@ -74,7 +74,6 @@ class SwitchView extends StatelessWidget {
               child: ListTile(
                 title: Center(
                     child: AutoSizeText(
-                      
                   babyName,
                   maxLines: 2,
                   style: TextStyle(
