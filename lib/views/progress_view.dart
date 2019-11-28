@@ -59,11 +59,13 @@ class ProgressView extends StatelessWidget {
                             Center(
                               child: GrowthChart(
                                 title: "Height-for-age",
+                                category: "height",
                               ),
                             ),
                             Center(
                               child: GrowthChart(
                                 title: "Weight-for-age",
+                                category: "weight"
                               ),
                             ),
                             Center(child: Text('Summary')),
