@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:turalura/models/Measurement.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:turalura/widgets/progress_indicator.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 
 class NewMeasurementDateView extends StatefulWidget {
@@ -31,7 +32,7 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
   @override
   Widget build(BuildContext context) {
     if (!widget.summarySnapshot.hasData) {
-      return CircularProgressIndicator();
+      return circularProgress();
     }
     print('dob ${widget.summarySnapshot.data['dob']}');
     DateTime dob =

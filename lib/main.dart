@@ -6,6 +6,7 @@ import 'package:turalura/views/navigation_view.dart';
 import 'package:turalura/views/onboard_view.dart';
 import 'package:turalura/views/onboarding/add_view.dart';
 import 'package:turalura/views/onboarding/country_view.dart';
+import 'package:turalura/widgets/progress_indicator.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 
 void main() => runApp(MyApp());
@@ -44,7 +45,7 @@ class HomeController extends StatelessWidget {
           final bool signedIn = snapshot.hasData;
           return signedIn ? UserInfoController() : LandingView();
         }
-        return CircularProgressIndicator();
+        return circularProgress();
       },
     );
   }
@@ -63,7 +64,7 @@ class UserInfoController extends StatelessWidget {
           }
           return Home();
         }  
-        return CircularProgressIndicator();
+        return circularProgress();
       },
     );
   }
