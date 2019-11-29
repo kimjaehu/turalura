@@ -22552,7 +22552,7 @@ class _GrowthChartState extends State<GrowthChart> {
     
 
     return 
-    widget.summarySnapshot.data["gender"] ?
+    widget.summarySnapshot.data["gender"] == 'boy' ?
     [
       boyFifth,
       boyFiftieth,
