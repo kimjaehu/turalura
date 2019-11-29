@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:turalura/views/new_measurement/measurement_view.dart';
 import 'package:turalura/models/Measurement.dart';
 import 'package:turalura/widgets/growth_chart.dart';
+import 'package:turalura/widgets/measurement_card.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 
 class ProgressView extends StatelessWidget {
@@ -23,22 +24,7 @@ class ProgressView extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(top: 10.0),
-                        child: Container(
-                          height: 50.0,
-                          child: RaisedButton(
-                            child: Text("data"),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NewMeasurementView(
-                                          measurement: newMeasurement,
-                                          summarySnapshot: summarySnapshot,
-                                        )),
-                              );
-                            },
-                          ),
-                        ),
+                        child: MeasurementCard(summarySnapshot: summarySnapshot, newMeasurement: newMeasurement),
                       ),
                       !measurementSnapshot.hasData
                           ? CircularProgressIndicator()

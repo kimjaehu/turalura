@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/models/Measurement.dart';
 import 'package:turalura/views/onboarding/switch_view.dart';
+import 'package:turalura/widgets/measurement_card.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 import 'package:intl/intl.dart';
 
@@ -607,7 +608,8 @@ class _HomeViewState extends State<HomeView> {
                     children: <Widget>[
                       babyCard(context, userSnapshot),
                       summaryCard(context, summarySnapshot),
-                      progressCard(context, summarySnapshot),
+                      // progressCard(context, summarySnapshot),
+                      MeasurementCard(summarySnapshot: summarySnapshot, newMeasurement: newMeasurement),
                       progressPercentileCard(context, summarySnapshot),
                     ],
                   ),
