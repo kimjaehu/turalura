@@ -145,7 +145,6 @@ class _AddViewState extends State<AddView> {
                             fontWeight: FontWeight.bold,
                             fontSize: 35.0)),
                     controller: _nameController,
-                    // autofocus: true,
                   ),
                 ),
                 Padding(

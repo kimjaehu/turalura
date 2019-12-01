@@ -22408,17 +22408,25 @@ class _GrowthChartState extends State<GrowthChart> {
   }
 
   List<FlSpot> _actualHeightData() {
-    return widget.measurementSnapshot.data.documents
-        .map<FlSpot>((snapshot) =>
-            new FlSpot(snapshot["day"].toDouble(), snapshot["height"]))
-        .toList();
+    return widget.measurementSnapshot.data.documents.length != 0
+        ? widget.measurementSnapshot.data.documents
+            .map<FlSpot>((snapshot) =>
+                new FlSpot(snapshot["day"].toDouble(), snapshot["height"]))
+            .toList()
+        : [
+            new FlSpot(0, 0),
+          ];
   }
 
   List<FlSpot> _actualWeightData() {
-    return widget.measurementSnapshot.data.documents
-        .map<FlSpot>((snapshot) =>
-            new FlSpot(snapshot["day"].toDouble(), snapshot["weight"]))
-        .toList();
+    return widget.measurementSnapshot.data.documents.length != 0
+        ? widget.measurementSnapshot.data.documents
+            .map<FlSpot>((snapshot) =>
+                new FlSpot(snapshot["day"].toDouble(), snapshot["weight"]))
+            .toList()
+        : [
+            new FlSpot(0, 0),
+          ];
   }
 
   List<LineChartBarData> _growthData() {
@@ -22537,7 +22545,9 @@ class _GrowthChartState extends State<GrowthChart> {
     );
 
     LineChartBarData actualData = LineChartBarData(
-      spots: widget.category == 'height' ? _actualHeightData() : _actualWeightData(),
+      spots: widget.category == 'height'
+          ? _actualHeightData()
+          : _actualWeightData(),
       isCurved: true,
       colors: [
         Colors.teal,
@@ -22549,23 +22559,20 @@ class _GrowthChartState extends State<GrowthChart> {
         show: false,
       ),
     );
-    
 
-    return 
-    widget.summarySnapshot.data["gender"] == 'boy' ?
-    [
-      boyFifth,
-      boyFiftieth,
-      boyNinetyfifth,
-      actualData,
-    ] :
-    [
-      girlFifth,
-      girlFiftieth,
-      girlNinetyfifth,
-      actualData,
-    ];
-
+    return widget.summarySnapshot.data["gender"] == 'boy'
+        ? [
+            boyFifth,
+            boyFiftieth,
+            boyNinetyfifth,
+            actualData,
+          ]
+        : [
+            girlFifth,
+            girlFiftieth,
+            girlNinetyfifth,
+            actualData,
+          ];
   }
 
   _growthChartData() {
@@ -22578,7 +22585,7 @@ class _GrowthChartState extends State<GrowthChart> {
         touchCallback: (LineTouchResponse touchResponse) {
           print(touchResponse);
         },
-        handleBuiltInTouches: false,
+        handleBuiltInTouches: true,
       ),
       gridData: const FlGridData(
         show: false,

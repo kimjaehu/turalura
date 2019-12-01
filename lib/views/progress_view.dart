@@ -80,7 +80,19 @@ class ProgressView extends StatelessWidget {
                                                 child: Row(
                                                   children: <Widget>[
                                                     Expanded(
-                                                      flex: 2,
+                                                      flex: 3,
+                                                      child: Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child: Text("Date")),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
                                                       child: Align(
                                                         alignment: Alignment
                                                             .centerLeft,
@@ -108,7 +120,7 @@ class ProgressView extends StatelessWidget {
                                                       flex: 3,
                                                       child: Align(
                                                         alignment: Alignment
-                                                            .centerRight,
+                                                            .center,
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
@@ -144,17 +156,40 @@ class ProgressView extends StatelessWidget {
     return ListView.builder(
       itemCount: measurementSnapshot.data.documents.length,
       itemBuilder: (BuildContext context, int index) {
-        // DateTime _measureDate = DateTime.parse(measurementSnapshot
-        //     .data.documents[index]["measureDate"]
-        //     .toDate()
-        //     .toString());
+        DateTime _measureDate = DateTime.parse(measurementSnapshot
+            .data.documents[index]["measureDate"]
+            .toDate()
+            .toString());
         double _height = measurementSnapshot.data.documents[index]["height"];
         double _weight = measurementSnapshot.data.documents[index]["weight"];
         int _day = measurementSnapshot.data.documents[index]["day"];
+        String _unit = measurementSnapshot.data.documents[index]["unit"];
+        String _heightText, _weightText;
+
+        if (_unit == 'metric') {
+          _heightText = '$_height cm';
+          _weightText = '$_weight kg';
+        } else if (_unit == 'imperial') {
+          _heightText = '${(_height / 2.54).toStringAsFixed(1)} in';
+          _weightText = '${(_weight * 2.205).toStringAsFixed(1)} lbs';
+        }
+
         return Row(
           children: <Widget>[
             Expanded(
-              flex: 2,
+              flex: 3,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    new DateFormat('MMM. d, yyyy').format(_measureDate),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -169,17 +204,17 @@ class ProgressView extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(_height.toString()),
+                  child: Text(_heightText),
                 ),
               ),
             ),
             Expanded(
               flex: 3,
               child: Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(_weight.toString()),
+                  child: Text(_weightText),
                 ),
               ),
             ),
