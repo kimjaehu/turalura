@@ -25,8 +25,9 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
   DateTime _date = new DateTime.now();
   bool _dateValidator;
 
-    Future<Object> parseJsonFromAssets(String assetsPath) async {
-    return rootBundle.loadString(assetsPath)
+  Future<Object> parseJsonFromAssets(String assetsPath) async {
+    return rootBundle
+        .loadString(assetsPath)
         .then((jsonStr) => jsonDecode(jsonStr));
   }
 
@@ -35,35 +36,35 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
     super.initState();
     _dateValidator = true;
     widget.measurement.measureDate = _date;
-    calculatePercentile("boy", "height", 5, 47.6);
   }
-  
-  Future<double> calculatePercentile( String gender, String category, int day, double measurement) async {
-    Map<String, dynamic> growthData = await parseJsonFromAssets('assets/data_repo/growth_data.json');
 
-    print(growthData[gender][category][day.toString()]);
-    double percentile, lowerPercentile, heigherPercentile, lowerMeasurement, higherMeasurement = 0;
-    double p01 = growthData[gender][category][day.toString()]["p01"];
-    double p1 = growthData[gender][category][day.toString()]["p1"];
-    double p3 =growthData[gender][category][day.toString()]["p3"];
-    double p5 = growthData[gender][category][day.toString()]["p5"];
-    double p10 = growthData[gender][category][day.toString()]["p10"];
-    double p15 =growthData[gender][category][day.toString()]["p15"];
-    double p25 =growthData[gender][category][day.toString()]["p25"];
-    double p50 =growthData[gender][category][day.toString()]["p50"];
-    double p75 =growthData[gender][category][day.toString()]["p75"];
-    double p85 =growthData[gender][category][day.toString()]["p85"];
-    double p90 =growthData[gender][category][day.toString()]["p90"];
-    double p95 =growthData[gender][category][day.toString()]["p95"];
-    double p97 =growthData[gender][category][day.toString()]["p97"];
-    double p99 =growthData[gender][category][day.toString()]["p99"];
-    double p999 =growthData[gender][category][day.toString()]["p999"];
+  Future<double> calculatePercentile(
+      String gender, String category, int day, double measurement, String unit) async {
+    Map<String, dynamic> growthData =
+        await parseJsonFromAssets('assets/data_repo/growth_data.json');
+
+    double lowerPercentile,
+        heigherPercentile,
+        lowerMeasurement,
+        higherMeasurement = 0;
+    double p01 = growthData[gender][category][day.toString()]["P01"];
+    double p1 = growthData[gender][category][day.toString()]["P1"];
+    double p3 = growthData[gender][category][day.toString()]["P3"];
+    double p5 = growthData[gender][category][day.toString()]["P5"];
+    double p10 = growthData[gender][category][day.toString()]["P10"];
+    double p15 = growthData[gender][category][day.toString()]["P15"];
+    double p25 = growthData[gender][category][day.toString()]["P25"];
+    double p50 = growthData[gender][category][day.toString()]["P50"];
+    double p75 = growthData[gender][category][day.toString()]["P75"];
+    double p85 = growthData[gender][category][day.toString()]["P85"];
+    double p90 = growthData[gender][category][day.toString()]["P90"];
+    double p95 = growthData[gender][category][day.toString()]["P95"];
+    double p97 = growthData[gender][category][day.toString()]["P97"];
+    double p99 = growthData[gender][category][day.toString()]["P99"];
+    double p999 = growthData[gender][category][day.toString()]["P999"];
 
     if (measurement > 0 && measurement <= p01) {
-      lowerPercentile = 0;
-      heigherPercentile = 0.001;
-      lowerMeasurement = 0;
-      higherMeasurement = p01;
+      return 0.01;
     } else if (measurement > p01 && measurement <= p1) {
       lowerPercentile = 0.001;
       heigherPercentile = 0.01;
@@ -72,47 +73,77 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
     } else if (measurement > p1 && measurement <= p3) {
       lowerPercentile = 0.01;
       heigherPercentile = 0.03;
+      lowerMeasurement = p1;
+      higherMeasurement = p3;
     } else if (measurement > p3 && measurement <= p5) {
       lowerPercentile = 0.01;
       heigherPercentile = 0.05;
+      lowerMeasurement = p3;
+      higherMeasurement = p5;
     } else if (measurement > p5 && measurement <= p10) {
       lowerPercentile = 0.05;
       heigherPercentile = 0.1;
+      lowerMeasurement = p5;
+      higherMeasurement = p10;
     } else if (measurement > p10 && measurement <= p15) {
       lowerPercentile = 0.1;
       heigherPercentile = 0.15;
+      lowerMeasurement = p10;
+      higherMeasurement = p15;
     } else if (measurement > p15 && measurement <= p25) {
       lowerPercentile = 0.15;
       heigherPercentile = 0.25;
+      lowerMeasurement = p15;
+      higherMeasurement = p25;
     } else if (measurement > p25 && measurement <= p50) {
       lowerPercentile = 0.25;
       heigherPercentile = 0.5;
+      lowerMeasurement = p25;
+      higherMeasurement = p50;
     } else if (measurement > p50 && measurement <= p75) {
       lowerPercentile = 0.5;
       heigherPercentile = 0.75;
+      lowerMeasurement = p50;
+      higherMeasurement = p75;
     } else if (measurement > p75 && measurement <= p85) {
       lowerPercentile = 0.75;
       heigherPercentile = 0.85;
+      lowerMeasurement = p75;
+      higherMeasurement = p85;
     } else if (measurement > p85 && measurement <= p90) {
       lowerPercentile = 0.85;
       heigherPercentile = 0.90;
+      lowerMeasurement = p85;
+      higherMeasurement = p90;
     } else if (measurement > p90 && measurement <= p95) {
       lowerPercentile = 0.90;
       heigherPercentile = 0.95;
+      lowerMeasurement = p90;
+      higherMeasurement = p95;
     } else if (measurement > p95 && measurement <= p97) {
       lowerPercentile = 0.95;
       heigherPercentile = 0.97;
+      lowerMeasurement = p95;
+      higherMeasurement = p97;
     } else if (measurement > p97 && measurement <= p99) {
       lowerPercentile = 0.97;
       heigherPercentile = 0.99;
+      lowerMeasurement = p97;
+      higherMeasurement = p99;
     } else if (measurement > p99 && measurement <= p999) {
       lowerPercentile = 0.99;
       heigherPercentile = 0.999;
-    } 
+      lowerMeasurement = p99;
+      higherMeasurement = p999;
+    }
+    if (measurement > p999) {
+      return 99.9;
+    }
 
-    percentile = lowerPercentile + (
-      
-    )
+    return lowerPercentile +
+        ((measurement - lowerMeasurement) /
+            (higherMeasurement - lowerMeasurement) *
+            (heigherPercentile - lowerPercentile));
   }
 
   @override
@@ -173,10 +204,34 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                 ),
               ),
               onPressed: () async {
-                setState(() {
-                  int dateDifference =
+                int dateDifference =
                       widget.measurement.measureDate.difference(dob).inDays;
+                String babyGender =
+                      widget.summarySnapshot.data['gender'];
+                print('babygender: $babyGender');
+                  double heightPercentile = await calculatePercentile(
+                          babyGender,
+                          "height",
+                          dateDifference,
+                          widget.measurement.height,
+                          widget.measurement.unit)
+                      .catchError((onError) {
+                    print(onError);
+                  });
+                  double weightPercentile = await calculatePercentile(
+                          babyGender,
+                          "weight",
+                         dateDifference,
+                          widget.measurement.weight,
+                          widget.measurement.unit)
+                      .catchError((onError) {
+                    print(onError);
+                  });
+
+                setState(() {
                   widget.measurement.day = dateDifference;
+                  widget.measurement.heightPercentile = heightPercentile;
+                  widget.measurement.weightPercentile = weightPercentile;
                 });
 
                 if (_dateValidator) {
@@ -186,16 +241,7 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                       .document(uid)
                       .get();
                   String userBaby = userInfo.data['currentBaby'].toString();
-                  String babyGender = widget.summarySnapshot.data['gender'].toString();
-
-                  double heightPercentile =
-                      await calculatePercentile(babyGender, "height", widget.measurement.day,widget.measurement.height).catchError((onError) {
-                    print(onError);
-                  });
-                  double weightPercentile =
-                      await calculatePercentile(babyGender, "weight", widget.measurement.day,widget.measurement.height).catchError((onError) {
-                    print(onError);
-                  });
+                  
 
                   await db
                       .collection("measurements")
@@ -214,7 +260,9 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                     'height': widget.measurement.height,
                     'weight': widget.measurement.weight,
                     'lastUpdated': widget.measurement.measureDate,
-                    'unit': widget.measurement.unit
+                    'unit': widget.measurement.unit,
+                    'heightPercentile': heightPercentile,
+                    'weightPercentile': weightPercentile
                   });
                   Navigator.of(context).pushReplacementNamed('/home');
                 } else {

@@ -123,8 +123,8 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
                   widget.measurement.height = double.parse(_heightController.text);
                   widget.measurement.weight = double.parse(_weightController.text);
                 } else {
-                  widget.measurement.height = double.parse(_heightController.text) / 2.54;
-                  widget.measurement.weight = double.parse(_weightController.text) * 2.20462;
+                  widget.measurement.height = double.parse(_heightController.text) * 2.54;
+                  widget.measurement.weight = double.parse(_weightController.text) / 2.20462;
                 }
                 
                 Navigator.push(context, MaterialPageRoute(builder: (context) => NewMeasurementDateView(measurement: widget.measurement, summarySnapshot: widget.summarySnapshot)));

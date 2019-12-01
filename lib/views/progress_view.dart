@@ -3,7 +3,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:turalura/views/new_measurement/measurement_view.dart';
 import 'package:turalura/models/Measurement.dart';
 import 'package:turalura/widgets/growth_chart.dart';
 import 'package:turalura/widgets/measurement_card.dart';
@@ -13,7 +12,7 @@ import 'package:turalura/widgets/provider_widget.dart';
 class ProgressView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final newMeasurement = new Measurement(null, null, null, null, null);
+    final newMeasurement = new Measurement(null, null, null, null, null, null, null);
     return StreamBuilder<Object>(
         stream: Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
         builder: (context, summarySnapshot) {

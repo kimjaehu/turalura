@@ -16,7 +16,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final newMeasurement = new Measurement(null, null, null, null, null);
+  final newMeasurement = new Measurement(null, null, null, null, null, null, null);
   final int age = 182;
   final int milestoneAge = 3;
   final int milestones = 10;
