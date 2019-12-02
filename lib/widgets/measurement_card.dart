@@ -41,6 +41,48 @@ class MeasurementCard extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
+            flex: 2,
+            child: Center(
+              child: SizedBox.fromSize(
+                size: Size(60, 60), // button width and height
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.purple, // button color
+                    child: InkWell(
+                      splashColor: Colors.white, // splash color
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NewMeasurementView(
+                                    measurement: newMeasurement,
+                                    summarySnapshot: summarySnapshot,
+                                  )),
+                        );
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.straighten,
+                            color: Colors.white,
+                          ), // icon
+                          Text(
+                            "Update",
+                            style: TextStyle(
+                                fontSize: 12.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ), // text
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
             flex: 7,
             child: Card(
               color: Colors.orange,
@@ -179,48 +221,7 @@ class MeasurementCard extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: SizedBox.fromSize(
-                size: Size(60, 60), // button width and height
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.purple, // button color
-                    child: InkWell(
-                      splashColor: Colors.white, // splash color
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NewMeasurementView(
-                                    measurement: newMeasurement,
-                                    summarySnapshot: summarySnapshot,
-                                  )),
-                        );
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.straighten,
-                            color: Colors.white,
-                          ), // icon
-                          Text(
-                            "Update",
-                            style: TextStyle(
-                                fontSize: 12.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ), // text
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          
         ],
       ),
     );

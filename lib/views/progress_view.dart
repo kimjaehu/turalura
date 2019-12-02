@@ -79,7 +79,7 @@ class ProgressView extends StatelessWidget {
                                                 child: Row(
                                                   children: <Widget>[
                                                     Expanded(
-                                                      flex: 3,
+                                                      flex: 4,
                                                       child: Align(
                                                         alignment: Alignment
                                                             .centerLeft,
@@ -91,7 +91,7 @@ class ProgressView extends StatelessWidget {
                                                       ),
                                                     ),
                                                     Expanded(
-                                                      flex: 1,
+                                                      flex: 2,
                                                       child: Align(
                                                         alignment: Alignment
                                                             .centerLeft,
@@ -116,6 +116,19 @@ class ProgressView extends StatelessWidget {
                                                       ),
                                                     ),
                                                     Expanded(
+                                                      flex: 2,
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child:
+                                                                Text("%")),
+                                                      ),
+                                                    ),
+                                                    Expanded(
                                                       flex: 3,
                                                       child: Align(
                                                         alignment: Alignment
@@ -126,6 +139,19 @@ class ProgressView extends StatelessWidget {
                                                                   .all(8.0),
                                                           child: Text("Weight"),
                                                         ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child:
+                                                                Text("%")),
                                                       ),
                                                     ),
                                                   ],
@@ -161,6 +187,8 @@ class ProgressView extends StatelessWidget {
             .toString());
         double _height = measurementSnapshot.data.documents[index]["height"];
         double _weight = measurementSnapshot.data.documents[index]["weight"];
+        double _heightPercentile = measurementSnapshot.data.documents[index]["heightPercentile"] * 100;
+        double _weightPercentile = measurementSnapshot.data.documents[index]["weightPercentile"] * 100;
         int _day = measurementSnapshot.data.documents[index]["day"];
         String _unit = measurementSnapshot.data.documents[index]["unit"];
         String _heightText, _weightText;
@@ -168,6 +196,7 @@ class ProgressView extends StatelessWidget {
         if (_unit == 'metric') {
           _heightText = '$_height cm';
           _weightText = '$_weight kg';
+
         } else if (_unit == 'imperial') {
           _heightText = '${(_height / 2.54).toStringAsFixed(1)} in';
           _weightText = '${(_weight * 2.205).toStringAsFixed(1)} lbs';
@@ -176,7 +205,7 @@ class ProgressView extends StatelessWidget {
         return Row(
           children: <Widget>[
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -188,7 +217,7 @@ class ProgressView extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -208,12 +237,32 @@ class ProgressView extends StatelessWidget {
               ),
             ),
             Expanded(
+              flex: 2,
+              child: Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('${_heightPercentile.toStringAsFixed(0)}%'),
+                ),
+              ),
+            ),
+            Expanded(
               flex: 3,
               child: Align(
                 alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(_weightText),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('${_weightPercentile.toStringAsFixed(0)}%'),
                 ),
               ),
             ),
@@ -232,6 +281,7 @@ class ProgressView extends StatelessWidget {
         .collection('measurements')
         .document(uid)
         .collection(currentBaby.toString().toLowerCase())
+        // .orderBy('__name__', descending: true)
         .snapshots();
   }
 }

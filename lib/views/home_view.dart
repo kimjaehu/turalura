@@ -10,20 +10,17 @@ import 'package:intl/intl.dart';
 import 'new_measurement/measurement_view.dart';
 
 class HomeView extends StatefulWidget {
-  
   @override
   _HomeViewState createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
-  final newMeasurement = new Measurement(null, null, null, null, null, null, null);
-  final int age = 182;
+  final newMeasurement =
+      new Measurement(null, null, null, null, null, null, null);
   final int milestoneAge = 3;
   final int milestones = 10;
   final int completedMilestones = 2;
-  final double heightCm = 60.0;
-  final double weightKg = 6.5;
-  
+
   Widget babyCard(context, userSnapshot) {
     if (!userSnapshot.hasData) {
       return Text("");
@@ -67,8 +64,8 @@ class _HomeViewState extends State<HomeView> {
                   currentBaby,
                   maxLines: 2,
                   style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 25.0,
+                      color: Colors.orange[700],
+                      fontSize: 40.0,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -81,14 +78,11 @@ class _HomeViewState extends State<HomeView> {
 
   Widget summaryCard(context, summarySnapshot) {
     if (!summarySnapshot.hasData) return Text('');
-    print(summarySnapshot.data['dob']);
 
     DateTime dob =
         DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
     DateTime toDate = DateTime.now();
     int dateDifference = toDate.difference(dob).inDays;
-    print(dob);
-    print(dateDifference);
 
     return Container(
       margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
@@ -225,6 +219,13 @@ class _HomeViewState extends State<HomeView> {
                               fontSize: 15.0,
                               fontWeight: FontWeight.bold),
                         ),
+                        Text(
+                          " completed",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   ],
@@ -240,6 +241,7 @@ class _HomeViewState extends State<HomeView> {
   Widget progressCard(context, summarySnapshot) {
     String height, weight;
     DateTime lastUpdated;
+
     if (!summarySnapshot.hasData) return Text('');
 
     if (summarySnapshot.data['unit'] == 'metric') {
@@ -456,21 +458,29 @@ class _HomeViewState extends State<HomeView> {
                     child: InkWell(
                       splashColor: Colors.white, // splash color
                       onTap: () {
-                        
                         Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NewMeasurementView(
-                                          measurement: newMeasurement,
-                                          summarySnapshot: summarySnapshot,
-                                        )),
-                              );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NewMeasurementView(
+                                    measurement: newMeasurement,
+                                    summarySnapshot: summarySnapshot,
+                                  )),
+                        );
                       }, // button pressed
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(Icons.straighten, color: Colors.white,), // icon
-                          Text("Update", style: TextStyle(fontSize: 12.0, color: Colors.white,fontWeight: FontWeight.bold),), // text
+                          Icon(
+                            Icons.straighten,
+                            color: Colors.white,
+                          ), // icon
+                          Text(
+                            "Update",
+                            style: TextStyle(
+                                fontSize: 12.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ), // text
                         ],
                       ),
                     ),
@@ -484,87 +494,180 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  String getPercentileText(String percent) {
+    int oneDigitChecker = int.parse(percent) % 10;
+    int twoDigitChecker = int.parse(percent) % 100;
+
+    if (oneDigitChecker == 1 && twoDigitChecker != 11) {
+      return 'st';
+    }
+    if (oneDigitChecker == 2 && twoDigitChecker != 12) {
+      return 'nd';
+    }
+    if (oneDigitChecker == 3 && twoDigitChecker != 13) {
+      return 'rd';
+    }
+
+    return 'th';
+  }
+
   Widget progressPercentileCard(context, summarySnapshot) {
+    if (!summarySnapshot.hasData) return Text('');
+
+    String heightPercentile =
+        (summarySnapshot.data["heightPercentile"] * 100).toStringAsFixed(0);
+    String weightPercentile =
+        (summarySnapshot.data["weightPercentile"] * 100).toStringAsFixed(0);
+    DateTime dob =
+        DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
+    DateTime toDate = DateTime.now();
+    double monthDifference = (toDate.difference(dob).inDays) / 30.4375;
+
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
       height: 100.0,
-      child: Card(
-        color: Colors.teal,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 5,
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 10.0,
-                            bottom: 10.0,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 7,
+            child: Card(
+              color: Colors.teal,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 5,
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10.0,
+                                  bottom: 5.0,
+                                ),
+                                child: Text(
+                                  "Height-for-age",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
                           ),
-                          child: Text(
-                            "Height-for-age",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: <Widget>[
+                              RichText(
+                                text: TextSpan(
+                                    text: heightPercentile,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 30.0,
+                                        fontWeight: FontWeight.bold),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text:
+                                              ' ${getPercentileText(heightPercentile)}',
+                                          style: TextStyle(fontSize: 15.0))
+                                    ]),
+                              ),
+                              Text(
+                                'percentile',
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: <Widget>[],
+                  ),
+                  VerticalDivider(
+                    color: Colors.white,
+                    indent: 5.0,
+                    endIndent: 5.0,
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10.0,
+                                  bottom: 5.0,
+                                ),
+                                child: Text(
+                                  "Weight-for-age",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: <Widget>[
+                              RichText(
+                                text: TextSpan(
+                                    text: weightPercentile,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 30.0,
+                                        fontWeight: FontWeight.bold),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text:
+                                              ' ${getPercentileText(weightPercentile)}',
+                                          style: TextStyle(fontSize: 15.0))
+                                    ]),
+                              ),
+                              Text(
+                                'percentile',
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            VerticalDivider(
-              color: Colors.white,
-              indent: 5.0,
-              endIndent: 5.0,
+          ),
+          Expanded(
+            flex: 3,
+            child: Card(
+              color: Colors.indigo,
+              child: Center(child: Text('adga')),
             ),
-            Expanded(
-              flex: 5,
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 10.0,
-                            bottom: 10.0,
-                          ),
-                          child: Text(
-                            "Weight-for-age",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: <Widget>[],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          )
+        ],
       ),
     );
+  }
+
+  String getSleepText(double monthDifference) {
+    if (monthDifference > 0 && monthDifference < 4) {
+      return '14-17 hrs';
+    }
+    if (monthDifference >= 4 && monthDifference < 12) {
+      return '12–16 hrs';
+    }
+    if (monthDifference >= 12 && monthDifference < 24) {
+      return '11–14 hrs';
+    }
+    if (monthDifference >= 24 && monthDifference < 60) {
+      return '10–13 hrs';
+    }
   }
 
   // Widget buildGearsCard(BuildContext context, int index) {
@@ -609,7 +712,9 @@ class _HomeViewState extends State<HomeView> {
                       babyCard(context, userSnapshot),
                       summaryCard(context, summarySnapshot),
                       // progressCard(context, summarySnapshot),
-                      MeasurementCard(summarySnapshot: summarySnapshot, newMeasurement: newMeasurement),
+                      MeasurementCard(
+                          summarySnapshot: summarySnapshot,
+                          newMeasurement: newMeasurement),
                       progressPercentileCard(context, summarySnapshot),
                     ],
                   ),
