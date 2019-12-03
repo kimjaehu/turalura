@@ -11,12 +11,28 @@ class MilestoneView extends StatefulWidget {
 
 class _MilestoneViewState extends State<MilestoneView> {
   int selectedCount;
+  String monthNum;
 
   @override
   void initState() {
     super.initState();
+    // initial month based on the days since birth
+    monthNum = 2.toString();
     selectedCount = 0;
   }
+
+  List<String> monthsList = [
+    "2",
+    "4",
+    "6",
+    "9",
+    "12",
+    "18",
+    "24",
+    "36",
+    "48",
+    "60"
+  ];
 
   Map<String, dynamic> milestoneList = {
     "2": [
@@ -75,11 +91,22 @@ class _MilestoneViewState extends State<MilestoneView> {
         "milestone": "Makes smoother movements with arms and legs"
       },
     ],
+    "4": [
+      {
+        "id": "1",
+        "category": "Social/Emotional",
+        "milestone": "example example"
+      }
+    ]
+
+
+
+
+
   };
 
   @override
   Widget build(BuildContext context) {
-    String monthNum = 2.toString();
     return StreamBuilder(
       stream: Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
       builder: (context, summarySnapshot) {
@@ -92,10 +119,41 @@ class _MilestoneViewState extends State<MilestoneView> {
             selectedCount = 0;
             return Column(
               children: <Widget>[
-                Container(
-                  child: Card(
-                      color: Colors.green,
-                      child: Text(selectedCount.toString())),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: monthsList.length,
+                      itemBuilder: (context, index) {
+                        String buttonText;
+                        if (int.parse(monthsList[index]) % 12 == 0){
+                          buttonText = '${(int.parse(monthsList[index]) / 12).toStringAsFixed(0)} yr.';
+                        } else {
+                          buttonText = '${monthsList[index]} mo.';
+                        }
+                        return Container(
+                          
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: RaisedButton(
+                              onPressed: () {
+                                print(monthsList[index].toString());
+                                setState(() {
+                                  monthNum = monthsList[index].toString();
+                                });
+                              },
+                              color: Colors.pink,
+                              child: Center(
+                                child: Text(buttonText, style: TextStyle(color: Colors.white),),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: getMilestoneCards(snapshot, monthNum),
@@ -123,14 +181,12 @@ class _MilestoneViewState extends State<MilestoneView> {
                 await Firestore.instance
                     .collection("milestones")
                     .document(uid)
-                    .updateData({
-                  monthNum: 
-                    {
-                      // "1": false
-                      milestoneNum:
-                          snapshot.data[monthNum][milestoneNum] ? false : true
+                    .setData({
+                  monthNum: {
+                    milestoneNum:
+                        snapshot.data[monthNum][milestoneNum] ? false : true
                   }
-                });
+                }, merge: true);
                 // snapshot.data[monthNum][milestoneNum]
                 //   ? {milestoneNum: false}
                 //   : {milestoneNum: true}
