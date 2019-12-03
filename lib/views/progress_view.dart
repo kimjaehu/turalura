@@ -275,7 +275,6 @@ class ProgressView extends StatelessWidget {
       BuildContext context, snapshot) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
     final currentBaby = snapshot.data['name'];
-    print('current baby ${currentBaby.toString().toLowerCase()}');
     yield* Firestore.instance
         .collection('measurements')
         .document(uid)

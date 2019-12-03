@@ -224,7 +224,7 @@ class _AddViewState extends State<AddView> {
                           .collection("summaries")
                           .document(uid)
                           .collection((_nameController.text).toLowerCase())
-                          .document('summary')
+                          .document("summary")
                           .setData({
                         'dob': _dateOfBirth,
                         'gender': gender,
@@ -237,6 +237,23 @@ class _AddViewState extends State<AddView> {
                         'heightPercentile': null,
                         'weightPercentile': null,
                         'name': _nameController.text,
+                      });
+                      await db
+                      .collection("milestones")
+                      .document(uid)
+                      .collection("userMilestones")
+                      .document("2")
+                      .setData({
+                        '1': false,
+                        '2': false,
+                        '3': false,
+                        '4': false,
+                        '5': false,
+                        '6': false,
+                        '7': false,
+                        '8': false,
+                        '9': false,
+                        '10': false,
                       });
                       Navigator.of(context).pushReplacementNamed('/home');
                     } else {
