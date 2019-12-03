@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turalura/pages.dart';
 import 'package:turalura/views/home_view.dart';
+import 'package:turalura/views/milestone_view.dart';
 import 'package:turalura/views/progress_view.dart';
 
 
@@ -14,7 +15,7 @@ int _currentIndex = 0;
 final List<Widget> _children = [
   HomeView(),
   ProgressView(),
-  Milestones(),
+  MilestoneView(),
   Activities(),
   Gears(),
 ];

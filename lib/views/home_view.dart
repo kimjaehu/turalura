@@ -43,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
                   );
                 },
                 child: Icon(
-                  Icons.child_care,
+                  Icons.menu,
                   size: 50.0,
                   color: Colors.blueGrey[700],
                 ),
