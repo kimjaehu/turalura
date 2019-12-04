@@ -522,6 +522,279 @@ class _MilestoneViewState extends State<MilestoneView> {
         "milestone": "May stand alone"
       },
     ],
+    "18": [
+      {
+        "id": "1",
+        "category": "Social/Emotional",
+        "milestone": "Likes to hand things to others as play"
+      },
+      {
+        "id": "2",
+        "category": "Social/Emotional",
+        "milestone": "May have temper tantrums"
+      },
+      {
+        "id": "3",
+        "category": "Social/Emotional",
+        "milestone": "May be afraid of strangers"
+      },
+      {
+        "id": "4",
+        "category": "Social/Emotional",
+        "milestone": "Shows affection to familiar people"
+      },
+      {
+        "id": "5",
+        "category": "Social/Emotional",
+        "milestone": "Plays simple pretend, such as feeding a doll"
+      },
+      {
+        "id": "6",
+        "category": "Social/Emotional",
+        "milestone": "May cling to caregivers in new situations"
+      },
+      {
+        "id": "7",
+        "category": "Social/Emotional",
+        "milestone": "Points to show others something interesting"
+      },
+      {
+        "id": "8",
+        "category": "Social/Emotional",
+        "milestone": "Explores alone but with parent close by"
+      },
+      {
+        "id": "9",
+        "category": "Language/Communication",
+        "milestone":
+            "Says several single words"
+      },
+      {
+        "id": "10",
+        "category": "Language/Communication",
+        "milestone":
+            "Says and shakes head \"no\""
+      },
+      {
+        "id": "11",
+        "category": "Language/Communication",
+        "milestone":
+            "Points to show someone what he wants"
+      },
+      {
+        "id": "12",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Knows what ordinary things are for; for example, telephone, brush, spoon"
+      },
+      {
+        "id": "13",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Points to get the attention of others"
+      },
+      {
+        "id": "14",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Shows interest in a doll or stuffed animal by pretending to feed"
+      },
+      {
+        "id": "15",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Points to one body part"
+      },
+      {
+        "id": "16",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Scribbles on his own"
+      },
+      {
+        "id": "17",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Can follow 1-step verbal commands without any gestures; for example, sits when you say \"sit down\""
+      },
+      {
+        "id": "18",
+        "category": "Movement/Physical Development",
+        "milestone": "Walks alone"
+      },
+      {
+        "id": "19",
+        "category": "Movement/Physical Development",
+        "milestone": "May walk up steps and run"
+      },
+      {
+        "id": "20",
+        "category": "Movement/Physical Development",
+        "milestone": "Pulls toys while walking"
+      },
+      {
+        "id": "21",
+        "category": "Movement/Physical Development",
+        "milestone": "Can help undress herself"
+      },
+      {
+        "id": "22",
+        "category": "Movement/Physical Development",
+        "milestone": "Drinks from a cup"
+      },
+      {
+        "id": "23",
+        "category": "Movement/Physical Development",
+        "milestone": "Eats with a spoon"
+      },
+    ],
+    "24": [
+      {
+        "id": "1",
+        "category": "Social/Emotional",
+        "milestone": "Copies others, especially adults and older children"
+      },
+      {
+        "id": "2",
+        "category": "Social/Emotional",
+        "milestone": "Gets excited when with other children"
+      },
+      {
+        "id": "3",
+        "category": "Social/Emotional",
+        "milestone": "Shows more and more independence"
+      },
+      {
+        "id": "4",
+        "category": "Social/Emotional",
+        "milestone": "Shows defiant behavior (doing what he has been told not to)"
+      },
+      {
+        "id": "5",
+        "category": "Social/Emotional",
+        "milestone": "Plays mainly beside other children, but is beginning to include other children, such as in chase games"
+      },
+      {
+        "id": "6",
+        "category": "Language/Communication",
+        "milestone":
+            "Points to things or pictures when they are named"
+      },
+      {
+        "id": "7",
+        "category": "Language/Communication",
+        "milestone":
+            "Knows names of familiar people and body parts"
+      },
+      {
+        "id": "8",
+        "category": "Language/Communication",
+        "milestone":
+            "Says sentences with 2 to 4 words"
+      },
+      {
+        "id": "9",
+        "category": "Language/Communication",
+        "milestone":
+            "Follows simple instructions"
+      },
+      {
+        "id": "10",
+        "category": "Language/Communication",
+        "milestone":
+            "Repeats words overheard in conversation"
+      },
+      {
+        "id": "11",
+        "category": "Language/Communication",
+        "milestone":
+            "Points to things in a book"
+      },
+      {
+        "id": "12",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Finds things even when hidden under two or three covers"
+      },
+      {
+        "id": "13",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Begins to sort shapes and colors"
+      },
+      {
+        "id": "14",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Completes sentences and rhymes in familiar books"
+      },
+      {
+        "id": "15",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Plays simple make-believe games"
+      },
+      {
+        "id": "16",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Builds towers of 4 or more blocks"
+      },
+      {
+        "id": "17",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Might use one hand more than the other"
+      },
+      {
+        "id": "18",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Follows two-step instructions such as \"Pick up your shoes and put them in the closet.\""
+      },
+      {
+        "id": "19",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Names items in a picture book such as a cat, bird, or dog"
+      },
+      {
+        "id": "20",
+        "category": "Movement/Physical Development",
+        "milestone": "Stands on tiptoe"
+      },
+      {
+        "id": "21",
+        "category": "Movement/Physical Development",
+        "milestone": "Kicks a ball"
+      },
+      {
+        "id": "22",
+        "category": "Movement/Physical Development",
+        "milestone": "Begins to run"
+      },
+      {
+        "id": "23",
+        "category": "Movement/Physical Development",
+        "milestone": "Climbs onto and down from furniture without help"
+      },
+      {
+        "id": "24",
+        "category": "Movement/Physical Development",
+        "milestone": "Walks up and down stairs holding on"
+      },
+      {
+        "id": "25",
+        "category": "Movement/Physical Development",
+        "milestone": "Throws ball overhand"
+      },
+      {
+        "id": "26",
+        "category": "Movement/Physical Development",
+        "milestone": "Makes or copies straight lines and circles"
+      },
+    ],
+
     
   };
 
