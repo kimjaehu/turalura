@@ -1094,7 +1094,130 @@ class _MilestoneViewState extends State<MilestoneView> {
       },
     ],
     "48": [
-      
+      {
+        "id": "1",
+        "category": "Social/Emotional",
+        "milestone": "Wants to please friends"
+      },
+      {
+        "id": "2",
+        "category": "Social/Emotional",
+        "milestone": "Wants to be like friends"
+      },
+      {
+        "id": "3",
+        "category": "Social/Emotional",
+        "milestone": "More likely to agree with rules"
+      },
+      {
+        "id": "4",
+        "category": "Social/Emotional",
+        "milestone": "Likes to sing, dance, and act"
+      },
+      {
+        "id": "5",
+        "category": "Social/Emotional",
+        "milestone": "Is aware of gender"
+      },
+      {
+        "id": "6",
+        "category": "Social/Emotional",
+        "milestone": "Can tell what’s real and what’s make-believe"
+      },
+      {
+        "id": "7",
+        "category": "Social/Emotional",
+        "milestone": "Shows more independence (for example, may visit a next-door neighbor by himself [adult supervision is still needed])"
+      },
+      {
+        "id": "8",
+        "category": "Social/Emotional",
+        "milestone": "Is sometimes demanding and sometimes very cooperative"
+      },
+      {
+        "id": "9",
+        "category": "Language/Communication",
+        "milestone":
+            "Speaks very clearly"
+      },
+      {
+        "id": "10",
+        "category": "Language/Communication",
+        "milestone":
+            "Tells a simple story using full sentences"
+      },
+      {
+        "id": "11",
+        "category": "Language/Communication",
+        "milestone":
+            "Uses future tense; for example, \"Grandma will be here.\""
+      },
+      {
+        "id": "12",
+        "category": "Language/Communication",
+        "milestone":
+            "Says name and address"
+      },
+      {
+        "id": "13",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Counts 10 or more things"
+      },
+      {
+        "id": "14",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Can draw a person with at least 6 body parts"
+      },
+      {
+        "id": "15",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Can print some letters or numbers"
+      },
+      {
+        "id": "16",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Copies a triangle and other geometric shapes"
+      },
+      {
+        "id": "17",
+        "category": "Cognitive (learning, thinking, problem-solving)",
+        "milestone":
+            "Knows about things used every day, like money and food"
+      },
+      {
+        "id": "18",
+        "category": "Movement/Physical Development",
+        "milestone": "Stands on one foot for 10 seconds or longer"
+      },
+      {
+        "id": "19",
+        "category": "Movement/Physical Development",
+        "milestone": "Hops; may be able to skip"
+      },
+      {
+        "id": "20",
+        "category": "Movement/Physical Development",
+        "milestone": "Can do a somersault"
+      },
+      {
+        "id": "21",
+        "category": "Movement/Physical Development",
+        "milestone": "Uses a fork and spoon and sometimes a table knife"
+      },
+      {
+        "id": "22",
+        "category": "Movement/Physical Development",
+        "milestone": "Can use the toilet on her own"
+      },
+      {
+        "id": "23",
+        "category": "Movement/Physical Development",
+        "milestone": "Swings and climbs"
+      },
     ],
   };
 
