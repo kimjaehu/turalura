@@ -12,13 +12,60 @@ class MilestoneView extends StatefulWidget {
 class _MilestoneViewState extends State<MilestoneView> {
   int selectedCount;
   String monthNum;
-
+  int initMonth;
   @override
   void initState() {
     super.initState();
-    // initial month based on the days since birth
-    monthNum = 2.toString();
-    selectedCount = 0;
+    Future.delayed(Duration.zero, () {
+      this.initialMonth();
+    });
+  }
+
+  initialMonth() async {
+    int monthSince;
+    String uid = await Provider.of(context).auth.getCurrentUID();
+    await Firestore.instance
+        .collection('users')
+        .document(uid)
+        .get()
+        .then((doc) {
+      DateTime dob = DateTime.parse(doc.data['dob'].toDate().toString());
+      DateTime toDate = DateTime.now();
+      int dateDifference = toDate.difference(dob).inDays;
+      if ((dateDifference / 30.4375) >= 0 && (dateDifference / 30.4375) < 4) {
+        monthSince = 2;
+      } else if ((dateDifference / 30.4375) >= 4 &&
+          (dateDifference / 30.4375) < 6) {
+        monthSince = 4;
+      } else if ((dateDifference / 30.4375) >= 6 &&
+          (dateDifference / 30.4375) < 9) {
+        monthSince = 6;
+      } else if ((dateDifference / 30.4375) >= 9 &&
+          (dateDifference / 30.4375) < 12) {
+        monthSince = 9;
+      } else if ((dateDifference / 30.4375) >= 12 &&
+          (dateDifference / 30.4375) < 18) {
+        monthSince = 12;
+      } else if ((dateDifference / 30.4375) >= 18 &&
+          (dateDifference / 30.4375) < 24) {
+        monthSince = 18;
+      } else if ((dateDifference / 30.4375) >= 24 &&
+          (dateDifference / 30.4375) < 36) {
+        monthSince = 24;
+      } else if ((dateDifference / 30.4375) >= 36 &&
+          (dateDifference / 30.4375) < 48) {
+        monthSince = 36;
+      } else if ((dateDifference / 30.4375) >= 48 &&
+          (dateDifference / 30.4375) < 60) {
+        monthSince = 48;
+      } else {
+        monthSince = 60;
+      }
+      setState(() {
+        monthNum = monthSince.toString();
+        initMonth = monthSince;
+      });
+    });
   }
 
   List<String> monthsList = [
@@ -1176,6 +1223,11 @@ class _MilestoneViewState extends State<MilestoneView> {
     return StreamBuilder(
       stream: Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
       builder: (context, summarySnapshot) {
+        if (!summarySnapshot.hasData) {
+          circularProgress();
+        }
+
+        if (monthNum == null) return circularProgress();
         return StreamBuilder<DocumentSnapshot>(
           stream: getUserMilestonesStreamSnapshots(context),
           builder: (context, snapshot) {
@@ -1209,7 +1261,11 @@ class _MilestoneViewState extends State<MilestoneView> {
                                   monthNum = monthsList[index].toString();
                                 });
                               },
-                              color: Colors.pink,
+                              color: monthNum == monthsList[index]
+                                  ? Colors.deepPurple
+                                  : initMonth < int.parse(monthsList[index])
+                                      ? Colors.grey
+                                      : Colors.deepPurple[200],
                               child: Center(
                                 child: Text(
                                   buttonText,
@@ -1224,20 +1280,26 @@ class _MilestoneViewState extends State<MilestoneView> {
                   ),
                 ),
                 Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      getMilestoneCards(
-                          snapshot, monthNum, "Social/Emotional", Colors.blue),
-                      getMilestoneCards(snapshot, monthNum,
-                          "Language/Communication", Colors.orange),
-                      getMilestoneCards(
-                          snapshot,
-                          monthNum,
-                          "Cognitive (learning, thinking, problem-solving)",
-                          Colors.green),
-                      getMilestoneCards(snapshot, monthNum,
-                          "Movement/Physical Development", Colors.teal),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        milestoneHeading("Social/Emotional", Colors.blue),
+                        getMilestoneCards(snapshot, monthNum,
+                            "Social/Emotional", Colors.blue),
+                        milestoneHeading(
+                            "Language/Communication", Colors.green),
+                        getMilestoneCards(snapshot, monthNum,
+                            "Language/Communication", Colors.green),
+                        milestoneHeading(
+                            "Cognitive (learning, thinking, problem-solving)",
+                            Colors.orange),
+                        getMilestoneCards(snapshot, monthNum,
+                            "Movement/Physical Development", Colors.indigo),
+                        milestoneHeading("Social/Emotional", Colors.blue),
+                        getMilestoneCards(snapshot, monthNum,
+                            "Movement/Physical Development", Colors.indigo),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -1248,6 +1310,31 @@ class _MilestoneViewState extends State<MilestoneView> {
     );
   }
 
+  Widget milestoneHeading(String headText, Color color) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 0.0),
+      child: Card(
+        color: color,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: AutoSizeText(
+                headText,
+                maxLines: 1,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget getMilestoneCards(snapshot, monthNum, category, cardColor) {
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
@@ -1255,7 +1342,6 @@ class _MilestoneViewState extends State<MilestoneView> {
       itemCount: milestoneList[monthNum].length,
       itemBuilder: (BuildContext context, int index) {
         String milestoneNum = milestoneList[monthNum][index]["id"];
-        print(milestoneList[monthNum][index]["category"]);
         return milestoneList[monthNum][index]["category"] != category
             ? SizedBox()
             : Padding(
@@ -1264,7 +1350,6 @@ class _MilestoneViewState extends State<MilestoneView> {
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.1,
                     child: Card(
-                      color: cardColor,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -1277,7 +1362,7 @@ class _MilestoneViewState extends State<MilestoneView> {
                                 child: AutoSizeText(
                                   milestoneList[monthNum][index]["id"],
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      color: cardColor,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                   maxLines: 1,
@@ -1292,7 +1377,7 @@ class _MilestoneViewState extends State<MilestoneView> {
                               child: AutoSizeText(
                                 milestoneList[monthNum][index]["milestone"],
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: cardColor,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
                                 maxLines: 2,
@@ -1307,7 +1392,7 @@ class _MilestoneViewState extends State<MilestoneView> {
                                   ? IconButton(
                                       icon: Icon(Icons.check_box),
                                       iconSize: 40,
-                                      color: Colors.white,
+                                      color: cardColor,
                                       onPressed: () async {
                                         final uid = await Provider.of(context)
                                             .auth
@@ -1330,7 +1415,7 @@ class _MilestoneViewState extends State<MilestoneView> {
                                   : IconButton(
                                       icon: Icon(Icons.check_box_outline_blank),
                                       iconSize: 40,
-                                      color: Colors.white,
+                                      color: cardColor,
                                       onPressed: () async {
                                         final uid = await Provider.of(context)
                                             .auth

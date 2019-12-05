@@ -52,4 +52,9 @@ Stream<DocumentSnapshot> getUserBabySummaryStreamSnapshots() async* {
         .snapshots();
   }
 
+  Future<DocumentSnapshot> getUserInfo() async {
+    String uid = (await _firebaseAuth.currentUser()).uid;
+    return await Firestore.instance.collection('users').document(uid).get();
+  }
+
 }

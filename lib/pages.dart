@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Milestones extends StatelessWidget {
+class Delays extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

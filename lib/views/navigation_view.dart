@@ -16,6 +16,7 @@ final List<Widget> _children = [
   HomeView(),
   ProgressView(),
   MilestoneView(),
+  Delays(),
   Activities(),
   Gears(),
 ];
@@ -46,6 +47,11 @@ final List<Widget> _children = [
           BottomNavigationBarItem(
             icon: new Icon(Icons.check_circle_outline),
             title: new Text("Milestones"),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.new_releases, color: Colors.red,),
+            title: new Text("Important"),
+            
           ),
           BottomNavigationBarItem(
             icon: new Icon(Icons.accessibility_new),
