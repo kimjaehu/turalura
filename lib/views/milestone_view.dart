@@ -566,20 +566,17 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "9",
         "category": "Language/Communication",
-        "milestone":
-            "Says several single words"
+        "milestone": "Says several single words"
       },
       {
         "id": "10",
         "category": "Language/Communication",
-        "milestone":
-            "Says and shakes head \"no\""
+        "milestone": "Says and shakes head \"no\""
       },
       {
         "id": "11",
         "category": "Language/Communication",
-        "milestone":
-            "Points to show someone what he wants"
+        "milestone": "Points to show someone what he wants"
       },
       {
         "id": "12",
@@ -590,8 +587,7 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "13",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Points to get the attention of others"
+        "milestone": "Points to get the attention of others"
       },
       {
         "id": "14",
@@ -602,14 +598,12 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "15",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Points to one body part"
+        "milestone": "Points to one body part"
       },
       {
         "id": "16",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Scribbles on his own"
+        "milestone": "Scribbles on his own"
       },
       {
         "id": "17",
@@ -667,84 +661,74 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "4",
         "category": "Social/Emotional",
-        "milestone": "Shows defiant behavior (doing what he has been told not to)"
+        "milestone":
+            "Shows defiant behavior (doing what he has been told not to)"
       },
       {
         "id": "5",
         "category": "Social/Emotional",
-        "milestone": "Plays mainly beside other children, but is beginning to include other children, such as in chase games"
+        "milestone":
+            "Plays mainly beside other children, but is beginning to include other children, such as in chase games"
       },
       {
         "id": "6",
         "category": "Language/Communication",
-        "milestone":
-            "Points to things or pictures when they are named"
+        "milestone": "Points to things or pictures when they are named"
       },
       {
         "id": "7",
         "category": "Language/Communication",
-        "milestone":
-            "Knows names of familiar people and body parts"
+        "milestone": "Knows names of familiar people and body parts"
       },
       {
         "id": "8",
         "category": "Language/Communication",
-        "milestone":
-            "Says sentences with 2 to 4 words"
+        "milestone": "Says sentences with 2 to 4 words"
       },
       {
         "id": "9",
         "category": "Language/Communication",
-        "milestone":
-            "Follows simple instructions"
+        "milestone": "Follows simple instructions"
       },
       {
         "id": "10",
         "category": "Language/Communication",
-        "milestone":
-            "Repeats words overheard in conversation"
+        "milestone": "Repeats words overheard in conversation"
       },
       {
         "id": "11",
         "category": "Language/Communication",
-        "milestone":
-            "Points to things in a book"
+        "milestone": "Points to things in a book"
       },
       {
         "id": "12",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Finds things even when hidden under two or three covers"
+        "milestone": "Finds things even when hidden under two or three covers"
       },
       {
         "id": "13",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Begins to sort shapes and colors"
+        "milestone": "Begins to sort shapes and colors"
       },
       {
         "id": "14",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Completes sentences and rhymes in familiar books"
+        "milestone": "Completes sentences and rhymes in familiar books"
       },
       {
         "id": "15",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Plays simple make-believe games"
+        "milestone": "Plays simple make-believe games"
       },
       {
         "id": "16",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Builds towers of 4 or more blocks"
+        "milestone": "Builds towers of 4 or more blocks"
       },
       {
         "id": "17",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Might use one hand more than the other"
+        "milestone": "Might use one hand more than the other"
       },
       {
         "id": "18",
@@ -755,8 +739,7 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "19",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Names items in a picture book such as a cat, bird, or dog"
+        "milestone": "Names items in a picture book such as a cat, bird, or dog"
       },
       {
         "id": "20",
@@ -843,32 +826,27 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "10",
         "category": "Language/Communication",
-        "milestone":
-            "Follows instructions with 2 or 3 steps"
+        "milestone": "Follows instructions with 2 or 3 steps"
       },
       {
         "id": "11",
         "category": "Language/Communication",
-        "milestone":
-            "Can name most familiar things"
+        "milestone": "Can name most familiar things"
       },
       {
         "id": "12",
         "category": "Language/Communication",
-        "milestone":
-            "Understands words like \"in\", \"on\", and \"under\""
+        "milestone": "Understands words like \"in\", \"on\", and \"under\""
       },
       {
         "id": "13",
         "category": "Language/Communication",
-        "milestone":
-            "Says first name, age, and sex"
+        "milestone": "Says first name, age, and sex"
       },
       {
         "id": "14",
         "category": "Language/Communication",
-        "milestone":
-            "Names a friend"
+        "milestone": "Names a friend"
       },
       {
         "id": "15",
@@ -885,56 +863,47 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "17",
         "category": "Language/Communication",
-        "milestone":
-            "Carries on a conversation using 2 to 3 sentences"
+        "milestone": "Carries on a conversation using 2 to 3 sentences"
       },
       {
         "id": "18",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Can work toys with buttons, levers, and moving parts"
+        "milestone": "Can work toys with buttons, levers, and moving parts"
       },
       {
         "id": "19",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Plays make-believe with dolls, animals, and people"
+        "milestone": "Plays make-believe with dolls, animals, and people"
       },
       {
         "id": "20",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Does puzzles with 3 or 4 pieces"
+        "milestone": "Does puzzles with 3 or 4 pieces"
       },
       {
         "id": "21",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Understands what “two” means"
+        "milestone": "Understands what “two” means"
       },
       {
         "id": "22",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Copies a circle with pencil or crayon"
+        "milestone": "Copies a circle with pencil or crayon"
       },
       {
         "id": "23",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Turns book pages one at a time"
+        "milestone": "Turns book pages one at a time"
       },
       {
         "id": "24",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Builds towers of more than 6 blocks"
+        "milestone": "Builds towers of more than 6 blocks"
       },
       {
         "id": "25",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Screws and unscrews jar lids or turns door handle"
+        "milestone": "Screws and unscrews jar lids or turns door handle"
       },
       {
         "id": "26",
@@ -1008,68 +977,57 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "10",
         "category": "Language/Communication",
-        "milestone":
-            "Tells stories"
+        "milestone": "Tells stories"
       },
       {
         "id": "11",
         "category": "Language/Communication",
-        "milestone":
-            "Can say first and last name"
+        "milestone": "Can say first and last name"
       },
       {
         "id": "12",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Names some colors and some numbers"
+        "milestone": "Names some colors and some numbers"
       },
       {
         "id": "13",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Understands the idea of counting"
+        "milestone": "Understands the idea of counting"
       },
       {
         "id": "14",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Starts to understand time"
+        "milestone": "Starts to understand time"
       },
       {
         "id": "15",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Remembers parts of a story"
+        "milestone": "Remembers parts of a story"
       },
       {
         "id": "16",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Understands the idea of \"same\" and \"different\""
+        "milestone": "Understands the idea of \"same\" and \"different\""
       },
       {
         "id": "17",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Draws a person with 2 to 4 body parts"
+        "milestone": "Draws a person with 2 to 4 body parts"
       },
       {
         "id": "18",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Uses scissors"
+        "milestone": "Uses scissors"
       },
       {
         "id": "19",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Starts to copy some capital letters"
+        "milestone": "Starts to copy some capital letters"
       },
       {
         "id": "20",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Plays board or card games"
+        "milestone": "Plays board or card games"
       },
       {
         "id": "21",
@@ -1093,7 +1051,7 @@ class _MilestoneViewState extends State<MilestoneView> {
         "milestone": "Pours, cuts with supervision, and mashes own food"
       },
     ],
-    "48": [
+    "60": [
       {
         "id": "1",
         "category": "Social/Emotional",
@@ -1127,7 +1085,8 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "7",
         "category": "Social/Emotional",
-        "milestone": "Shows more independence (for example, may visit a next-door neighbor by himself [adult supervision is still needed])"
+        "milestone":
+            "Shows more independence (for example, may visit a next-door neighbor by himself [adult supervision is still needed])"
       },
       {
         "id": "8",
@@ -1137,56 +1096,47 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "9",
         "category": "Language/Communication",
-        "milestone":
-            "Speaks very clearly"
+        "milestone": "Speaks very clearly"
       },
       {
         "id": "10",
         "category": "Language/Communication",
-        "milestone":
-            "Tells a simple story using full sentences"
+        "milestone": "Tells a simple story using full sentences"
       },
       {
         "id": "11",
         "category": "Language/Communication",
-        "milestone":
-            "Uses future tense; for example, \"Grandma will be here.\""
+        "milestone": "Uses future tense; for example, \"Grandma will be here.\""
       },
       {
         "id": "12",
         "category": "Language/Communication",
-        "milestone":
-            "Says name and address"
+        "milestone": "Says name and address"
       },
       {
         "id": "13",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Counts 10 or more things"
+        "milestone": "Counts 10 or more things"
       },
       {
         "id": "14",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Can draw a person with at least 6 body parts"
+        "milestone": "Can draw a person with at least 6 body parts"
       },
       {
         "id": "15",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Can print some letters or numbers"
+        "milestone": "Can print some letters or numbers"
       },
       {
         "id": "16",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Copies a triangle and other geometric shapes"
+        "milestone": "Copies a triangle and other geometric shapes"
       },
       {
         "id": "17",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone":
-            "Knows about things used every day, like money and food"
+        "milestone": "Knows about things used every day, like money and food"
       },
       {
         "id": "18",
@@ -1255,7 +1205,6 @@ class _MilestoneViewState extends State<MilestoneView> {
                             padding: const EdgeInsets.all(4.0),
                             child: RaisedButton(
                               onPressed: () {
-                                print(monthsList[index].toString());
                                 setState(() {
                                   monthNum = monthsList[index].toString();
                                 });
@@ -1275,7 +1224,21 @@ class _MilestoneViewState extends State<MilestoneView> {
                   ),
                 ),
                 Expanded(
-                  child: getMilestoneCards(snapshot, monthNum),
+                  child: Column(
+                    children: <Widget>[
+                      getMilestoneCards(
+                          snapshot, monthNum, "Social/Emotional", Colors.blue),
+                      getMilestoneCards(snapshot, monthNum,
+                          "Language/Communication", Colors.orange),
+                      getMilestoneCards(
+                          snapshot,
+                          monthNum,
+                          "Cognitive (learning, thinking, problem-solving)",
+                          Colors.green),
+                      getMilestoneCards(snapshot, monthNum,
+                          "Movement/Physical Development", Colors.teal),
+                    ],
+                  ),
                 ),
               ],
             );
@@ -1285,91 +1248,116 @@ class _MilestoneViewState extends State<MilestoneView> {
     );
   }
 
-  Widget getMilestoneCards(snapshot, monthNum) {
+  Widget getMilestoneCards(snapshot, monthNum, category, cardColor) {
     return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       itemCount: milestoneList[monthNum].length,
       itemBuilder: (BuildContext context, int index) {
         String milestoneNum = milestoneList[monthNum][index]["id"];
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Material(
-            child: InkWell(
-              onTap: () async {
-                final uid = await Provider.of(context).auth.getCurrentUID();
-
-                await Firestore.instance
-                    .collection("milestones")
-                    .document(uid)
-                    .setData({
-                  monthNum: {
-                    milestoneNum:
-                        snapshot.data[monthNum][milestoneNum] ? false : true
-                  }
-                }, merge: true);
-                // snapshot.data[monthNum][milestoneNum]
-                //   ? {milestoneNum: false}
-                //   : {milestoneNum: true}
-                //   );
-              },
-              child: Card(
-                color: Colors.blue,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: AutoSizeText(
-                            milestoneList[monthNum][index]["id"],
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                            maxLines: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 9,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: AutoSizeText(
-                          milestoneList[monthNum][index]["milestone"],
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                          maxLines: 2,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: snapshot.data[monthNum][milestoneNum]
-                            ? Icon(
-                                Icons.check_box,
-                                size: 40,
-                                color: Colors.white,
-                              )
-                            : Icon(
-                                Icons.check_box_outline_blank,
-                                size: 40,
-                                color: Colors.white,
+        print(milestoneList[monthNum][index]["category"]);
+        return milestoneList[monthNum][index]["category"] != category
+            ? SizedBox()
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Material(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    child: Card(
+                      color: cardColor,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: AutoSizeText(
+                                  milestoneList[monthNum][index]["id"],
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                  maxLines: 1,
+                                ),
                               ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 9,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: AutoSizeText(
+                                milestoneList[monthNum][index]["milestone"],
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                                maxLines: 2,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: snapshot.data[monthNum][milestoneNum]
+                                  ? IconButton(
+                                      icon: Icon(Icons.check_box),
+                                      iconSize: 40,
+                                      color: Colors.white,
+                                      onPressed: () async {
+                                        final uid = await Provider.of(context)
+                                            .auth
+                                            .getCurrentUID();
+
+                                        await Firestore.instance
+                                            .collection("milestones")
+                                            .document(uid)
+                                            .setData({
+                                          monthNum: {
+                                            milestoneNum:
+                                                snapshot.data[monthNum]
+                                                        [milestoneNum]
+                                                    ? false
+                                                    : true
+                                          }
+                                        }, merge: true);
+                                      },
+                                    )
+                                  : IconButton(
+                                      icon: Icon(Icons.check_box_outline_blank),
+                                      iconSize: 40,
+                                      color: Colors.white,
+                                      onPressed: () async {
+                                        final uid = await Provider.of(context)
+                                            .auth
+                                            .getCurrentUID();
+
+                                        await Firestore.instance
+                                            .collection("milestones")
+                                            .document(uid)
+                                            .setData({
+                                          monthNum: {
+                                            milestoneNum:
+                                                snapshot.data[monthNum]
+                                                        [milestoneNum]
+                                                    ? false
+                                                    : true
+                                          }
+                                        }, merge: true);
+                                      },
+                                    ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
-        );
+              );
       },
     );
   }

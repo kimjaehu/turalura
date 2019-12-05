@@ -513,16 +513,20 @@ class _HomeViewState extends State<HomeView> {
 
   Widget progressPercentileCard(context, summarySnapshot) {
     if (!summarySnapshot.hasData) return Text('');
-
-    String heightPercentile =
-        (summarySnapshot.data["heightPercentile"] * 100).toStringAsFixed(0);
-    String weightPercentile =
-        (summarySnapshot.data["weightPercentile"] * 100).toStringAsFixed(0);
+    String heightPercentile, weightPercentile;
     DateTime dob =
         DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
     DateTime toDate = DateTime.now();
     double monthDifference = (toDate.difference(dob).inDays) / 30.4375;
-
+    if (summarySnapshot.data["heightPercentile"] != null) {
+    heightPercentile =
+        (summarySnapshot.data["heightPercentile"] * 100).toStringAsFixed(0);
+    weightPercentile =
+        (summarySnapshot.data["weightPercentile"] * 100).toStringAsFixed(0);
+    } else {
+      heightPercentile = '-';
+      weightPercentile = '-';
+    }
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
       height: 100.0,
@@ -570,7 +574,7 @@ class _HomeViewState extends State<HomeView> {
                                     children: <TextSpan>[
                                       TextSpan(
                                           text:
-                                              ' ${getPercentileText(heightPercentile)}',
+                                              ' ${heightPercentile == '-' ? '-' : getPercentileText(heightPercentile)}',
                                           style: TextStyle(fontSize: 15.0))
                                     ]),
                               ),
@@ -625,7 +629,7 @@ class _HomeViewState extends State<HomeView> {
                                     children: <TextSpan>[
                                       TextSpan(
                                           text:
-                                              ' ${getPercentileText(weightPercentile)}',
+                                              ' ${weightPercentile == '-' ? '-' : getPercentileText(weightPercentile)}',
                                           style: TextStyle(fontSize: 15.0))
                                     ]),
                               ),

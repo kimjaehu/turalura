@@ -1884,7 +1884,6 @@ class _GrowthChartState extends State<GrowthChart> {
       new FlSpot(1855, 102.039),
       new FlSpot(1856, 102.055),
     ];
-    print('heightfifth: $dateDifference');
     return _girlHeightListFifth
         .where((x) => x.x < dateDifference * 1.25)
         .toList();
@@ -3750,7 +3749,6 @@ class _GrowthChartState extends State<GrowthChart> {
       new FlSpot(1855, 102.801),
       new FlSpot(1856, 102.816),
     ];
-    print('heightfifth: $dateDifference');
     return _boyHeightListFifth
         .where((x) => x.x < dateDifference * 1.25)
         .toList();
@@ -22433,7 +22431,6 @@ class _GrowthChartState extends State<GrowthChart> {
         DateTime.parse(widget.summarySnapshot.data['dob'].toDate().toString());
     DateTime toDate = DateTime.now();
     int dateDifference = toDate.difference(dob).inDays;
-    print(dateDifference);
 
     LineChartBarData boyFifth = LineChartBarData(
       spots: (widget.category == 'height')

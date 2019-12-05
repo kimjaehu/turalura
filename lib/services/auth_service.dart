@@ -44,7 +44,6 @@ Stream<DocumentSnapshot> getUserBabySummaryStreamSnapshots() async* {
     String uid = (await _firebaseAuth.currentUser()).uid;
     DocumentSnapshot users = await Firestore.instance.collection('users').document(uid).get();
     String currentBaby = users.data['currentBaby'];
-    print(currentBaby);
     yield* Firestore.instance
         .collection('summaries')
         .document(uid)
