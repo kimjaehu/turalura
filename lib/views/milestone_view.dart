@@ -124,7 +124,7 @@ class _MilestoneViewState extends State<MilestoneView> {
         "id": "8",
         "category": "Cognitive (learning, thinking, problem-solving)",
         "milestone":
-            "Begins to act bored (cries, fussy) if activity doesn’t change"
+            "Begins to act bored (cries, fussy) if activity doesn\'t change"
       },
       {
         "id": "9",
@@ -254,7 +254,7 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "3",
         "category": "Social/Emotional",
-        "milestone": "Responds to other people’s emotions and often seems happy"
+        "milestone": "Responds to other people\'s emotions and often seems happy"
       },
       {
         "id": "4",
@@ -397,7 +397,7 @@ class _MilestoneViewState extends State<MilestoneView> {
         "id": "13",
         "category": "Cognitive (learning, thinking, problem-solving)",
         "milestone":
-            "Picks up things like cereal o’s between thumb and index finger"
+            "Picks up things like cereal o\'s between thumb and index finger"
       },
       {
         "id": "14",
@@ -508,7 +508,7 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "16",
         "category": "Cognitive (learning, thinking, problem-solving)",
-        "milestone": "Looks at the right picture or thing when it’s named"
+        "milestone": "Looks at the right picture or thing when it\'s named"
       },
       {
         "id": "17",
@@ -1002,7 +1002,7 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "6",
         "category": "Social/Emotional",
-        "milestone": "Often can’t tell what’s real and what’s make-believe"
+        "milestone": "Often can\'t tell what\'s real and what\'s make-believe"
       },
       {
         "id": "7",
@@ -1127,7 +1127,7 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "6",
         "category": "Social/Emotional",
-        "milestone": "Can tell what’s real and what’s make-believe"
+        "milestone": "Can tell what\'s real and what\'s make-believe"
       },
       {
         "id": "7",
@@ -1318,7 +1318,7 @@ class _MilestoneViewState extends State<MilestoneView> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(8.0,16.0,8.0,16.0),
             child: Center(
               child: AutoSizeText(
                 headText,

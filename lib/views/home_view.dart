@@ -25,6 +25,7 @@ class _HomeViewState extends State<HomeView> {
     if (!userSnapshot.hasData) {
       return Text("");
     }
+    
     String currentBaby = userSnapshot.data['currentBaby'];
 
     return Container(

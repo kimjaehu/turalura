@@ -52,24 +52,43 @@ class _CountryViewState extends State<CountryView> {
             SizedBox(
               height: height * 0.3,
             ),
-            RaisedButton(
-              onPressed: () async {
-                final uid = await Provider.of(context).auth.getCurrentUID();
-                await db
-                    .collection("users")
-                    .document(uid)
-                    .setData({'country': country, 'currentBaby': null, 'dob': null});
-                
-                Navigator.of(context).pushReplacementNamed('/add');
 
-              },
-              color: Colors.white,
-              textColor: Colors.amber[800],
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
-                child: Text("Save"),
+            ClipOval(
+              child: Material(
+                color: Colors.white, // button color
+                child: InkWell(
+                  splashColor: Colors.orangeAccent, // inkwell color
+                  child:
+                      SizedBox(width: 65, height: 65, child: Icon(Icons.check,size: 35, color: Colors.orangeAccent,)),
+                  onTap: () async {
+                    final uid = await Provider.of(context).auth.getCurrentUID();
+                    await db.collection("users").document(uid).setData(
+                        {'country': country, 'currentBaby': null, 'dob': null});
+
+                    Navigator.of(context).pushReplacementNamed('/add');
+                  },
+                ),
               ),
             )
+
+            // RaisedButton(
+            //   onPressed: () async {
+            //     final uid = await Provider.of(context).auth.getCurrentUID();
+            //     await db
+            //         .collection("users")
+            //         .document(uid)
+            //         .setData({'country': country, 'currentBaby': null, 'dob': null});
+
+            //     Navigator.of(context).pushReplacementNamed('/add');
+
+            //   },
+            //   color: Colors.white,
+            //   textColor: Colors.amber[800],
+            //   child: Padding(
+            //     padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
+            //     child: Text("Save"),
+            //   ),
+            // )
           ],
         )),
       ),

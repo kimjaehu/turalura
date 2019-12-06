@@ -62,7 +62,12 @@ class UserInfoController extends StatelessWidget {
           if (!snapshot.data.exists) { 
             return OnboardView();
           }
-          return Home();
+          if (snapshot.data["currentBaby"] == null) {
+            return AddView();
+          } else {
+            return Home();
+          }
+          
         }  
         return circularProgress();
       },

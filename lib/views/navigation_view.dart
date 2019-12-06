@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turalura/pages.dart';
+import 'package:turalura/views/delays_view.dart';
 import 'package:turalura/views/home_view.dart';
 import 'package:turalura/views/milestone_view.dart';
 import 'package:turalura/views/progress_view.dart';
@@ -16,7 +17,7 @@ final List<Widget> _children = [
   HomeView(),
   ProgressView(),
   MilestoneView(),
-  Delays(),
+  DelaysView(),
   Activities(),
   Gears(),
 ];
@@ -51,7 +52,6 @@ final List<Widget> _children = [
           BottomNavigationBarItem(
             icon: new Icon(Icons.new_releases, color: Colors.red,),
             title: new Text("Important"),
-            
           ),
           BottomNavigationBarItem(
             icon: new Icon(Icons.accessibility_new),
