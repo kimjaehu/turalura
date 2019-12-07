@@ -251,6 +251,10 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                           .format(widget.measurement.measureDate))
                       .setData(widget.measurement.toJson());
 
+                  final latestMeasure = await db.collection("measurements")
+                      .document(uid)
+                      .collection(userBaby.toLowerCase()).orderBy("measureDate").limit(1).getDocuments();
+
                   await db
                       .collection("summaries")
                       .document(uid)

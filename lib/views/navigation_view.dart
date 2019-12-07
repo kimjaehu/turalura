@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turalura/pages.dart';
+import 'package:turalura/views/activities_view.dart';
 import 'package:turalura/views/delays_view.dart';
 import 'package:turalura/views/home_view.dart';
 import 'package:turalura/views/milestone_view.dart';
@@ -18,7 +19,7 @@ final List<Widget> _children = [
   ProgressView(),
   MilestoneView(),
   DelaysView(),
-  Activities(),
+  ActivitiesView(),
   Gears(),
 ];
 
