@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class ProgressView extends StatelessWidget {
                                                 child: Row(
                                                   children: <Widget>[
                                                     Expanded(
-                                                      flex: 4,
+                                                      flex: 5,
                                                       child: Align(
                                                         alignment: Alignment
                                                             .centerLeft,
@@ -153,12 +154,16 @@ class ProgressView extends StatelessWidget {
                                                                 Text("%")),
                                                       ),
                                                     ),
+                                                    Expanded(flex: 2, child: Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text(''),
+                                                    ),)
                                                   ],
                                                 ),
                                               ),
                                               Expanded(
                                                 child: measurementList(
-                                                    measurementSnapshot),
+                                                    measurementSnapshot, summarySnapshot),
                                               )
                                             ],
                                           )
@@ -176,7 +181,7 @@ class ProgressView extends StatelessWidget {
         });
   }
 
-  Widget measurementList(measurementSnapshot) {
+  Widget measurementList(measurementSnapshot, summarySnapshot) {
     return ListView.builder(
       itemCount: measurementSnapshot.data.documents.length,
       itemBuilder: (BuildContext context, int index) {
@@ -204,13 +209,13 @@ class ProgressView extends StatelessWidget {
         return Row(
           children: <Widget>[
             Expanded(
-              flex: 4,
+              flex: 5,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    new DateFormat('MMM. d, yyyy').format(_measureDate),
+                  child: AutoSizeText(
+                    new DateFormat('MMM. d, yyyy').format(_measureDate), maxLines: 1,
                   ),
                 ),
               ),
@@ -221,7 +226,7 @@ class ProgressView extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(_day.toString()),
+                  child: AutoSizeText(_day.toString(), maxLines: 1,),
                 ),
               ),
             ),
@@ -231,7 +236,7 @@ class ProgressView extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(_heightText),
+                  child: AutoSizeText(_heightText, maxLines: 1,),
                 ),
               ),
             ),
@@ -241,7 +246,7 @@ class ProgressView extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('${_heightPercentile.toStringAsFixed(0)}%'),
+                  child: AutoSizeText('${_heightPercentile.toStringAsFixed(0)}%', maxLines: 1,),
                 ),
               ),
             ),
@@ -251,7 +256,7 @@ class ProgressView extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(_weightText),
+                  child: AutoSizeText(_weightText, maxLines: 1,),
                 ),
               ),
             ),
@@ -261,10 +266,31 @@ class ProgressView extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('${_weightPercentile.toStringAsFixed(0)}%'),
+                  child: AutoSizeText('${_weightPercentile.toStringAsFixed(0)}%', maxLines: 1,),
                 ),
               ),
             ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                  onPressed: () async {
+                    final currentBaby = summarySnapshot.data['name'];
+                    final uid = await Provider.of(context)
+                                        .auth
+                                        .getCurrentUID();
+                    final measureDateFormat = DateFormat('yyyyMMdd').format(_measureDate);
+                    Firestore.instance.collection('measurements').document(uid).collection(
+                      currentBaby.toString().toLowerCase()).document(measureDateFormat).delete();
+
+                    
+                  
+                  },
+                  icon: Icon(Icons.clear, color: Colors.red,),
+                ),
+              )
+            )
           ],
         );
       },

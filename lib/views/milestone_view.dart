@@ -254,7 +254,8 @@ class _MilestoneViewState extends State<MilestoneView> {
       {
         "id": "3",
         "category": "Social/Emotional",
-        "milestone": "Responds to other people\'s emotions and often seems happy"
+        "milestone":
+            "Responds to other people\'s emotions and often seems happy"
       },
       {
         "id": "4",
@@ -1226,14 +1227,17 @@ class _MilestoneViewState extends State<MilestoneView> {
         if (!summarySnapshot.hasData) {
           circularProgress();
         }
-
+        
         if (monthNum == null) return circularProgress();
+        
         return StreamBuilder<DocumentSnapshot>(
           stream: getUserMilestonesStreamSnapshots(context),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return circularProgress();
             }
+            String currentBaby = summarySnapshot.data["name"].toString().toLowerCase();
+            print(currentBaby);
             selectedCount = 0;
             return Column(
               children: <Widget>[
@@ -1285,19 +1289,19 @@ class _MilestoneViewState extends State<MilestoneView> {
                       children: <Widget>[
                         milestoneHeading("Social/Emotional", Colors.blue),
                         getMilestoneCards(snapshot, monthNum,
-                            "Social/Emotional", Colors.blue),
+                            "Social/Emotional", Colors.blue, currentBaby),
                         milestoneHeading(
                             "Language/Communication", Colors.green),
                         getMilestoneCards(snapshot, monthNum,
-                            "Language/Communication", Colors.green),
+                            "Language/Communication", Colors.green, currentBaby),
                         milestoneHeading(
                             "Cognitive (learning, thinking, problem-solving)",
                             Colors.orange),
                         getMilestoneCards(snapshot, monthNum,
-                            "Movement/Physical Development", Colors.indigo),
-                        milestoneHeading("Social/Emotional", Colors.blue),
+                            "Cognitive (learning, thinking, problem-solving)", Colors.indigo, currentBaby),
+                        milestoneHeading("Movement/Physical Development", Colors.blue),
                         getMilestoneCards(snapshot, monthNum,
-                            "Movement/Physical Development", Colors.indigo),
+                            "Movement/Physical Development", Colors.indigo, currentBaby),
                       ],
                     ),
                   ),
@@ -1318,7 +1322,7 @@ class _MilestoneViewState extends State<MilestoneView> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(8.0,16.0,8.0,16.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
             child: Center(
               child: AutoSizeText(
                 headText,
@@ -1335,7 +1339,7 @@ class _MilestoneViewState extends State<MilestoneView> {
     );
   }
 
-  Widget getMilestoneCards(snapshot, monthNum, category, cardColor) {
+  Widget getMilestoneCards(snapshot, monthNum, category, cardColor, currentBaby) {
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -1387,55 +1391,55 @@ class _MilestoneViewState extends State<MilestoneView> {
                           Expanded(
                             flex: 2,
                             child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: snapshot.data[monthNum][milestoneNum]
-                                  ? IconButton(
-                                      icon: Icon(Icons.check_box),
-                                      iconSize: 40,
-                                      color: cardColor,
-                                      onPressed: () async {
-                                        final uid = await Provider.of(context)
-                                            .auth
-                                            .getCurrentUID();
+                                padding: const EdgeInsets.all(4.0),
+                                child: IconButton(
+                                  icon: Icon(snapshot.data[monthNum]
+                                          [milestoneNum]
+                                      ? Icons.check_box
+                                      : Icons.check_box_outline_blank),
+                                  iconSize: 40,
+                                  color: cardColor,
+                                  onPressed: () async {
+                                    final uid = await Provider.of(context)
+                                        .auth
+                                        .getCurrentUID();
 
-                                        await Firestore.instance
-                                            .collection("milestones")
-                                            .document(uid)
-                                            .setData({
-                                          monthNum: {
-                                            milestoneNum:
-                                                snapshot.data[monthNum]
-                                                        [milestoneNum]
-                                                    ? false
-                                                    : true
-                                          }
-                                        }, merge: true);
-                                      },
-                                    )
-                                  : IconButton(
-                                      icon: Icon(Icons.check_box_outline_blank),
-                                      iconSize: 40,
-                                      color: cardColor,
-                                      onPressed: () async {
-                                        final uid = await Provider.of(context)
-                                            .auth
-                                            .getCurrentUID();
+                                    await Firestore.instance
+                                        .collection("milestones")
+                                        .document(uid)
+                                        .setData({
+                                      monthNum: {
+                                        milestoneNum: snapshot.data[monthNum]
+                                                [milestoneNum]
+                                            ? false
+                                            : true
+                                      }
+                                    }, merge: true);
+                                    int milestonesCount;
+                                    int selectedMilestones = 0;
+                                    await Firestore.instance
+                                        .collection("milestones")
+                                        .document(uid).get().then((doc) => {
+                                          milestonesCount = doc.data[monthNum].length,
+                                          doc.data[monthNum].forEach((index, milestone) => {
+                                            milestone ? selectedMilestones++ : null 
+                                          })
+                                        });
+                                    
+                                    await Firestore.instance
+                                        .collection("summaries")
+                                        .document(uid)
+                                        .collection(currentBaby)
+                                        .document("summary")
+                                        .updateData({
+                                          'monthNum': monthNum,
+                                          'milestonesCompleted': selectedMilestones,
+                                          'milestonesCount': milestonesCount,
+                                        });
 
-                                        await Firestore.instance
-                                            .collection("milestones")
-                                            .document(uid)
-                                            .setData({
-                                          monthNum: {
-                                            milestoneNum:
-                                                snapshot.data[monthNum]
-                                                        [milestoneNum]
-                                                    ? false
-                                                    : true
-                                          }
-                                        }, merge: true);
-                                      },
-                                    ),
-                            ),
+
+                                  },
+                                )),
                           ),
                         ],
                       ),

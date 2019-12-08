@@ -254,19 +254,19 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                   final latestMeasure = await db.collection("measurements")
                       .document(uid)
                       .collection(userBaby.toLowerCase()).orderBy("measureDate").limit(1).getDocuments();
-
+                  
                   await db
                       .collection("summaries")
                       .document(uid)
                       .collection(userBaby.toLowerCase())
                       .document('summary')
                       .updateData({
-                    'height': widget.measurement.height,
-                    'weight': widget.measurement.weight,
-                    'lastUpdated': widget.measurement.measureDate,
-                    'unit': widget.measurement.unit,
-                    'heightPercentile': heightPercentile,
-                    'weightPercentile': weightPercentile
+                    'height': latestMeasure.documents[0].data["height"],
+                    'weight': latestMeasure.documents[0].data["weight"],
+                    'lastUpdated': latestMeasure.documents[0].data["measureDate"],
+                    'unit': latestMeasure.documents[0].data["unit"],
+                    'heightPercentile': latestMeasure.documents[0].data["heightPercentile"],
+                    'weightPercentile': latestMeasure.documents[0].data["weightPercentile"]
                   });
                   Navigator.of(context).pushReplacementNamed('/home');
                 } else {
