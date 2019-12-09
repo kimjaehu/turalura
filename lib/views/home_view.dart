@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:turalura/models/Measurement.dart';
 import 'package:turalura/views/onboarding/switch_view.dart';
 import 'package:turalura/widgets/measurement_card.dart';
+import 'package:turalura/widgets/progress_indicator.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 import 'package:intl/intl.dart';
 
@@ -513,13 +514,10 @@ class _HomeViewState extends State<HomeView> {
     return 'th';
   }
 
-  Widget progressPercentileCard(context, summarySnapshot) {
+  Widget progressPercentileCard(context, summarySnapshot, monthDifference) {
     if (!summarySnapshot.hasData) return Text('');
     String heightPercentile, weightPercentile;
-    DateTime dob =
-        DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
-    DateTime toDate = DateTime.now();
-    double monthDifference = (toDate.difference(dob).inDays) / 30.4375;
+    
     if (summarySnapshot.data["heightPercentile"] != null) {
     heightPercentile =
         (summarySnapshot.data["heightPercentile"] * 100).toStringAsFixed(0);
@@ -661,14 +659,19 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget teethingCard(context) {
-    final String assetName = 'assets/images/teething/sixtoten.svg';
+  Widget teethingCard(context, monthDifference) {
+    String _assetName;
+    
+    if (monthDifference < 6) {
+      _assetName ='assets/images/teething/zerotosix.svg';
+    }
+    
     return Expanded(
       child: Row(
         children: <Widget>[
           Expanded(flex: 5,
             child: SvgPicture.asset(
-              assetName,
+              _assetName,
               semanticsLabel: 'Baby Teething Chart'
             ),
           ),
@@ -722,13 +725,18 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Object>(
+    return StreamBuilder(
         stream: Provider.of(context).auth.getUserInfoSnapshot(),
         builder: (context, userSnapshot) {
-          return StreamBuilder<Object>(
+          return StreamBuilder(
               stream:
                   Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
               builder: (context, summarySnapshot) {
+                if (!summarySnapshot.hasData) return circularProgress();
+                DateTime dob =
+                  DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
+              DateTime toDate = DateTime.now();
+              double monthDifference = (toDate.difference(dob).inDays) / 30.4375;
                 return Container(
                   child: Column(
                     children: <Widget>[
@@ -738,8 +746,8 @@ class _HomeViewState extends State<HomeView> {
                       MeasurementCard(
                           summarySnapshot: summarySnapshot,
                           newMeasurement: newMeasurement),
-                      progressPercentileCard(context, summarySnapshot),
-                      teethingCard(context),
+                      progressPercentileCard(context, summarySnapshot,monthDifference),
+                      teethingCard(context,monthDifference),
                     ],
                   ),
                 );
