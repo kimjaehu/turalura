@@ -281,11 +281,41 @@ class ProgressView extends StatelessWidget {
                                         .auth
                                         .getCurrentUID();
                     final measureDateFormat = DateFormat('yyyyMMdd').format(_measureDate);
+
                     Firestore.instance.collection('measurements').document(uid).collection(
                       currentBaby.toString().toLowerCase()).document(measureDateFormat).delete();
 
-                    
-                  
+                    final latestMeasure = await Firestore.instance.collection("measurements")
+                      .document(uid)
+                      .collection(currentBaby.toLowerCase()).orderBy("measureDate", descending: true).limit(1).getDocuments();
+
+                    latestMeasure.documents.isNotEmpty ?
+                      await Firestore.instance
+                        .collection("summaries")
+                        .document(uid)
+                        .collection(currentBaby.toLowerCase())
+                        .document('summary')
+                        .updateData({
+                      'height': latestMeasure.documents[0].data["height"],
+                      'weight': latestMeasure.documents[0].data["weight"],
+                      'lastUpdated': latestMeasure.documents[0].data["measureDate"],
+                      'unit': latestMeasure.documents[0].data["unit"],
+                      'heightPercentile': latestMeasure.documents[0].data["heightPercentile"],
+                      'weightPercentile': latestMeasure.documents[0].data["weightPercentile"]
+                    })
+                    : await Firestore.instance
+                        .collection("summaries")
+                        .document(uid)
+                        .collection(currentBaby.toLowerCase())
+                        .document('summary')
+                        .updateData({
+                          'height': null,
+                      'weight': null,
+                      'lastUpdated': null,
+                      'unit': null,
+                      'heightPercentile': null,
+                      'weightPercentile': null
+                        });
                   },
                   icon: Icon(Icons.clear, color: Colors.red,),
                 ),

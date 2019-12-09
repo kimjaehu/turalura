@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:turalura/models/Measurement.dart';
 import 'package:turalura/views/onboarding/switch_view.dart';
 import 'package:turalura/widgets/measurement_card.dart';
@@ -17,9 +18,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final newMeasurement =
       new Measurement(null, null, null, null, null, null, null);
-  final int milestoneAge = 3;
-  final int milestones = 10;
-  final int completedMilestones = 2;
 
   Widget babyCard(context, userSnapshot) {
     if (!userSnapshot.hasData) {
@@ -30,7 +28,7 @@ class _HomeViewState extends State<HomeView> {
 
     return Container(
       margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
-      height: 100.0,
+      height: MediaQuery.of(context).size.height*0.1,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -84,10 +82,13 @@ class _HomeViewState extends State<HomeView> {
         DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
     DateTime toDate = DateTime.now();
     int dateDifference = toDate.difference(dob).inDays;
+    final String milestoneMonthNum = summarySnapshot.data['monthNum'];
+    final String milestonesCount = summarySnapshot.data['milestonesCount'].toString();
+    final String milestonesCompleted = summarySnapshot.data['milestonesCompleted'].toString();
 
     return Container(
       margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
-      height: 85.0,
+      height: MediaQuery.of(context).size.height*0.125,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -180,7 +181,7 @@ class _HomeViewState extends State<HomeView> {
                             top: 5.0,
                           ),
                           child: Text(
-                            "$milestoneAge mo. milestone",
+                            "$milestoneMonthNum mo. milestone",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -197,7 +198,7 @@ class _HomeViewState extends State<HomeView> {
                       textBaseline: TextBaseline.alphabetic,
                       children: <Widget>[
                         Text(
-                          completedMilestones.toString(),
+                          milestonesCompleted,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 30.0,
@@ -214,7 +215,7 @@ class _HomeViewState extends State<HomeView> {
                           ),
                         ),
                         Text(
-                          milestones.toString(),
+                          milestonesCount,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 15.0,
@@ -264,7 +265,7 @@ class _HomeViewState extends State<HomeView> {
     }
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
-      height: 70.0,
+      height: MediaQuery.of(context).size.height*0.125,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -530,7 +531,7 @@ class _HomeViewState extends State<HomeView> {
     }
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
-      height: 100.0,
+      height: MediaQuery.of(context).size.height*0.15,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -660,6 +661,23 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  Widget teethingCard(context) {
+    final String assetName = 'assets/images/teething/sixtoten.svg';
+    return Expanded(
+      child: Row(
+        children: <Widget>[
+          Expanded(flex: 5,
+            child: SvgPicture.asset(
+              assetName,
+              semanticsLabel: 'Baby Teething Chart'
+            ),
+          ),
+          Expanded(flex: 5,child: Text("adg"),)
+        ],
+      )
+    );
+  }
+
   String getSleepText(double monthDifference) {
     if (monthDifference > 0 && monthDifference < 4) {
       return '14-17 hrs';
@@ -721,6 +739,7 @@ class _HomeViewState extends State<HomeView> {
                           summarySnapshot: summarySnapshot,
                           newMeasurement: newMeasurement),
                       progressPercentileCard(context, summarySnapshot),
+                      teethingCard(context),
                     ],
                   ),
                 );

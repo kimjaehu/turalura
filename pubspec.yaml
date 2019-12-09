@@ -56,6 +56,7 @@ flutter:
     - assets/images/flag_canada.svg
     - assets/images/flag_usa.svg
     - assets/data_repo/growth_data.json
+    - assets/images/teething/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
