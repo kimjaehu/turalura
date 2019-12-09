@@ -28,7 +28,7 @@ class _HomeViewState extends State<HomeView> {
     String currentBaby = userSnapshot.data['currentBaby'];
 
     return Container(
-      margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
+      margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0, bottom: 10.0),
       height: MediaQuery.of(context).size.height * 0.1,
       child: Row(
         children: <Widget>[
@@ -42,11 +42,8 @@ class _HomeViewState extends State<HomeView> {
                     MaterialPageRoute(builder: (context) => SwitchView()),
                   );
                 },
-                child: Icon(
-                  Icons.menu,
-                  size: 50.0,
-                  color: Colors.blueGrey[700],
-                ),
+                child:
+                    Icon(Icons.menu, size: 50.0, color: Colors.blueGrey[700]),
               ),
             ),
           ),
@@ -90,71 +87,52 @@ class _HomeViewState extends State<HomeView> {
         summarySnapshot.data['milestonesCompleted'].toString();
 
     return Container(
-      margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
-      height: MediaQuery.of(context).size.height * 0.125,
+      margin: EdgeInsets.only(right: 5.0, left: 5.0),
       child: Row(
         children: <Widget>[
           Expanded(
             flex: 5,
             child: Card(
               color: Colors.blue,
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: <Widget>[
-                    //     Icon(
-                    //       Icons.timer,
-                    //       size: 75.0,
-                    //       color: Colors.white,
-                    //     ),
-                    //   ],
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 5.0,
-                          ),
-                          child: Text(
-                            "Days Since birth",
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Days Since birth",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: <Widget>[
+                          Text(
+                            dateDifference.toString(),
                             style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 30.0,
                                 fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: <Widget>[
-                        Text(
-                          dateDifference.toString(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            "days old",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              "days old",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -162,333 +140,59 @@ class _HomeViewState extends State<HomeView> {
           Expanded(
             flex: 5,
             child: Card(
-              color: Colors.pink,
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: <Widget>[
-                    //     Icon(
-                    //       Icons.check_circle_outline,
-                    //       size: 75.0,
-                    //       color: Colors.white,
-                    //     ),
-                    //   ],
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 5.0,
-                          ),
-                          child: Text(
-                            "$milestoneMonthNum mo. milestone",
+              color: Colors.teal,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "$milestoneMonthNum mo. milestone",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: <Widget>[
+                          Text(
+                            milestonesCompleted,
                             style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 30.0,
                                 fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: <Widget>[
-                        Text(
-                          milestonesCompleted,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 5.0),
-                          child: Text(
-                            "/",
+                          Padding(
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              "/",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Text(
+                            milestonesCount,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        Text(
-                          milestonesCount,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          " completed",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget progressCard(context, summarySnapshot) {
-    String height, weight;
-    DateTime lastUpdated;
-
-    if (!summarySnapshot.hasData) return Text('');
-
-    if (summarySnapshot.data['unit'] == 'metric') {
-      height = '${summarySnapshot.data['height'].toStringAsFixed(1)} cm';
-      weight = '${summarySnapshot.data['weight'].toStringAsFixed(1)} kg';
-      lastUpdated = DateTime.parse(
-          summarySnapshot.data['lastUpdated'].toDate().toString());
-    } else if (summarySnapshot.data['unit'] == 'imperial') {
-      height =
-          '${(summarySnapshot.data['height'] / 2.54).toStringAsFixed(1)} in';
-      weight =
-          '${(summarySnapshot.data['weight'] * 2.205).toStringAsFixed(1)} lbs';
-      lastUpdated = DateTime.parse(
-          summarySnapshot.data['lastUpdated'].toDate().toString());
-    } else {
-      height = '-';
-      weight = '-';
-      lastUpdated = null;
-    }
-    return Container(
-      margin: EdgeInsets.only(right: 5.0, left: 5.0),
-      height: MediaQuery.of(context).size.height * 0.125,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 7,
-            child: Card(
-              color: Colors.orange,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 10.0,
-                                  bottom: 10.0,
-                                ),
-                                child: Text(
-                                  "Last updated",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: <Widget>[
-                              Text(
-                                lastUpdated == null
-                                    ? "No data yet"
-                                    : new DateFormat('MMM. d, yyyy')
-                                        .format(lastUpdated),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  VerticalDivider(
-                    color: Colors.white,
-                    indent: 5.0,
-                    endIndent: 5.0,
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                child: Text(
-                                  "Height",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: <Widget>[
-                              Text(
-                                height,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  VerticalDivider(
-                    color: Colors.white,
-                    indent: 5.0,
-                    endIndent: 5.0,
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                child: Text(
-                                  "Weight",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: <Widget>[
-                              Text(
-                                weight,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // VerticalDivider(
-                  //   color: Colors.white,
-                  //   indent: 5.0,
-                  //   endIndent: 5.0,
-                  // ),
-                  // Expanded(
-                  //   flex: 2,
-                  //   child: Center(
-                  //     child: GestureDetector(
-                  //       onTap: () => print("tapped"),
-                  //       child: Icon(Icons.assignment),
-                  //       // child: Column(
-                  //       //   children: <Widget>[
-                  //       //     Row(
-                  //       //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       //       children: <Widget>[
-                  //       //         Icon(
-                  //       //           Icons.add,
-                  //       //           size: 35.0,
-                  //       //           color: Colors.white,
-                  //       //         ),
-                  //       //       ],
-                  //       //     ),
-                  //       //     Row(
-                  //       //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       //       crossAxisAlignment: CrossAxisAlignment.baseline,
-                  //       //       textBaseline: TextBaseline.alphabetic,
-                  //       //       children: <Widget>[
-                  //       //         Text(
-                  //       //           "Add new",
-                  //       //           style: TextStyle(
-                  //       //               color: Colors.white,
-                  //       //               fontSize: 15.0,
-                  //       //               fontWeight: FontWeight.bold),
-                  //       //         ),
-                  //       //       ],
-                  //       //     ),
-                  //       //   ],
-                  //       // ),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: SizedBox.fromSize(
-                size: Size(60, 60), // button width and height
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.purple, // button color
-                    child: InkWell(
-                      splashColor: Colors.white, // splash color
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NewMeasurementView(
-                                    measurement: newMeasurement,
-                                    summarySnapshot: summarySnapshot,
-                                  )),
-                        );
-                      }, // button pressed
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.straighten,
-                            color: Colors.white,
-                          ), // icon
                           Text(
-                            "Update",
+                            " completed",
                             style: TextStyle(
-                                fontSize: 12.0,
                                 color: Colors.white,
+                                fontSize: 15.0,
                                 fontWeight: FontWeight.bold),
-                          ), // text
+                          ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
@@ -531,131 +235,96 @@ class _HomeViewState extends State<HomeView> {
     }
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
-      height: MediaQuery.of(context).size.height * 0.15,
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 7,
+            flex: 5,
             child: Card(
-              color: Colors.teal,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 5,
-                    child: Center(
-                      child: Column(
+              color: Colors.deepPurple[400],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Height-for-age",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        textBaseline: TextBaseline.alphabetic,
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 10.0,
-                                  bottom: 5.0,
-                                ),
-                                child: Text(
-                                  "Height-for-age",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
+                          RichText(
+                            text: TextSpan(
+                                text: heightPercentile,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text:
+                                          ' ${heightPercentile == '-' ? '-' : getPercentileText(heightPercentile)}',
+                                      style: TextStyle(fontSize: 15.0))
+                                ]),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: <Widget>[
-                              RichText(
-                                text: TextSpan(
-                                    text: heightPercentile,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30.0,
-                                        fontWeight: FontWeight.bold),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text:
-                                              ' ${heightPercentile == '-' ? '-' : getPercentileText(heightPercentile)}',
-                                          style: TextStyle(fontSize: 15.0))
-                                    ]),
-                              ),
-                              Text(
-                                'percentile',
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
+                          Text(
+                            'percentile',
+                            style: TextStyle(color: Colors.white),
+                          )
                         ],
                       ),
-                    ),
+                    ],
                   ),
-                  VerticalDivider(
-                    color: Colors.white,
-                    indent: 5.0,
-                    endIndent: 5.0,
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 10.0,
-                                  bottom: 5.0,
-                                ),
-                                child: Text(
-                                  "Weight-for-age",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: <Widget>[
-                              RichText(
-                                text: TextSpan(
-                                    text: weightPercentile,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30.0,
-                                        fontWeight: FontWeight.bold),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text:
-                                              ' ${weightPercentile == '-' ? '-' : getPercentileText(weightPercentile)}',
-                                          style: TextStyle(fontSize: 15.0))
-                                    ]),
-                              ),
-                              Text(
-                                'percentile',
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 5,
             child: Card(
-              color: Colors.indigo,
-              child: Center(child: Text('adga')),
+              color: Colors.redAccent[100],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Weight-for-age",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: <Widget>[
+                          RichText(
+                            text: TextSpan(
+                                text: weightPercentile,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text:
+                                          ' ${weightPercentile == '-' ? '-' : getPercentileText(weightPercentile)}',
+                                      style: TextStyle(fontSize: 15.0))
+                                ]),
+                          ),
+                          Text(
+                            'percentile',
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -699,22 +368,28 @@ class _HomeViewState extends State<HomeView> {
                 color: Colors.yellow[300],
                 child: Column(
                   children: <Widget>[
-                    AutoSizeText(
-                      "Teething Chart",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.brown),
-                    ),
+                    // AutoSizeText(
+                    //   "Teething Chart",
+                    //   style: TextStyle(
+                    //       fontSize: 20.0,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.brown),
+                    // ),
                     Expanded(
                       child: Stack(
                         alignment: AlignmentDirectional.center,
                         children: <Widget>[
                           SvgPicture.asset(_assetName,
                               semanticsLabel: 'Baby Teething Chart'),
-                          // Positioned(
-
-                          //   child: Text("Testing"),)
+                          Positioned(
+                            child: AutoSizeText(
+                              "Teething Chart",
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.brown),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -797,11 +472,11 @@ class _HomeViewState extends State<HomeView> {
                 child: Column(
                   children: <Widget>[
                     babyCard(context, userSnapshot),
-                    summaryCard(context, summarySnapshot),
-                    // progressCard(context, summarySnapshot),
                     MeasurementCard(
                         summarySnapshot: summarySnapshot,
                         newMeasurement: newMeasurement),
+                    summaryCard(context, summarySnapshot),
+                    // progressCard(context, summarySnapshot),
                     progressPercentileCard(
                         context, summarySnapshot, monthDifference),
                     teethingCard(context, monthDifference),

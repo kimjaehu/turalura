@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:turalura/models/Measurement.dart';
@@ -38,191 +39,171 @@ class MeasurementCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
       height: 70.0,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: SizedBox.fromSize(
-                size: Size(60, 60), // button width and height
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.purple, // button color
-                    child: InkWell(
-                      splashColor: Colors.white, // splash color
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NewMeasurementView(
-                                    measurement: newMeasurement,
-                                    summarySnapshot: summarySnapshot,
-                                  )),
-                        );
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.straighten,
-                            color: Colors.white,
-                          ), // icon
-                          Text(
-                            "Update",
+      child: Card(
+        color: Colors.orange,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 4,
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 10.0,
+                            bottom: 10.0,
+                          ),
+                          child: Text(
+                            "Last updated",
                             style: TextStyle(
-                                fontSize: 12.0,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
-                          ), // text
-                        ],
-                      ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: <Widget>[
+                        Text(
+                          lastUpdated == null
+                              ? "No data yet"
+                              : new DateFormat('MMM. d, yyyy')
+                                  .format(lastUpdated),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            VerticalDivider(
+              color: Colors.white,
+              indent: 5.0,
+              endIndent: 5.0,
+            ),
+            Expanded(
+              flex: 3,
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                          child: Text(
+                            "Height",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: <Widget>[
+                        Text(
+                          height,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            VerticalDivider(
+              color: Colors.white,
+              indent: 5.0,
+              endIndent: 5.0,
+            ),
+            Expanded(
+              flex: 3,
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                          child: Text(
+                            "Weight",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: <Widget>[
+                        Text(
+                          weight,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Card(
+                  child: InkWell(
+                    splashColor: Colors.orange, // splash color
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewMeasurementView(
+                            measurement: newMeasurement,
+                            summarySnapshot: summarySnapshot,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.straighten,
+                          color: Colors.orange,
+                          size: 30.0,
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 7,
-            child: Card(
-              color: Colors.orange,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 3,
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 10.0,
-                                  bottom: 10.0,
-                                ),
-                                child: Text(
-                                  "Last updated",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: <Widget>[
-                              Text(
-                                lastUpdated == null
-                                    ? "No data yet"
-                                    : new DateFormat('MMM. d, yyyy')
-                                        .format(lastUpdated),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  VerticalDivider(
-                    color: Colors.white,
-                    indent: 5.0,
-                    endIndent: 5.0,
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                child: Text(
-                                  "Height",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: <Widget>[
-                              Text(
-                                height,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  VerticalDivider(
-                    color: Colors.white,
-                    indent: 5.0,
-                    endIndent: 5.0,
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                child: Text(
-                                  "Weight",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: <Widget>[
-                              Text(
-                                weight,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          
-        ],
+          ],
+        ),
       ),
     );
   }
