@@ -24,12 +24,12 @@ class _HomeViewState extends State<HomeView> {
     if (!userSnapshot.hasData) {
       return Text("");
     }
-    
+
     String currentBaby = userSnapshot.data['currentBaby'];
 
     return Container(
       margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
-      height: MediaQuery.of(context).size.height*0.1,
+      height: MediaQuery.of(context).size.height * 0.1,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -64,7 +64,7 @@ class _HomeViewState extends State<HomeView> {
                   currentBaby,
                   maxLines: 2,
                   style: TextStyle(
-                      color: Colors.orange[700],
+                      color: Colors.grey[700],
                       fontSize: 40.0,
                       fontWeight: FontWeight.bold),
                 ),
@@ -84,12 +84,14 @@ class _HomeViewState extends State<HomeView> {
     DateTime toDate = DateTime.now();
     int dateDifference = toDate.difference(dob).inDays;
     final String milestoneMonthNum = summarySnapshot.data['monthNum'];
-    final String milestonesCount = summarySnapshot.data['milestonesCount'].toString();
-    final String milestonesCompleted = summarySnapshot.data['milestonesCompleted'].toString();
+    final String milestonesCount =
+        summarySnapshot.data['milestonesCount'].toString();
+    final String milestonesCompleted =
+        summarySnapshot.data['milestonesCompleted'].toString();
 
     return Container(
       margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
-      height: MediaQuery.of(context).size.height*0.125,
+      height: MediaQuery.of(context).size.height * 0.125,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -266,7 +268,7 @@ class _HomeViewState extends State<HomeView> {
     }
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
-      height: MediaQuery.of(context).size.height*0.125,
+      height: MediaQuery.of(context).size.height * 0.125,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -517,19 +519,19 @@ class _HomeViewState extends State<HomeView> {
   Widget progressPercentileCard(context, summarySnapshot, monthDifference) {
     if (!summarySnapshot.hasData) return Text('');
     String heightPercentile, weightPercentile;
-    
+
     if (summarySnapshot.data["heightPercentile"] != null) {
-    heightPercentile =
-        (summarySnapshot.data["heightPercentile"] * 100).toStringAsFixed(0);
-    weightPercentile =
-        (summarySnapshot.data["weightPercentile"] * 100).toStringAsFixed(0);
+      heightPercentile =
+          (summarySnapshot.data["heightPercentile"] * 100).toStringAsFixed(0);
+      weightPercentile =
+          (summarySnapshot.data["weightPercentile"] * 100).toStringAsFixed(0);
     } else {
       heightPercentile = '-';
       weightPercentile = '-';
     }
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
-      height: MediaQuery.of(context).size.height*0.15,
+      height: MediaQuery.of(context).size.height * 0.15,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -661,23 +663,76 @@ class _HomeViewState extends State<HomeView> {
 
   Widget teethingCard(context, monthDifference) {
     String _assetName;
-    
     if (monthDifference < 6) {
-      _assetName ='assets/images/teething/zerotosix.svg';
+      _assetName = 'assets/images/teething/zerotosix.svg';
+    } else if (monthDifference >= 6 && monthDifference < 8) {
+      _assetName = 'assets/images/teething/sixtoten.svg';
+    } else if (monthDifference >= 8 && monthDifference < 9) {
+      _assetName = 'assets/images/teething/eighttotwelve.svg';
+    } else if (monthDifference >= 9 && monthDifference < 10) {
+      _assetName = 'assets/images/teething/ninetothirteen.svg';
+    } else if (monthDifference >= 10 && monthDifference < 13) {
+      _assetName = 'assets/images/teething/tentosixteen.svg';
+    } else if (monthDifference >= 13 && monthDifference < 14) {
+      _assetName = 'assets/images/teething/thirteentonineteen.svg';
+    } else if (monthDifference >= 14 && monthDifference < 16) {
+      _assetName = 'assets/images/teething/fourteentoeighteen.svg';
+    } else if (monthDifference >= 16 && monthDifference < 17) {
+      _assetName = 'assets/images/teething/sixteentotwentytwo.svg';
+    } else if (monthDifference >= 17 && monthDifference < 23) {
+      _assetName = 'assets/images/teething/seventeentotwentythree.svg';
+    } else if (monthDifference >= 23 && monthDifference < 25) {
+      _assetName = 'assets/images/teething/twentythreetothirtyone.svg';
+    } else if (monthDifference >= 25 && monthDifference < 33) {
+      _assetName = 'assets/images/teething/twentyfivetothirtythree.svg';
+    } else {
+      _assetName = 'assets/images/teething/twentyfivetothirtythree.svg';
     }
-    
     return Expanded(
-      child: Row(
-        children: <Widget>[
-          Expanded(flex: 5,
-            child: SvgPicture.asset(
-              _assetName,
-              semanticsLabel: 'Baby Teething Chart'
+      child: Container(
+        margin: EdgeInsets.only(right: 5.0, left: 5.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 5,
+              child: Card(
+                color: Colors.yellow[300],
+                child: Column(
+                  children: <Widget>[
+                    AutoSizeText(
+                      "Teething Chart",
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.brown),
+                    ),
+                    Expanded(
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: <Widget>[
+                          SvgPicture.asset(_assetName,
+                              semanticsLabel: 'Baby Teething Chart'),
+                          // Positioned(
+
+                          //   child: Text("Testing"),)
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          Expanded(flex: 5,child: Text("adg"),)
-        ],
-      )
+            Expanded(
+                flex: 5,
+                child: Card(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[Text("agdsgh")],
+                  ),
+                ))
+          ],
+        ),
+      ),
     );
   }
 
@@ -726,32 +781,35 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: Provider.of(context).auth.getUserInfoSnapshot(),
-        builder: (context, userSnapshot) {
-          return StreamBuilder(
-              stream:
-                  Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
-              builder: (context, summarySnapshot) {
-                if (!summarySnapshot.hasData) return circularProgress();
-                DateTime dob =
-                  DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
+      stream: Provider.of(context).auth.getUserInfoSnapshot(),
+      builder: (context, userSnapshot) {
+        return StreamBuilder(
+            stream:
+                Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
+            builder: (context, summarySnapshot) {
+              if (!summarySnapshot.hasData) return circularProgress();
+              DateTime dob = DateTime.parse(
+                  summarySnapshot.data['dob'].toDate().toString());
               DateTime toDate = DateTime.now();
-              double monthDifference = (toDate.difference(dob).inDays) / 30.4375;
-                return Container(
-                  child: Column(
-                    children: <Widget>[
-                      babyCard(context, userSnapshot),
-                      summaryCard(context, summarySnapshot),
-                      // progressCard(context, summarySnapshot),
-                      MeasurementCard(
-                          summarySnapshot: summarySnapshot,
-                          newMeasurement: newMeasurement),
-                      progressPercentileCard(context, summarySnapshot,monthDifference),
-                      teethingCard(context,monthDifference),
-                    ],
-                  ),
-                );
-              });
-        });
+              double monthDifference =
+                  (toDate.difference(dob).inDays) / 30.4375;
+              return Container(
+                child: Column(
+                  children: <Widget>[
+                    babyCard(context, userSnapshot),
+                    summaryCard(context, summarySnapshot),
+                    // progressCard(context, summarySnapshot),
+                    MeasurementCard(
+                        summarySnapshot: summarySnapshot,
+                        newMeasurement: newMeasurement),
+                    progressPercentileCard(
+                        context, summarySnapshot, monthDifference),
+                    teethingCard(context, monthDifference),
+                  ],
+                ),
+              );
+            });
+      },
+    );
   }
 }

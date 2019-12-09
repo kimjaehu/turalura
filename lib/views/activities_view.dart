@@ -249,6 +249,16 @@ class _ActivitiesViewState extends State<ActivitiesView> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8.0,20.0,8.0,10.0),
+          child: AutoSizeText(
+            "Help Your Baby Learn and Grow",
+            style: TextStyle(
+                color: Colors.deepPurple,
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold),maxLines: 1,
+          ),
+        ),
         Expanded(
           // you may want to use an aspect ratio here for tablet support
           child: PageView.builder(
@@ -273,11 +283,15 @@ class _ActivitiesViewState extends State<ActivitiesView> {
           color: Colors.orange[400],
           borderRadius: BorderRadius.all(Radius.circular(4.0)),
         ),
-        child:Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Icon(Icons.extension, size: 200.0,color: Colors.white,),
+            Icon(
+              Icons.extension,
+              size: 200.0,
+              color: Colors.white,
+            ),
             Padding(
               padding: const EdgeInsets.all(32.0),
               child: AutoSizeText(
