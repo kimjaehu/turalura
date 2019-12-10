@@ -1236,9 +1236,9 @@ class _MilestoneViewState extends State<MilestoneView> {
             if (!snapshot.hasData) {
               return circularProgress();
             }
-            if (summarySnapshot.data == null) {
-          circularProgress();
-        }
+            if (summarySnapshot.data["name"] == null) {
+              circularProgress();
+            }
             String currentBaby =
                 summarySnapshot.data["name"].toString().toLowerCase();
             selectedCount = 0;

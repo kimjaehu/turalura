@@ -32,38 +32,40 @@ final List<Widget> _children = [
         title: Text("Turalura", style: TextStyle(color: Colors.amber[800]),),
       ),
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.grey,
-        onTap: onTabTapped,
-        currentIndex: _currentIndex,
-        
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.child_care,),
-            title: new Text("home"),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.show_chart),
-            title: new Text("Progress"),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.check_circle_outline),
-            title: new Text("Milestones"),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.new_releases, color: Colors.red,),
-            title: new Text("Important"),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.extension),
-            title: new Text("Activities"),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.child_friendly),
-            title: new Text("Gears"),
-          ),
-        ],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom:50.0),
+        child: BottomNavigationBar(
+          selectedItemColor: Colors.amber[800],
+          unselectedItemColor: Colors.grey,
+          onTap: onTabTapped,
+          currentIndex: _currentIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.child_care,),
+              title: new Text("home"),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.show_chart),
+              title: new Text("Progress"),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.check_circle_outline),
+              title: new Text("Milestones"),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.new_releases, color: Colors.red,),
+              title: new Text("Important"),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.extension),
+              title: new Text("Activities"),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.child_friendly),
+              title: new Text("Gears"),
+            ),
+          ],
+        ),
       ),
     );
   }

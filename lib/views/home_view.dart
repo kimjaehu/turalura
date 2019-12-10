@@ -6,6 +6,7 @@ import 'package:turalura/views/onboarding/switch_view.dart';
 import 'package:turalura/widgets/measurement_card.dart';
 import 'package:turalura/widgets/progress_indicator.dart';
 import 'package:turalura/widgets/provider_widget.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class _HomeViewState extends State<HomeView> {
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 3,
+            flex: 2,
             child: Center(
               child: GestureDetector(
                 onTap: () {
@@ -40,16 +41,11 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
           ),
-          VerticalDivider(
-            color: Colors.grey,
-            indent: 5.0,
-            endIndent: 5.0,
-          ),
           Expanded(
-            flex: 7,
+            flex: 3,
             child: Center(
               child: Padding(
-                padding: EdgeInsets.all(15.0),
+                padding: EdgeInsets.all(12.0),
                 child: AutoSizeText(
                   currentBaby,
                   maxLines: 2,
@@ -434,13 +430,25 @@ class _HomeViewState extends State<HomeView> {
             ),
             Expanded(
                 flex: 5,
-                child: Card(
-                  color: Colors.cyan,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Icon(Icons.child_friendly, size: 80, color: Colors.white,)
+                child: GestureDetector(
+                  onTap: () {
+                    FlutterWebBrowser.openWebPage(
+                        url: "https://www.paypal.me/turalurababy/",
+                        androidToolbarColor: Colors.orange);
+                  },
+                  child: Card(
+                    color: Colors.cyan,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Icon(
+                          Icons.child_friendly,
+                          size: 80,
+                          color: Colors.white,
+                        ),
+                        AutoSizeText("Support Turalura", style: TextStyle(fontFamily: 'Lobster'),)
                       ],
+                    ),
                   ),
                 ))
           ],

@@ -62,7 +62,7 @@ BannerAd myBanner = BannerAd(
     ..load()
     ..show(
       // Positions the banner ad 60 pixels from the bottom of the screen
-      anchorOffset: 60.0,
+      anchorOffset: 0.0,
       // Positions the banner ad 10 pixels from the center of the screen to the right
       horizontalCenterOffset: 10.0,
       // Banner Position
