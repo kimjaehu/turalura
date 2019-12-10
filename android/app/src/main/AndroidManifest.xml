@@ -10,6 +10,9 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="turalura"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3069349665651547~5210469006"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

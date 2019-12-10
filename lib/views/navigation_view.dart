@@ -37,6 +37,7 @@ final List<Widget> _children = [
         unselectedItemColor: Colors.grey,
         onTap: onTabTapped,
         currentIndex: _currentIndex,
+        
         items: [
           BottomNavigationBarItem(
             icon: new Icon(Icons.child_care,),
@@ -55,7 +56,7 @@ final List<Widget> _children = [
             title: new Text("Important"),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.accessibility_new),
+            icon: new Icon(Icons.extension),
             title: new Text("Activities"),
           ),
           BottomNavigationBarItem(

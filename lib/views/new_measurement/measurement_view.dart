@@ -5,7 +5,9 @@ import 'package:turalura/views/new_measurement/date_view.dart';
 class NewMeasurementView extends StatefulWidget {
   final Measurement measurement;
   AsyncSnapshot summarySnapshot;
-  NewMeasurementView({Key key, @required this.measurement, this.summarySnapshot}) : super(key:key);
+  NewMeasurementView(
+      {Key key, @required this.measurement, this.summarySnapshot})
+      : super(key: key);
 
   @override
   _NewMeasurementViewState createState() => _NewMeasurementViewState();
@@ -106,36 +108,88 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
                 ),
               ),
             ),
-            RaisedButton(
-              color: Colors.deepPurple,
-              textColor: Colors.white,
-              child: Padding(
-                padding: EdgeInsets.only(left: 45.0, right: 45.0),
-                child: Text(
-                  "Next",
-                  style: TextStyle(),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: ClipOval(
+                child: Material(
+                  color: Colors.deepPurple, // button color
+                  child: InkWell(
+                    splashColor: Colors.white, // inkwell color
+                    child: SizedBox(
+                      width: 65,
+                      height: 65,
+                      child: Icon(
+                        Icons.navigate_next,
+                        size: 35,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onTap: () async {
+                      widget.measurement.unit = unit;
+
+                      if (unit == "metric") {
+                        widget.measurement.height =
+                            double.parse(_heightController.text);
+                        widget.measurement.weight =
+                            double.parse(_weightController.text);
+                      } else {
+                        widget.measurement.height =
+                            double.parse(_heightController.text) * 2.54;
+                        widget.measurement.weight =
+                            double.parse(_weightController.text) / 2.20462;
+                      }
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NewMeasurementDateView(
+                                  measurement: widget.measurement,
+                                  summarySnapshot: widget.summarySnapshot)));
+                    },
+                  ),
                 ),
               ),
-              onPressed: () {
-                widget.measurement.unit = unit;
-
-                if (unit == "metric") {
-                  widget.measurement.height = double.parse(_heightController.text);
-                  widget.measurement.weight = double.parse(_weightController.text);
-                } else {
-                  widget.measurement.height = double.parse(_heightController.text) * 2.54;
-                  widget.measurement.weight = double.parse(_weightController.text) / 2.20462;
-                }
-                
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NewMeasurementDateView(measurement: widget.measurement, summarySnapshot: widget.summarySnapshot)));
-                
-                print("${widget.measurement.unit}, ${widget.measurement.height}, ${widget.measurement.weight}");
-              },
             ),
+            // RaisedButton(
+            //   color: Colors.deepPurple,
+            //   textColor: Colors.white,
+            //   child: Padding(
+            //     padding: EdgeInsets.only(left: 45.0, right: 45.0),
+            //     child: Text(
+            //       "Next",
+            //       style: TextStyle(),
+            //     ),
+            //   ),
+            //   onPressed: () {
+            //     widget.measurement.unit = unit;
+
+            //     if (unit == "metric") {
+            //       widget.measurement.height =
+            //           double.parse(_heightController.text);
+            //       widget.measurement.weight =
+            //           double.parse(_weightController.text);
+            //     } else {
+            //       widget.measurement.height =
+            //           double.parse(_heightController.text) * 2.54;
+            //       widget.measurement.weight =
+            //           double.parse(_weightController.text) / 2.20462;
+            //     }
+
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => NewMeasurementDateView(
+            //                 measurement: widget.measurement,
+            //                 summarySnapshot: widget.summarySnapshot)));
+
+            //     print(
+            //         "${widget.measurement.unit}, ${widget.measurement.height}, ${widget.measurement.weight}");
+            //   },
+            // ),
             Expanded(
               child: Padding(
-                  padding: EdgeInsets.only(
-                      top: 20.0, right: 5.0, left: 5.0, bottom: 10.0),
+                  padding: EdgeInsets.all(
+                      5.0),
                   child: Container(
                     color: Colors.pink,
                   )),

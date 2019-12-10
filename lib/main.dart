@@ -8,12 +8,67 @@ import 'package:turalura/views/onboarding/add_view.dart';
 import 'package:turalura/views/onboarding/country_view.dart';
 import 'package:turalura/widgets/progress_indicator.dart';
 import 'package:turalura/widgets/provider_widget.dart';
+import 'package:firebase_admob/firebase_admob.dart';
+import 'dart:io' show Platform;
 
 void main() => runApp(MyApp());
+
+  final String appIdForAndroid = "ca-app-pub-3069349665651547~5210469006";
+  final String appIdForIOS = "ca-app-pub-3069349665651547~2584305666";
+
+  final String adUnitIDForAndroid = "ca-app-pub-3069349665651547/7645044745";
+  final String adUnitIDForIOS = "ca-app-pub-3069349665651547/3514228043";
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+
+
+String adUnit = adUnitIDForAndroid;
+
+    if (Platform.isAndroid) {
+      FirebaseAdMob.instance.initialize(appId: appIdForAndroid);
+      adUnit = adUnitIDForAndroid;
+    } else if (Platform.isIOS) {
+      FirebaseAdMob.instance.initialize(appId: appIdForIOS);
+      adUnit = adUnitIDForIOS;
+    }
+
+    MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+      keywords: <String>['baby', 'health'],
+      contentUrl: 'https://flutter.io',
+      childDirected: false,
+      testDevices: <String>[], // Android emulators are considered test devices
+    );
+
+  
+
+BannerAd myBanner = BannerAd(
+  // Replace the testAdUnitId with an ad unit id from the AdMob dash.
+  // https://developers.google.com/admob/android/test-ads
+  // https://developers.google.com/admob/ios/test-ads
+  adUnitId: adUnit,
+  size: AdSize.smartBanner,
+  targetingInfo: targetingInfo,
+  listener: (MobileAdEvent event) {
+    print("BannerAd event is $event");
+  },
+);
+
+
+    myBanner
+    // typically this happens well before the ad is shown
+    ..load()
+    ..show(
+      // Positions the banner ad 60 pixels from the bottom of the screen
+      anchorOffset: 60.0,
+      // Positions the banner ad 10 pixels from the center of the screen to the right
+      horizontalCenterOffset: 10.0,
+      // Banner Position
+      anchorType: AnchorType.bottom,
+    );
+
     return Provider(
       auth: AuthService(),
       child: MaterialApp(

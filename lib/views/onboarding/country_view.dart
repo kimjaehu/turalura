@@ -58,8 +58,15 @@ class _CountryViewState extends State<CountryView> {
                 color: Colors.white, // button color
                 child: InkWell(
                   splashColor: Colors.orangeAccent, // inkwell color
-                  child:
-                      SizedBox(width: 65, height: 65, child: Icon(Icons.check,size: 35, color: Colors.orangeAccent,)),
+                  child: SizedBox(
+                    width: 65,
+                    height: 65,
+                    child: Icon(
+                      Icons.check,
+                      size: 35,
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
                   onTap: () async {
                     final uid = await Provider.of(context).auth.getCurrentUID();
                     await db.collection("users").document(uid).setData(

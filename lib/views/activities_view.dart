@@ -250,13 +250,14 @@ class _ActivitiesViewState extends State<ActivitiesView> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.fromLTRB(8.0,20.0,8.0,10.0),
+          padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 10.0),
           child: AutoSizeText(
             "Help Your Baby Learn and Grow",
             style: TextStyle(
                 color: Colors.deepPurple,
                 fontSize: 25.0,
-                fontWeight: FontWeight.bold),maxLines: 1,
+                fontWeight: FontWeight.bold),
+            maxLines: 1,
           ),
         ),
         Expanded(
@@ -299,7 +300,7 @@ class _ActivitiesViewState extends State<ActivitiesView> {
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18.0),
+                    fontSize: 20.0),
               ),
             )
           ],

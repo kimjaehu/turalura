@@ -575,9 +575,12 @@ class _DelaysViewState extends State<DelaysView> {
                                       ? Colors.grey
                                       : Colors.red[200],
                               child: Center(
-                                child: Text(
+                                child: AutoSizeText(
                                   buttonText,
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -662,7 +665,9 @@ class _DelaysViewState extends State<DelaysView> {
                                 child: AutoSizeText(
                                   delaysList[monthNum][index]["id"],
                                   style: TextStyle(
-                                      color: cardColor,
+                                      color: int.parse(monthNum) <= initMonth
+                                          ? cardColor
+                                          : Colors.grey,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                   maxLines: 1,
@@ -677,7 +682,9 @@ class _DelaysViewState extends State<DelaysView> {
                               child: AutoSizeText(
                                 delaysList[monthNum][index]["delays"],
                                 style: TextStyle(
-                                    color: cardColor,
+                                    color: int.parse(monthNum) <= initMonth
+                                        ? cardColor
+                                        : Colors.grey,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
                                 maxLines: 2,
@@ -688,12 +695,17 @@ class _DelaysViewState extends State<DelaysView> {
                             flex: 2,
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
-                              child: snapshot.data[monthNum][delaysNum]
+                              child: int.parse(monthNum) <= initMonth
                                   ? IconButton(
-                                      icon: Icon(Icons.check_box),
+                                      icon: Icon(snapshot.data[monthNum]
+                                              [delaysNum]
+                                          ? Icons.check_box
+                                          : Icons.check_box_outline_blank),
                                       iconSize: 40,
                                       color: cardColor,
                                       onPressed: () async {
+                                        print(
+                                            'Iconbutton $initMonth, $monthNum');
                                         final uid = await Provider.of(context)
                                             .auth
                                             .getCurrentUID();
@@ -714,25 +726,8 @@ class _DelaysViewState extends State<DelaysView> {
                                   : IconButton(
                                       icon: Icon(Icons.check_box_outline_blank),
                                       iconSize: 40,
-                                      color: cardColor,
-                                      onPressed: () async {
-                                        final uid = await Provider.of(context)
-                                            .auth
-                                            .getCurrentUID();
-
-                                        await Firestore.instance
-                                            .collection("delays")
-                                            .document(uid)
-                                            .setData({
-                                          monthNum: {
-                                            delaysNum: snapshot.data[monthNum]
-                                                    [delaysNum]
-                                                ? false
-                                                : true
-                                          }
-                                        }, merge: true);
-                                        showAlertDialog(context);
-                                      },
+                                      color: Colors.grey,
+                                      onPressed: () async {},
                                     ),
                             ),
                           ),
@@ -770,10 +765,12 @@ class _DelaysViewState extends State<DelaysView> {
           Text("Act Early")
         ],
       ),
-      titleTextStyle: TextStyle(color: Colors.red, fontSize: 35.0, fontWeight: FontWeight.bold),
+      titleTextStyle: TextStyle(
+          color: Colors.red, fontSize: 35.0, fontWeight: FontWeight.bold),
       content: Text(
           "Tell your child’s doctor or nurse if you notice any of these signs of possible developmental delay for this age, and talk with someone in your community who is familiar with services for young children in your area."),
-      contentTextStyle: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold),
+      contentTextStyle:
+          TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold),
       actions: [
         okButton,
       ],

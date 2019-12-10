@@ -1227,17 +1227,20 @@ class _MilestoneViewState extends State<MilestoneView> {
         if (!summarySnapshot.hasData) {
           circularProgress();
         }
-        
+
         if (monthNum == null) return circularProgress();
-        
+
         return StreamBuilder<DocumentSnapshot>(
           stream: getUserMilestonesStreamSnapshots(context),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return circularProgress();
             }
-            String currentBaby = summarySnapshot.data["name"].toString().toLowerCase();
-            print(currentBaby);
+            if (summarySnapshot.data == null) {
+          circularProgress();
+        }
+            String currentBaby =
+                summarySnapshot.data["name"].toString().toLowerCase();
             selectedCount = 0;
             return Column(
               children: <Widget>[
@@ -1271,9 +1274,12 @@ class _MilestoneViewState extends State<MilestoneView> {
                                       ? Colors.grey
                                       : Colors.deepPurple[200],
                               child: Center(
-                                child: Text(
+                                child: AutoSizeText(
                                   buttonText,
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -1292,16 +1298,29 @@ class _MilestoneViewState extends State<MilestoneView> {
                             "Social/Emotional", Colors.blue, currentBaby),
                         milestoneHeading(
                             "Language/Communication", Colors.green),
-                        getMilestoneCards(snapshot, monthNum,
-                            "Language/Communication", Colors.green, currentBaby),
+                        getMilestoneCards(
+                            snapshot,
+                            monthNum,
+                            "Language/Communication",
+                            Colors.green,
+                            currentBaby),
                         milestoneHeading(
                             "Cognitive (learning, thinking, problem-solving)",
                             Colors.orange),
-                        getMilestoneCards(snapshot, monthNum,
-                            "Cognitive (learning, thinking, problem-solving)", Colors.indigo, currentBaby),
-                        milestoneHeading("Movement/Physical Development", Colors.blue),
-                        getMilestoneCards(snapshot, monthNum,
-                            "Movement/Physical Development", Colors.indigo, currentBaby),
+                        getMilestoneCards(
+                            snapshot,
+                            monthNum,
+                            "Cognitive (learning, thinking, problem-solving)",
+                            Colors.indigo,
+                            currentBaby),
+                        milestoneHeading(
+                            "Movement/Physical Development", Colors.blue),
+                        getMilestoneCards(
+                            snapshot,
+                            monthNum,
+                            "Movement/Physical Development",
+                            Colors.indigo,
+                            currentBaby),
                       ],
                     ),
                   ),
@@ -1339,7 +1358,8 @@ class _MilestoneViewState extends State<MilestoneView> {
     );
   }
 
-  Widget getMilestoneCards(snapshot, monthNum, category, cardColor, currentBaby) {
+  Widget getMilestoneCards(
+      snapshot, monthNum, category, cardColor, currentBaby) {
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -1366,7 +1386,9 @@ class _MilestoneViewState extends State<MilestoneView> {
                                 child: AutoSizeText(
                                   milestoneList[monthNum][index]["id"],
                                   style: TextStyle(
-                                      color: cardColor,
+                                      color: int.parse(monthNum) <= initMonth
+                                          ? cardColor
+                                          : Colors.grey,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                   maxLines: 1,
@@ -1381,7 +1403,9 @@ class _MilestoneViewState extends State<MilestoneView> {
                               child: AutoSizeText(
                                 milestoneList[monthNum][index]["milestone"],
                                 style: TextStyle(
-                                    color: cardColor,
+                                    color: int.parse(monthNum) <= initMonth
+                                        ? cardColor
+                                        : Colors.grey,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
                                 maxLines: 2,
@@ -1391,55 +1415,69 @@ class _MilestoneViewState extends State<MilestoneView> {
                           Expanded(
                             flex: 2,
                             child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: IconButton(
-                                  icon: Icon(snapshot.data[monthNum]
-                                          [milestoneNum]
-                                      ? Icons.check_box
-                                      : Icons.check_box_outline_blank),
-                                  iconSize: 40,
-                                  color: cardColor,
-                                  onPressed: () async {
-                                    final uid = await Provider.of(context)
-                                        .auth
-                                        .getCurrentUID();
+                              padding: const EdgeInsets.all(4.0),
+                              child: int.parse(monthNum) <= initMonth
+                                  ? IconButton(
+                                      icon: Icon(snapshot.data[monthNum]
+                                              [milestoneNum]
+                                          ? Icons.check_box
+                                          : Icons.check_box_outline_blank),
+                                      iconSize: 40,
+                                      color: cardColor,
+                                      onPressed: () async {
+                                        final uid = await Provider.of(context)
+                                            .auth
+                                            .getCurrentUID();
 
-                                    await Firestore.instance
-                                        .collection("milestones")
-                                        .document(uid)
-                                        .setData({
-                                      monthNum: {
-                                        milestoneNum: snapshot.data[monthNum]
-                                                [milestoneNum]
-                                            ? false
-                                            : true
-                                      }
-                                    }, merge: true);
-                                    int milestonesCount;
-                                    int selectedMilestones = 0;
-                                    await Firestore.instance
-                                        .collection("milestones")
-                                        .document(uid).get().then((doc) => {
-                                          milestonesCount = doc.data[monthNum].length,
-                                          doc.data[monthNum].forEach((index, milestone) => {
-                                            milestone ? selectedMilestones++ : null 
-                                          })
-                                        });
-                                    
-                                    await Firestore.instance
-                                        .collection("summaries")
-                                        .document(uid)
-                                        .collection(currentBaby)
-                                        .document("summary")
-                                        .updateData({
+                                        await Firestore.instance
+                                            .collection("milestones")
+                                            .document(uid)
+                                            .setData({
+                                          monthNum: {
+                                            milestoneNum:
+                                                snapshot.data[monthNum]
+                                                        [milestoneNum]
+                                                    ? false
+                                                    : true
+                                          }
+                                        }, merge: true);
+                                        int milestonesCount;
+                                        int selectedMilestones = 0;
+                                        await Firestore.instance
+                                            .collection("milestones")
+                                            .document(uid)
+                                            .get()
+                                            .then((doc) => {
+                                                  milestonesCount =
+                                                      doc.data[monthNum].length,
+                                                  doc.data[monthNum].forEach(
+                                                      (index, milestone) => {
+                                                            milestone
+                                                                ? selectedMilestones++
+                                                                : null
+                                                          })
+                                                });
+
+                                        await Firestore.instance
+                                            .collection("summaries")
+                                            .document(uid)
+                                            .collection(currentBaby)
+                                            .document("summary")
+                                            .updateData({
                                           'monthNum': monthNum,
-                                          'milestonesCompleted': selectedMilestones,
+                                          'milestonesCompleted':
+                                              selectedMilestones,
                                           'milestonesCount': milestonesCount,
                                         });
-
-
-                                  },
-                                )),
+                                      },
+                                    )
+                                  : IconButton(
+                                      icon: Icon(Icons.check_box_outline_blank),
+                                      iconSize: 40,
+                                      color: Colors.grey,
+                                      onPressed: () async {},
+                                    ),
+                            ),
                           ),
                         ],
                       ),
