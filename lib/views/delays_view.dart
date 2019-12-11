@@ -693,8 +693,7 @@ class _DelaysViewState extends State<DelaysView> {
                           ),
                           Expanded(
                             flex: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
+                            child: Center(
                               child: int.parse(monthNum) <= initMonth
                                   ? IconButton(
                                       icon: Icon(snapshot.data[monthNum]
@@ -704,8 +703,8 @@ class _DelaysViewState extends State<DelaysView> {
                                       iconSize: 40,
                                       color: cardColor,
                                       onPressed: () async {
-                                        print(
-                                            'Iconbutton $initMonth, $monthNum');
+                                        snapshot.data[monthNum]
+                                              [delaysNum] ?null : showAlertDialog(context);
                                         final uid = await Provider.of(context)
                                             .auth
                                             .getCurrentUID();

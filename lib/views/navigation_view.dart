@@ -20,7 +20,7 @@ final List<Widget> _children = [
   MilestoneView(),
   DelaysView(),
   ActivitiesView(),
-  Gears(),
+  // Gears(),
 ];
 
 
@@ -60,10 +60,10 @@ final List<Widget> _children = [
               icon: new Icon(Icons.extension),
               title: new Text("Activities"),
             ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.child_friendly),
-              title: new Text("Gears"),
-            ),
+            // BottomNavigationBarItem(
+            //   icon: new Icon(Icons.child_friendly),
+            //   title: new Text("Gears"),
+            // ),
           ],
         ),
       ),

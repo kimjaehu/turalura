@@ -290,7 +290,7 @@ class _ActivitiesViewState extends State<ActivitiesView> {
           children: <Widget>[
             Icon(
               Icons.extension,
-              size: 200.0,
+              size: 100.0,
               color: Colors.white,
             ),
             Padding(
@@ -300,7 +300,7 @@ class _ActivitiesViewState extends State<ActivitiesView> {
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20.0),
+                    fontSize: 16.0),
               ),
             )
           ],

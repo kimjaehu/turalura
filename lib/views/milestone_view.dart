@@ -1224,23 +1224,17 @@ class _MilestoneViewState extends State<MilestoneView> {
     return StreamBuilder(
       stream: Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
       builder: (context, summarySnapshot) {
-        if (!summarySnapshot.hasData) {
-          circularProgress();
-        }
-
+        if (!summarySnapshot.hasData || summarySnapshot.data == null)
+          return circularProgress();
+        print(summarySnapshot.data);
+        String currentBaby =
+            summarySnapshot.data["name"].toString().toLowerCase();
         if (monthNum == null) return circularProgress();
 
         return StreamBuilder<DocumentSnapshot>(
           stream: getUserMilestonesStreamSnapshots(context),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return circularProgress();
-            }
-            if (summarySnapshot.data["name"] == null) {
-              circularProgress();
-            }
-            String currentBaby =
-                summarySnapshot.data["name"].toString().toLowerCase();
+            if (!snapshot.hasData) return circularProgress();
             selectedCount = 0;
             return Column(
               children: <Widget>[
@@ -1414,8 +1408,7 @@ class _MilestoneViewState extends State<MilestoneView> {
                           ),
                           Expanded(
                             flex: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
+                            child: Center(
                               child: int.parse(monthNum) <= initMonth
                                   ? IconButton(
                                       icon: Icon(snapshot.data[monthNum]

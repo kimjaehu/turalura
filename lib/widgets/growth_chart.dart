@@ -22626,7 +22626,7 @@ class _GrowthChartState extends State<GrowthChart> {
         padding: EdgeInsets.all(8.0),
         child: Card(
           child: Center(
-            child: Column(
+            child: Stack(
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.all(8.0),
@@ -22638,7 +22638,6 @@ class _GrowthChartState extends State<GrowthChart> {
                 !widget.measurementSnapshot.hasData
                     ? circularProgress()
                     : Container(
-                        height: MediaQuery.of(context).size.height * 0.5,
                         child: LineChart(_growthChartData()),
                       )
               ],

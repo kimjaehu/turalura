@@ -17,10 +17,12 @@ class ProgressView extends StatelessWidget {
     return StreamBuilder<Object>(
         stream: Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
         builder: (context, summarySnapshot) {
+          if (!summarySnapshot.hasData) return circularProgress();
           return StreamBuilder<Object>(
               stream:
                   getUserMeasurementsStreamSnapshots(context, summarySnapshot),
               builder: (context, measurementSnapshot) {
+                if (!measurementSnapshot.hasData) return circularProgress();
                 return Container(
                   child: Column(
                     children: <Widget>[
@@ -30,210 +32,187 @@ class ProgressView extends StatelessWidget {
                             summarySnapshot: summarySnapshot,
                             newMeasurement: newMeasurement),
                       ),
-                      !measurementSnapshot.hasData
-                          ? circularProgress()
-                          : Expanded(
-                              child: DefaultTabController(
-                                length: 3,
-                                initialIndex: 0,
-                                child: Column(
+                      Expanded(
+                        child: DefaultTabController(
+                          length: 3,
+                          initialIndex: 0,
+                          child: Column(
+                            children: <Widget>[
+                              TabBar(
+                                labelStyle: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                                tabs: <Widget>[
+                                  Tab(
+                                    text: 'Height',
+                                  ),
+                                  Tab(
+                                    text: 'Weight',
+                                  ),
+                                  Tab(
+                                    text: 'Data',
+                                  ),
+                                ],
+                              ),
+                              Expanded(
+                                child: TabBarView(
                                   children: <Widget>[
-                                    TabBar(
-                                      labelStyle: TextStyle(
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold),
-                                      tabs: <Widget>[
-                                        Tab(
-                                          text: 'Height',
-                                        ),
-                                        Tab(
-                                          text: 'Weight',
-                                        ),
-                                        Tab(
-                                          text: 'Data',
-                                        ),
-                                      ],
+                                    Center(
+                                      child: GrowthChart(
+                                        title: "Height-for-age",
+                                        category: "height",
+                                        summarySnapshot: summarySnapshot,
+                                        measurementSnapshot:
+                                            measurementSnapshot,
+                                      ),
                                     ),
-                                    Expanded(
-                                      child: TabBarView(
-                                        children: <Widget>[
-                                          Center(
-                                            child: GrowthChart(
-                                              title: "Height-for-age",
-                                              category: "height",
-                                              summarySnapshot: summarySnapshot,
-                                              measurementSnapshot:
-                                                  measurementSnapshot,
-                                            ),
-                                          ),
-                                          Center(
-                                            child: GrowthChart(
-                                                title: "Weight-for-age",
-                                                category: "weight",
-                                                summarySnapshot:
-                                                    summarySnapshot,
-                                                measurementSnapshot:
-                                                    measurementSnapshot),
-                                          ),
-                                          Column(
+                                    Center(
+                                      child: GrowthChart(
+                                          title: "Weight-for-age",
+                                          category: "weight",
+                                          summarySnapshot: summarySnapshot,
+                                          measurementSnapshot:
+                                              measurementSnapshot),
+                                    ),
+                                    Column(
+                                      children: <Widget>[
+                                        Container(
+                                          color: Colors.blue[50],
+                                          height: MediaQuery.of(context).size.height * 0.075,
+                                          child: Row(
                                             children: <Widget>[
-                                              Container(
-                                                color: Colors.blue[50],
-                                                height: 35.0,
-                                                child: Row(
-                                                  children: <Widget>[
-                                                    Expanded(
-                                                      flex: 5,
-                                                      child: Align(
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: AutoSizeText(
-                                                            "Date",
-                                                            maxLines: 1,
-                                                            style: TextStyle(
-                                                                fontSize: 16.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ),
-                                                      ),
+                                              Expanded(
+                                                flex: 5,
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: AutoSizeText(
+                                                      "Date",
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Align(
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: AutoSizeText(
-                                                            "Day",
-                                                            maxLines: 1,
-                                                            style: TextStyle(
-                                                                fontSize: 16.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 3,
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: AutoSizeText(
-                                                            "Height",
-                                                            maxLines: 1,
-                                                            style: TextStyle(
-                                                                fontSize: 16.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: AutoSizeText(
-                                                            "th",
-                                                            maxLines: 1,
-                                                            style: TextStyle(
-                                                                fontSize: 16.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 3,
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: AutoSizeText(
-                                                            "Weight",
-                                                            maxLines: 1,
-                                                            style: TextStyle(
-                                                                fontSize: 16.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: AutoSizeText(
-                                                            "th",
-                                                            maxLines: 1,
-                                                            style: TextStyle(
-                                                                fontSize: 16.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Text(''),
-                                                      ),
-                                                    )
-                                                  ],
+                                                  ),
                                                 ),
                                               ),
                                               Expanded(
-                                                child: measurementList(
-                                                    measurementSnapshot,
-                                                    summarySnapshot),
+                                                flex: 2,
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: AutoSizeText(
+                                                      "Day",
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 3,
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: AutoSizeText(
+                                                      "Height",
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: AutoSizeText(
+                                                      "th",
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 3,
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: AutoSizeText(
+                                                      "Weight",
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: AutoSizeText(
+                                                      "th",
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(''),
                                               )
                                             ],
-                                          )
-                                        ],
-                                      ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: measurementList(
+                                              measurementSnapshot,
+                                              summarySnapshot),
+                                        )
+                                      ],
                                     )
                                   ],
                                 ),
-                              ),
-                            )
+                              )
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 );
@@ -274,7 +253,7 @@ class ProgressView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: AutoSizeText(
                     new DateFormat('MMM. d, yyyy').format(_measureDate),
                     maxLines: 1,
@@ -288,7 +267,7 @@ class ProgressView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: AutoSizeText(
                     _day.toString(),
                     maxLines: 1,
@@ -301,7 +280,7 @@ class ProgressView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: AutoSizeText(
                     _heightText,
                     maxLines: 1,
@@ -314,7 +293,7 @@ class ProgressView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: AutoSizeText(
                     '${_heightPercentile.toStringAsFixed(0)}${getPercentileText(_heightPercentile.toStringAsFixed(0))}',
                     maxLines: 1,
@@ -327,7 +306,7 @@ class ProgressView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: AutoSizeText(
                     _weightText,
                     maxLines: 1,
@@ -340,7 +319,7 @@ class ProgressView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: AutoSizeText(
                     '${_weightPercentile.toStringAsFixed(0)}${getPercentileText(_weightPercentile.toStringAsFixed(0))}',
                     maxLines: 1,
@@ -351,7 +330,7 @@ class ProgressView extends StatelessWidget {
             Expanded(
                 flex: 2,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: IconButton(
                     onPressed: () async {
                       final currentBaby = summarySnapshot.data['name'];

@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
 
 
-String adUnit = adUnitIDForAndroid;
+    String adUnit = adUnitIDForAndroid;
 
     if (Platform.isAndroid) {
       FirebaseAdMob.instance.initialize(appId: appIdForAndroid);
@@ -39,7 +39,7 @@ String adUnit = adUnitIDForAndroid;
       keywords: <String>['baby', 'health'],
       contentUrl: 'https://flutter.io',
       childDirected: false,
-      testDevices: <String>[], // Android emulators are considered test devices
+      testDevices: <String>["8916E7F6511D794B8A9DE7869C837372"], // Android emulators are considered test devices
     );
 
   
@@ -56,6 +56,16 @@ BannerAd myBanner = BannerAd(
   },
 );
 
+InterstitialAd myInterstitial = InterstitialAd(
+  // Replace the testAdUnitId with an ad unit id from the AdMob dash.
+  // https://developers.google.com/admob/android/test-ads
+  // https://developers.google.com/admob/ios/test-ads
+  adUnitId: InterstitialAd.testAdUnitId,
+  targetingInfo: targetingInfo,
+  listener: (MobileAdEvent event) {
+    print("InterstitialAd event is $event");
+  },
+);
 
     myBanner
     // typically this happens well before the ad is shown
@@ -64,7 +74,7 @@ BannerAd myBanner = BannerAd(
       // Positions the banner ad 60 pixels from the bottom of the screen
       anchorOffset: 0.0,
       // Positions the banner ad 10 pixels from the center of the screen to the right
-      horizontalCenterOffset: 10.0,
+      horizontalCenterOffset: 0.0,
       // Banner Position
       anchorType: AnchorType.bottom,
     );

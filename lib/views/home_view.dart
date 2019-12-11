@@ -400,7 +400,7 @@ class _HomeViewState extends State<HomeView> {
                                     child: AutoSizeText(
                                       "Teething Chart",
                                       style: TextStyle(
-                                          fontSize: 16.0,
+                                          fontSize: 12.0,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.brown),
                                     ),
@@ -411,7 +411,7 @@ class _HomeViewState extends State<HomeView> {
                                         ? AutoSizeText(
                                             _scheduleText,
                                             style: TextStyle(
-                                                fontSize: 12.0,
+                                                fontSize: 8.0,
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.brown),
                                           )
@@ -432,9 +432,9 @@ class _HomeViewState extends State<HomeView> {
                 flex: 5,
                 child: GestureDetector(
                   onTap: () {
-                    FlutterWebBrowser.openWebPage(
-                        url: "https://www.paypal.me/turalurababy/",
-                        androidToolbarColor: Colors.orange);
+                    // FlutterWebBrowser.openWebPage(
+                    //     url: "https://www.paypal.me/turalurababy/",
+                    //     androidToolbarColor: Colors.orange);
                   },
                   child: Card(
                     color: Colors.cyan,
@@ -443,10 +443,10 @@ class _HomeViewState extends State<HomeView> {
                       children: <Widget>[
                         Icon(
                           Icons.child_friendly,
-                          size: 80,
+                          size: 75,
                           color: Colors.white,
                         ),
-                        AutoSizeText("Support Turalura", style: TextStyle(fontFamily: 'Lobster'),)
+                        // AutoSizeText("Support Turalura!", style: TextStyle(fontFamily: 'Lobster', fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.bold),)
                       ],
                     ),
                   ),
@@ -518,9 +518,9 @@ class _HomeViewState extends State<HomeView> {
                 child: Column(
                   children: <Widget>[
                     babyCard(context, userSnapshot),
-                    MeasurementCard(
-                        summarySnapshot: summarySnapshot,
-                        newMeasurement: newMeasurement),
+                    // MeasurementCard(
+                    //     summarySnapshot: summarySnapshot,
+                    //     newMeasurement: newMeasurement),
                     summaryCard(context, summarySnapshot),
                     // progressCard(context, summarySnapshot),
                     progressPercentileCard(
