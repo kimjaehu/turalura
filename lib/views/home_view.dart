@@ -3,19 +3,66 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:turalura/models/Measurement.dart';
 import 'package:turalura/views/onboarding/switch_view.dart';
-import 'package:turalura/widgets/measurement_card.dart';
 import 'package:turalura/widgets/progress_indicator.dart';
 import 'package:turalura/widgets/provider_widget.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 class HomeView extends StatefulWidget {
   @override
   _HomeViewState createState() => _HomeViewState();
 }
 
+
+
 class _HomeViewState extends State<HomeView> {
   final newMeasurement =
       new Measurement(null, null, null, null, null, null, null);
+
+  @override
+  void initState() { 
+    super.initState();
+    
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    
+
+
+    
+    return StreamBuilder(
+      stream: Provider.of(context).auth.getUserInfoSnapshot(),
+      builder: (context, userSnapshot) {
+        return StreamBuilder(
+            stream:
+                Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
+            builder: (context, summarySnapshot) {
+              if (!summarySnapshot.hasData) return circularProgress();
+              DateTime dob = DateTime.parse(
+                  summarySnapshot.data['dob'].toDate().toString());
+              DateTime toDate = DateTime.now();
+              double monthDifference =
+                  (toDate.difference(dob).inDays) / 30.4375;
+              return Container(
+                child: Column(
+                  children: <Widget>[
+                    babyCard(context, userSnapshot),
+                    // MeasurementCard(
+                    //     summarySnapshot: summarySnapshot,
+                    //     newMeasurement: newMeasurement),
+                    summaryCard(context, summarySnapshot),
+                    // progressCard(context, summarySnapshot),
+                    progressPercentileCard(
+                        context, summarySnapshot, monthDifference),
+                    teethingCard(context, monthDifference),
+                  ],
+                ),
+              );
+            });
+      },
+    );
+  }
 
   Widget babyCard(context, userSnapshot) {
     if (!userSnapshot.hasData) {
@@ -69,11 +116,11 @@ class _HomeViewState extends State<HomeView> {
         DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
     DateTime toDate = DateTime.now();
     int dateDifference = toDate.difference(dob).inDays;
-    final String milestoneMonthNum = summarySnapshot.data['monthNum'];
+    final String milestoneMonthNum = summarySnapshot.data['monthNum'] != null ? summarySnapshot.data['monthNum']: '-';
     final String milestonesCount =
-        summarySnapshot.data['milestonesCount'].toString();
-    final String milestonesCompleted =
-        summarySnapshot.data['milestonesCompleted'].toString();
+        summarySnapshot.data['milestonesCount'] != null ? summarySnapshot.data['milestonesCount'].toString() : '-';
+    final String milestonesCompleted = summarySnapshot.data['milestonesCompleted'] != null ?
+        summarySnapshot.data['milestonesCompleted'].toString() : '-';
 
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
@@ -499,38 +546,4 @@ class _HomeViewState extends State<HomeView> {
   //   );
   // }
 
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: Provider.of(context).auth.getUserInfoSnapshot(),
-      builder: (context, userSnapshot) {
-        return StreamBuilder(
-            stream:
-                Provider.of(context).auth.getUserBabySummaryStreamSnapshots(),
-            builder: (context, summarySnapshot) {
-              if (!summarySnapshot.hasData) return circularProgress();
-              DateTime dob = DateTime.parse(
-                  summarySnapshot.data['dob'].toDate().toString());
-              DateTime toDate = DateTime.now();
-              double monthDifference =
-                  (toDate.difference(dob).inDays) / 30.4375;
-              return Container(
-                child: Column(
-                  children: <Widget>[
-                    babyCard(context, userSnapshot),
-                    // MeasurementCard(
-                    //     summarySnapshot: summarySnapshot,
-                    //     newMeasurement: newMeasurement),
-                    summaryCard(context, summarySnapshot),
-                    // progressCard(context, summarySnapshot),
-                    progressPercentileCard(
-                        context, summarySnapshot, monthDifference),
-                    teethingCard(context, monthDifference),
-                  ],
-                ),
-              );
-            });
-      },
-    );
-  }
 }
