@@ -53,7 +53,6 @@ class _OnboardViewState extends State<OnboardView> {
           color: Colors.white,
           size: 225.0,
         ),
-
         backgroundColor: Color(0xff9932CC),
       ),
     );
@@ -61,15 +60,18 @@ class _OnboardViewState extends State<OnboardView> {
 
   void onDonePress() {
     // Do what you want
-     Navigator.of(context).pushReplacementNamed('/country');
+    Navigator.of(context).pushReplacementNamed('/country');
   }
 
   @override
   Widget build(BuildContext context) {
-    return new IntroSlider(
-      slides: this.slides,
-      onDonePress: this.onDonePress,
-      isShowSkipBtn: false,
+    return Padding(
+      padding: const EdgeInsets.only(bottom:50.0),
+      child: new IntroSlider(
+        slides: this.slides,
+        onDonePress: this.onDonePress,
+        isShowSkipBtn: false,
+      ),
     );
   }
 }

@@ -115,6 +115,10 @@ class _AddViewState extends State<AddView> {
                 SizedBox(
                   height: height * 0.05,
                 ),
+                genderToggleButton(),
+                SizedBox(
+                  height: height * 0.05,
+                ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
                   child: TextField(
@@ -151,7 +155,7 @@ class _AddViewState extends State<AddView> {
                   child: Text(
                     "Date of birth",
                     style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.deepPurple),
                   ),
                 ),
                 SizedBox(
@@ -181,10 +185,7 @@ class _AddViewState extends State<AddView> {
                 SizedBox(
                   height: height * 0.05,
                 ),
-                genderToggleButton(),
-                SizedBox(
-                  height: height * 0.05,
-                ),
+                
 
                 ClipOval(
               child: Material(
