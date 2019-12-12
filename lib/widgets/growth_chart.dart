@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:turalura/widgets/progress_indicator.dart';
@@ -22474,7 +22475,7 @@ class _GrowthChartState extends State<GrowthChart> {
           : _boyWeightNinetyfifthData(dateDifference),
       isCurved: true,
       colors: [
-        Colors.red[100],
+        Colors.green[100],
       ],
       barWidth: 4,
       isStrokeCapRound: true,
@@ -22528,7 +22529,7 @@ class _GrowthChartState extends State<GrowthChart> {
           : _girlWeightNinetyfifthData(dateDifference),
       isCurved: true,
       colors: [
-        Colors.red[100],
+        Colors.green[100],
       ],
       barWidth: 4,
       isStrokeCapRound: true,
@@ -22621,18 +22622,38 @@ class _GrowthChartState extends State<GrowthChart> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
+    return Padding(
+        padding: EdgeInsets.only(left: 8.0, right: 8.0),
         child: Card(
           child: Center(
             child: Stack(
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.title,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: Column(
+                    children: <Widget>[
+                      AutoSizeText(
+                        '95th percentile',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green[300],
+                        ),
+                      ),
+                      AutoSizeText(
+                        '50th percentile',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      AutoSizeText(
+                        '5th percentile',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red[300],
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 !widget.measurementSnapshot.hasData
@@ -22644,7 +22665,6 @@ class _GrowthChartState extends State<GrowthChart> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

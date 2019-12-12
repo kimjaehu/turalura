@@ -33,168 +33,167 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
       appBar: AppBar(
         title: Text('New Measurements'),
       ),
-      body: Container(
-        margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
-        child: Column(
-          children: <Widget>[
-            conversionToggleButton(),
-            Padding(
-              padding: EdgeInsets.only(top: 10.0),
-              child: Card(
-                color: isSelected[0] ? Colors.lightBlue : Colors.green,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                      child: TextField(
-                        style: TextStyle(color: Colors.white),
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            labelText:
-                                isSelected[0] ? "Height (cm)" : "Height (in)",
-                            labelStyle: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.lightBlue),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            hintText: isSelected[0] ? "cm" : "in",
-                            hintStyle: TextStyle(
-                                color: Colors.grey[400],
-                                fontWeight: FontWeight.bold)),
-                        controller: _heightController,
-                        // autofocus: true,
+      body: SingleChildScrollView(
+              child: Container(
+          margin: EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: MediaQuery.of(context).size.height * 0.025,),
+              conversionToggleButton(),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.025,),
+              Card(
+                  color: isSelected[0] ? Colors.lightBlue : Colors.green,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+                        child: TextField(
+                          style: TextStyle(color: Colors.white),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              labelText:
+                                  isSelected[0] ? "Height (cm)" : "Height (in)",
+                              labelStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.lightBlue),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              hintText: isSelected[0] ? "cm" : "in",
+                              hintStyle: TextStyle(
+                                  color: Colors.grey[400],
+                                  fontWeight: FontWeight.bold)),
+                          controller: _heightController,
+                          // autofocus: true,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.0),
-              child: Card(
-                color: isSelected[0] ? Colors.lightBlue : Colors.green,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                      child: TextField(
-                        style: TextStyle(color: Colors.white),
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            labelText:
-                                isSelected[0] ? "Weight (kg)" : "Weight (lbs)",
-                            labelStyle: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.lightBlue),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            hintText: isSelected[0] ? "kg" : "lbs",
-                            hintStyle: TextStyle(
-                                color: Colors.grey[400],
-                                fontWeight: FontWeight.bold)),
-                        controller: _weightController,
-                        // autofocus: true,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: ClipOval(
-                child: Material(
-                  color: Colors.deepPurple, // button color
-                  child: InkWell(
-                    splashColor: Colors.white, // inkwell color
-                    child: SizedBox(
-                      width: 65,
-                      height: 65,
-                      child: Icon(
-                        Icons.navigate_next,
-                        size: 35,
-                        color: Colors.white,
-                      ),
-                    ),
-                    onTap: () async {
-                      widget.measurement.unit = unit;
-
-                      if (unit == "metric") {
-                        widget.measurement.height =
-                            double.parse(_heightController.text);
-                        widget.measurement.weight =
-                            double.parse(_weightController.text);
-                      } else {
-                        widget.measurement.height =
-                            double.parse(_heightController.text) * 2.54;
-                        widget.measurement.weight =
-                            double.parse(_weightController.text) / 2.20462;
-                      }
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NewMeasurementDateView(
-                                  measurement: widget.measurement,
-                                  summarySnapshot: widget.summarySnapshot)));
-                    },
+                    ],
                   ),
                 ),
-              ),
-            ),
-            // RaisedButton(
-            //   color: Colors.deepPurple,
-            //   textColor: Colors.white,
-            //   child: Padding(
-            //     padding: EdgeInsets.only(left: 45.0, right: 45.0),
-            //     child: Text(
-            //       "Next",
-            //       style: TextStyle(),
-            //     ),
-            //   ),
-            //   onPressed: () {
-            //     widget.measurement.unit = unit;
+              
+                SizedBox(height: MediaQuery.of(context).size.height * 0.015,),
+                Card(
+                  color: isSelected[0] ? Colors.lightBlue : Colors.green,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+                        child: TextField(
+                          style: TextStyle(color: Colors.white),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              labelText:
+                                  isSelected[0] ? "Weight (kg)" : "Weight (lbs)",
+                              labelStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.lightBlue),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              hintText: isSelected[0] ? "kg" : "lbs",
+                              hintStyle: TextStyle(
+                                  color: Colors.grey[400],
+                                  fontWeight: FontWeight.bold)),
+                          controller: _weightController,
+                          // autofocus: true,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.025,),
+              ClipOval(
+                  child: Material(
+                    color: Colors.deepPurple, // button color
+                    child: InkWell(
+                      splashColor: Colors.white, // inkwell color
+                      child: SizedBox(
+                        width: 65,
+                        height: 65,
+                        child: Icon(
+                          Icons.navigate_next,
+                          size: 35,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onTap: () async {
+                        widget.measurement.unit = unit;
 
-            //     if (unit == "metric") {
-            //       widget.measurement.height =
-            //           double.parse(_heightController.text);
-            //       widget.measurement.weight =
-            //           double.parse(_weightController.text);
-            //     } else {
-            //       widget.measurement.height =
-            //           double.parse(_heightController.text) * 2.54;
-            //       widget.measurement.weight =
-            //           double.parse(_weightController.text) / 2.20462;
-            //     }
+                        if (unit == "metric") {
+                          widget.measurement.height =
+                              double.parse(_heightController.text);
+                          widget.measurement.weight =
+                              double.parse(_weightController.text);
+                        } else {
+                          widget.measurement.height =
+                              double.parse(_heightController.text) * 2.54;
+                          widget.measurement.weight =
+                              double.parse(_weightController.text) / 2.20462;
+                        }
 
-            //     Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //             builder: (context) => NewMeasurementDateView(
-            //                 measurement: widget.measurement,
-            //                 summarySnapshot: widget.summarySnapshot)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NewMeasurementDateView(
+                                    measurement: widget.measurement,
+                                    summarySnapshot: widget.summarySnapshot)));
+                      },
+                    ),
+                  ),
+                ),
+              
+              // RaisedButton(
+              //   color: Colors.deepPurple,
+              //   textColor: Colors.white,
+              //   child: Padding(
+              //     padding: EdgeInsets.only(left: 45.0, right: 45.0),
+              //     child: Text(
+              //       "Next",
+              //       style: TextStyle(),
+              //     ),
+              //   ),
+              //   onPressed: () {
+              //     widget.measurement.unit = unit;
 
-            //     print(
-            //         "${widget.measurement.unit}, ${widget.measurement.height}, ${widget.measurement.weight}");
-            //   },
-            // ),
-            Expanded(
-              child: Padding(
-                  padding: EdgeInsets.all(
-                      5.0),
-                  child: Container(
-                    color: Colors.pink,
-                  )),
-            )
-          ],
+              //     if (unit == "metric") {
+              //       widget.measurement.height =
+              //           double.parse(_heightController.text);
+              //       widget.measurement.weight =
+              //           double.parse(_weightController.text);
+              //     } else {
+              //       widget.measurement.height =
+              //           double.parse(_heightController.text) * 2.54;
+              //       widget.measurement.weight =
+              //           double.parse(_weightController.text) / 2.20462;
+              //     }
+
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => NewMeasurementDateView(
+              //                 measurement: widget.measurement,
+              //                 summarySnapshot: widget.summarySnapshot)));
+
+              //     print(
+              //         "${widget.measurement.unit}, ${widget.measurement.height}, ${widget.measurement.weight}");
+              //   },
+              // ),
+              // Expanded(
+              //   child: Padding(
+              //       padding: EdgeInsets.all(
+              //           5.0),
+              //       child: Container(
+              //         color: Colors.pink,
+              //       )),
+              // )
+            ],
+          ),
         ),
       ),
     );

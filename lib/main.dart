@@ -1,5 +1,4 @@
 import 'dart:io' show Platform;
-
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:turalura/services/auth_service.dart';
@@ -23,8 +22,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
-
     String adUnit = adUnitIDForAndroid;
 
     if (Platform.isAndroid) {
@@ -36,7 +33,7 @@ class MyApp extends StatelessWidget {
     }
 
     MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-      keywords: <String>['baby', 'health'],
+      keywords: <String>['baby', 'life'],
       contentUrl: 'https://flutter.io',
       childDirected: false,
       testDevices: <String>["8916E7F6511D794B8A9DE7869C837372"], // Android emulators are considered test devices

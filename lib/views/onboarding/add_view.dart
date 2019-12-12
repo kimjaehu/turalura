@@ -17,6 +17,7 @@ class _AddViewState extends State<AddView> {
   bool _nameValidator;
   List<bool> isSelected;
   String gender = 'boy';
+  String monthNum;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -31,7 +32,6 @@ class _AddViewState extends State<AddView> {
   Widget genderToggleButton() {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           ToggleButtons(
             color: isSelected[0] ? Colors.pink : Colors.blue,
@@ -44,35 +44,37 @@ class _AddViewState extends State<AddView> {
             // borderRadius: BorderRadius.circular(5.0),
             children: <Widget>[
               Padding(
-                  padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.face,
-                        size: 80.0,
-                      ),
-                      Text(
-                        'Boy',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  )),
+                padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      Icons.face,
+                      size: 80.0,
+                    ),
+                    Text(
+                      'Boy',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
               Padding(
-                  padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.face,
-                        size: 80.0,
-                      ),
-                      Text(
-                        'Girl',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  )),
+                padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      Icons.face,
+                      size: 80.0,
+                    ),
+                    Text(
+                      'Girl',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
             ],
             onPressed: (int index) {
               FocusScope.of(context).requestFocus(new FocusNode());
@@ -95,71 +97,112 @@ class _AddViewState extends State<AddView> {
     );
   }
 
+    milestoneMonthNum(dob) async {
+    int monthSince;
+      // DateTime dobStr = DateTime.parse(dob.toDate().toString());
+      DateTime toDate = DateTime.now();
+      int dateDifference = toDate.difference(dob).inDays;
+      if ((dateDifference / 30.4375) >= 0 && (dateDifference / 30.4375) < 4) {
+        monthSince = 2;
+      } else if ((dateDifference / 30.4375) >= 4 &&
+          (dateDifference / 30.4375) < 6) {
+        monthSince = 4;
+      } else if ((dateDifference / 30.4375) >= 6 &&
+          (dateDifference / 30.4375) < 9) {
+        monthSince = 6;
+      } else if ((dateDifference / 30.4375) >= 9 &&
+          (dateDifference / 30.4375) < 12) {
+        monthSince = 9;
+      } else if ((dateDifference / 30.4375) >= 12 &&
+          (dateDifference / 30.4375) < 18) {
+        monthSince = 12;
+      } else if ((dateDifference / 30.4375) >= 18 &&
+          (dateDifference / 30.4375) < 24) {
+        monthSince = 18;
+      } else if ((dateDifference / 30.4375) >= 24 &&
+          (dateDifference / 30.4375) < 36) {
+        monthSince = 24;
+      } else if ((dateDifference / 30.4375) >= 36 &&
+          (dateDifference / 30.4375) < 48) {
+        monthSince = 36;
+      } else if ((dateDifference / 30.4375) >= 48 &&
+          (dateDifference / 30.4375) < 60) {
+        monthSince = 48;
+      } else {
+        monthSince = 60;
+      }
+      return monthSince.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text('New Baby'),
       ),
       body: SingleChildScrollView(
-        child: GestureDetector(
+              child: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
           },
           child: Container(
-            margin: EdgeInsets.only(right: 5.0, left: 5.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  height: height * 0.05,
+                  height: height * 0.025,
                 ),
                 genderToggleButton(),
                 SizedBox(
-                  height: height * 0.05,
+                  height: height * 0.025,
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                  child: TextField(
-                    key: _formKey,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.orange,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 35.0),
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        // labelText: "My Baby's Name",
-                        alignLabelWithHint: false,
-                        errorText:
-                            _nameValidator ? 'Name can\'t be empty' : null,
-                        labelStyle: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20.0),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        hintText: "Enter Baby's Name",
-                        hintStyle: TextStyle(
-                            color: Colors.grey[400],
-                            fontWeight: FontWeight.bold,
-                            fontSize: 35.0)),
-                    controller: _nameController,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: height * 0.1,
+                    child: TextField(
+                      key: _formKey,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 35.0),
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                          // labelText: "My Baby's Name",
+                          alignLabelWithHint: false,
+                          errorText: _nameValidator ? 'Name can\'t be empty' : null,
+                          labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20.0),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          hintText: "Enter Baby's Name",
+                          hintStyle: TextStyle(
+                              color: Colors.grey[400],
+                              fontWeight: FontWeight.bold,
+                              fontSize: 35.0)),
+                      controller: _nameController,
+                    ),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
                     "Date of birth",
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.deepPurple),
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.deepPurple),
                   ),
                 ),
-                SizedBox(
-                  height: height * 0.20,
+                Container(
+                  height: height * 0.15,
                   child: CupertinoDatePicker(
                     initialDateTime: _date,
                     minimumDate: _date,
@@ -183,416 +226,430 @@ class _AddViewState extends State<AddView> {
                   ),
                 ),
                 SizedBox(
-                  height: height * 0.05,
+                  height: height * 0.025,
                 ),
-                
-
                 ClipOval(
-              child: Material(
-                    color: _dateValidator ? Colors.deepPurple : Colors.grey[400], // button color
+                  child: Material(
+                    color: _dateValidator
+                        ? Colors.deepPurple
+                        : Colors.grey[400], // button color
                     child: InkWell(
                       splashColor: Colors.white, // inkwell color
-                      child:
-                          SizedBox(width: 65, height: 65, child: Icon(_dateValidator ? Icons.check : Icons.close,size: 35, color: Colors.white,)),
+                      child: SizedBox(
+                          width: 65,
+                          height: 65,
+                          child: Icon(
+                            _dateValidator ? Icons.check : Icons.close,
+                            size: 35,
+                            color: Colors.white,
+                          )),
                       onTap: () async {
                         setState(() {
-                      _nameController.text.isEmpty
-                          ? _nameValidator = true
-                          : _nameValidator = false;
-                    });
+                          _nameController.text.isEmpty
+                              ? _nameValidator = true
+                              : _nameValidator = false;
+                        });
 
-                    if (_dateValidator || _nameValidator) {
-                      final uid =
-                          await Provider.of(context).auth.getCurrentUID();
-                      await db
-                          .collection("babies")
-                          .document(uid)
-                          .collection('userBabies')
-                          .add({
-                        'name': _nameController.text,
-                        'dob': _dateOfBirth,
-                        'gender': gender,
-                        'timestamp': _date,
-                      });
-                      // 1) update user info
-                      await db.collection("users").document(uid).updateData({
-                        'currentBaby': _nameController.text,
-                        'dob': _dateOfBirth,
-                      });
+                        monthNum = await milestoneMonthNum(_dateOfBirth);
 
-                      // 2) create summaries
-                      await db
-                          .collection("summaries")
-                          .document(uid)
-                          .collection((_nameController.text).toLowerCase())
-                          .document("summary")
-                          .setData({
-                        'dob': _dateOfBirth,
-                        'gender': gender,
-                        'milestonesCompleted': null,
-                        'milestonesCount': null,
-                        'lastUpdated': null,
-                        'unit': null,
-                        'height': null,
-                        'weight': null,
-                        'heightPercentile': null,
-                        'weightPercentile': null,
-                        'name': _nameController.text,
-                      });
+                        if (_dateValidator || _nameValidator) {
+                          final uid =
+                              await Provider.of(context).auth.getCurrentUID();
+                          await db
+                              .collection("babies")
+                              .document(uid)
+                              .collection('userBabies')
+                              .add({
+                            'name': _nameController.text,
+                            'dob': _dateOfBirth,
+                            'gender': gender,
+                            'timestamp': _date,
+                          });
+                          // 1) update user info
+                          await db.collection("users").document(uid).updateData({
+                            'currentBaby': _nameController.text,
+                            'dob': _dateOfBirth,
+                          });
 
-                      // 3) create milestones
-                      await db.collection("milestones").document(uid).setData({
-                        "2": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                        },
-                        "4": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                          '12': false,
-                          '13': false,
-                          '14': false,
-                          '15': false,
-                          '16': false,
-                          '17': false,
-                          '18': false,
-                          '19': false,
-                        },
-                        "6": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                          '12': false,
-                          '13': false,
-                          '14': false,
-                          '15': false,
-                          '16': false,
-                          '17': false,
-                        },
-                        "9": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                          '12': false,
-                          '13': false,
-                          '14': false,
-                          '15': false,
-                          '16': false,
-                          '17': false,
-                          '18': false,
-                        },
-                        "12": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                          '12': false,
-                          '13': false,
-                          '14': false,
-                          '15': false,
-                          '16': false,
-                          '17': false,
-                          '18': false,
-                          '19': false,
-                          '20': false,
-                          '21': false,
-                          '22': false,
-                          '23': false,
-                          '24': false,
-                          '25': false,
-                          '26': false,
-                          '27': false,
-                        },
-                        "18": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                          '12': false,
-                          '13': false,
-                          '14': false,
-                          '15': false,
-                          '16': false,
-                          '17': false,
-                          '18': false,
-                          '19': false,
-                          '20': false,
-                          '21': false,
-                          '22': false,
-                          '23': false,
-                        },
-                        "24": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                          '12': false,
-                          '13': false,
-                          '14': false,
-                          '15': false,
-                          '16': false,
-                          '17': false,
-                          '18': false,
-                          '19': false,
-                          '20': false,
-                          '21': false,
-                          '22': false,
-                          '23': false,
-                          '24': false,
-                          '25': false,
-                          '26': false,
-                        },
-                        "36": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                          '12': false,
-                          '13': false,
-                          '14': false,
-                          '15': false,
-                          '16': false,
-                          '17': false,
-                          '18': false,
-                          '19': false,
-                          '20': false,
-                          '21': false,
-                          '22': false,
-                          '23': false,
-                          '24': false,
-                          '25': false,
-                          '26': false,
-                          '27': false,
-                          '28': false,
-                          '29': false,
-                        },
-                        "48": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                          '12': false,
-                          '13': false,
-                          '14': false,
-                          '15': false,
-                          '16': false,
-                          '17': false,
-                          '18': false,
-                          '19': false,
-                          '20': false,
-                          '21': false,
-                          '22': false,
-                          '23': false,
-                          '24': false,
-                        },
-                        "60": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                          '12': false,
-                          '13': false,
-                          '14': false,
-                          '15': false,
-                          '16': false,
-                          '17': false,
-                          '18': false,
-                          '19': false,
-                          '20': false,
-                          '21': false,
-                          '22': false,
-                          '23': false,
+                          // 2) create summaries
+                          await db
+                              .collection("summaries")
+                              .document(uid)
+                              .collection((_nameController.text).toLowerCase())
+                              .document("summary")
+                              .setData({
+                            'dob': _dateOfBirth,
+                            'gender': gender,
+                            'milestonesCompleted': null,
+                            'milestonesCount': null,
+                            'lastUpdated': null,
+                            'unit': null,
+                            'height': null,
+                            'weight': null,
+                            'heightPercentile': null,
+                            'weightPercentile': null,
+                            'name': _nameController.text,
+                            'monthNum': monthNum,
+                          });
+
+                          // 3) create milestones
+                          await db
+                              .collection("milestones")
+                              .document(uid)
+                              .setData({
+                            "2": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                            },
+                            "4": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                              '12': false,
+                              '13': false,
+                              '14': false,
+                              '15': false,
+                              '16': false,
+                              '17': false,
+                              '18': false,
+                              '19': false,
+                            },
+                            "6": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                              '12': false,
+                              '13': false,
+                              '14': false,
+                              '15': false,
+                              '16': false,
+                              '17': false,
+                            },
+                            "9": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                              '12': false,
+                              '13': false,
+                              '14': false,
+                              '15': false,
+                              '16': false,
+                              '17': false,
+                              '18': false,
+                            },
+                            "12": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                              '12': false,
+                              '13': false,
+                              '14': false,
+                              '15': false,
+                              '16': false,
+                              '17': false,
+                              '18': false,
+                              '19': false,
+                              '20': false,
+                              '21': false,
+                              '22': false,
+                              '23': false,
+                              '24': false,
+                              '25': false,
+                              '26': false,
+                              '27': false,
+                            },
+                            "18": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                              '12': false,
+                              '13': false,
+                              '14': false,
+                              '15': false,
+                              '16': false,
+                              '17': false,
+                              '18': false,
+                              '19': false,
+                              '20': false,
+                              '21': false,
+                              '22': false,
+                              '23': false,
+                            },
+                            "24": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                              '12': false,
+                              '13': false,
+                              '14': false,
+                              '15': false,
+                              '16': false,
+                              '17': false,
+                              '18': false,
+                              '19': false,
+                              '20': false,
+                              '21': false,
+                              '22': false,
+                              '23': false,
+                              '24': false,
+                              '25': false,
+                              '26': false,
+                            },
+                            "36": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                              '12': false,
+                              '13': false,
+                              '14': false,
+                              '15': false,
+                              '16': false,
+                              '17': false,
+                              '18': false,
+                              '19': false,
+                              '20': false,
+                              '21': false,
+                              '22': false,
+                              '23': false,
+                              '24': false,
+                              '25': false,
+                              '26': false,
+                              '27': false,
+                              '28': false,
+                              '29': false,
+                            },
+                            "48": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                              '12': false,
+                              '13': false,
+                              '14': false,
+                              '15': false,
+                              '16': false,
+                              '17': false,
+                              '18': false,
+                              '19': false,
+                              '20': false,
+                              '21': false,
+                              '22': false,
+                              '23': false,
+                              '24': false,
+                            },
+                            "60": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                              '12': false,
+                              '13': false,
+                              '14': false,
+                              '15': false,
+                              '16': false,
+                              '17': false,
+                              '18': false,
+                              '19': false,
+                              '20': false,
+                              '21': false,
+                              '22': false,
+                              '23': false,
+                            }
+                          });
+
+                          // 4) create delays
+                          await db.collection("delays").document(uid).setData({
+                            "2": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                            },
+                            "4": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                            },
+                            "6": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                            },
+                            "9": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                            },
+                            "12": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                            },
+                            "18": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                            },
+                            "24": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                            },
+                            "36": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                            },
+                            "48": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                            },
+                            "60": {
+                              '1': false,
+                              '2': false,
+                              '3': false,
+                              '4': false,
+                              '5': false,
+                              '6': false,
+                              '7': false,
+                              '8': false,
+                              '9': false,
+                              '10': false,
+                              '11': false,
+                              '12': false,
+                              '13': false,
+                            }
+                          });
+                          Navigator.of(context).pushReplacementNamed('/home');
+                        } else {
+                          Text('');
                         }
-                      });
-
-                      // 4) create delays
-                      await db.collection("delays").document(uid).setData({
-                        "2": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                        },
-                        "4": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                        },
-                        "6": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                        },
-                        "9": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                        },
-                        "12": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                        },
-                        "18": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                        },
-                        "24": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                        },
-                        "36": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                        },
-                        "48": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                        },
-                        "60": {
-                          '1': false,
-                          '2': false,
-                          '3': false,
-                          '4': false,
-                          '5': false,
-                          '6': false,
-                          '7': false,
-                          '8': false,
-                          '9': false,
-                          '10': false,
-                          '11': false,
-                          '12': false,
-                          '13': false,
-                        }
-                      });
-                      Navigator.of(context).pushReplacementNamed('/home');
-                    } else {
-                      Text('');
-                    }
                       },
                     ),
                   ),
+                ),SizedBox(
+                  height: 60.0,
                 ),
               ],
             ),

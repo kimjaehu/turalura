@@ -1305,7 +1305,7 @@ class _MilestoneViewState extends State<MilestoneView> {
                             snapshot,
                             monthNum,
                             "Cognitive (learning, thinking, problem-solving)",
-                            Colors.indigo,
+                            Colors.orange,
                             currentBaby),
                         milestoneHeading(
                             "Movement/Physical Development", Colors.blue),

@@ -38,7 +38,7 @@ class MeasurementCard extends StatelessWidget {
     }
     return Container(
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
-      height: 70.0,
+      height: MediaQuery.of(context).size.height * 0.10,
       child: Card(
         color: Colors.orange,
         child: Row(

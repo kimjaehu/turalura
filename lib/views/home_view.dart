@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:turalura/models/Measurement.dart';
 import 'package:turalura/views/onboarding/switch_view.dart';
+import 'package:turalura/widgets/measurement_card.dart';
 import 'package:turalura/widgets/progress_indicator.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 
@@ -11,26 +12,17 @@ class HomeView extends StatefulWidget {
   _HomeViewState createState() => _HomeViewState();
 }
 
-
-
 class _HomeViewState extends State<HomeView> {
   final newMeasurement =
       new Measurement(null, null, null, null, null, null, null);
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
-    
   }
-
-
 
   @override
   Widget build(BuildContext context) {
-    
-
-
-    
     return StreamBuilder(
       stream: Provider.of(context).auth.getUserInfoSnapshot(),
       builder: (context, userSnapshot) {
@@ -44,13 +36,13 @@ class _HomeViewState extends State<HomeView> {
               DateTime toDate = DateTime.now();
               double monthDifference =
                   (toDate.difference(dob).inDays) / 30.4375;
-              return Container(
+              return SafeArea(
                 child: Column(
                   children: <Widget>[
                     babyCard(context, userSnapshot),
-                    // MeasurementCard(
-                    //     summarySnapshot: summarySnapshot,
-                    //     newMeasurement: newMeasurement),
+                    MeasurementCard(
+                        summarySnapshot: summarySnapshot,
+                        newMeasurement: newMeasurement),
                     summaryCard(context, summarySnapshot),
                     // progressCard(context, summarySnapshot),
                     progressPercentileCard(
@@ -70,8 +62,11 @@ class _HomeViewState extends State<HomeView> {
     }
     String currentBaby = userSnapshot.data['currentBaby'];
     return Container(
-      margin: EdgeInsets.only(top: 5.0, right: 5.0, left: 5.0, bottom: 5.0),
+      height: MediaQuery.of(context).size.height * 0.1,
+      margin: EdgeInsets.all(5.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
             flex: 2,
@@ -116,60 +111,66 @@ class _HomeViewState extends State<HomeView> {
         DateTime.parse(summarySnapshot.data['dob'].toDate().toString());
     DateTime toDate = DateTime.now();
     int dateDifference = toDate.difference(dob).inDays;
-    final String milestoneMonthNum = summarySnapshot.data['monthNum'] != null ? summarySnapshot.data['monthNum']: '-';
+    final String milestoneMonthNum = summarySnapshot.data['monthNum'] != null
+        ? summarySnapshot.data['monthNum']
+        : '-';
     final String milestonesCount =
-        summarySnapshot.data['milestonesCount'] != null ? summarySnapshot.data['milestonesCount'].toString() : '-';
-    final String milestonesCompleted = summarySnapshot.data['milestonesCompleted'] != null ?
-        summarySnapshot.data['milestonesCompleted'].toString() : '-';
+        summarySnapshot.data['milestonesCount'] != null
+            ? summarySnapshot.data['milestonesCount'].toString()
+            : '-';
+    final String milestonesCompleted =
+        summarySnapshot.data['milestonesCompleted'] != null
+            ? summarySnapshot.data['milestonesCompleted'].toString()
+            : '-';
 
     return Container(
+      height: MediaQuery.of(context).size.height * 0.15,
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
             flex: 5,
             child: Card(
               color: Colors.blue,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Center(
-                  child: Column(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  AutoSizeText(
+                    "Days Since birth",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
                     children: <Widget>[
-                      Text(
-                        "Days Since birth",
+                      AutoSizeText(
+                        dateDifference.toString(),
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: <Widget>[
-                          Text(
-                            dateDifference.toString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10.0),
-                            child: Text(
-                              "days old",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.0),
+                        child: AutoSizeText(
+                          "days old",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           ),
@@ -177,60 +178,57 @@ class _HomeViewState extends State<HomeView> {
             flex: 5,
             child: Card(
               color: Colors.teal,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Center(
-                  child: Column(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  AutoSizeText(
+                    "$milestoneMonthNum mo. milestone",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
                     children: <Widget>[
-                      Text(
-                        "$milestoneMonthNum mo. milestone",
+                      AutoSizeText(
+                        milestonesCompleted,
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
+                      Padding(
+                        padding: EdgeInsets.only(left: 5.0),
+                        child: AutoSizeText(
+                          "/",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: <Widget>[
-                          Text(
-                            milestonesCompleted,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 5.0),
-                            child: Text(
-                              "/",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Text(
-                            milestonesCount,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            " completed",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                      AutoSizeText(
+                        milestonesCount,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      AutoSizeText(
+                        " completed",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           ),
@@ -270,53 +268,53 @@ class _HomeViewState extends State<HomeView> {
       weightPercentile = '-';
     }
     return Container(
+      height: MediaQuery.of(context).size.height * 0.175,
       margin: EdgeInsets.only(right: 5.0, left: 5.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
             flex: 5,
             child: Card(
               color: Colors.deepPurple,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Center(
-                  child: Column(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  AutoSizeText(
+                    "Height-for-age",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    textBaseline: TextBaseline.alphabetic,
                     children: <Widget>[
-                      Text(
-                        "Height-for-age",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                      AutoSizeText.rich(
+                        TextSpan(
+                            text: heightPercentile,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text:
+                                      ' ${heightPercentile == '-' ? '-' : getPercentileText(heightPercentile)}',
+                                  style: TextStyle(fontSize: 15.0))
+                            ]),
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: <Widget>[
-                          RichText(
-                            text: TextSpan(
-                                text: heightPercentile,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.bold),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text:
-                                          ' ${heightPercentile == '-' ? '-' : getPercentileText(heightPercentile)}',
-                                      style: TextStyle(fontSize: 15.0))
-                                ]),
-                          ),
-                          Text(
-                            'percentile',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ],
-                      ),
+                      AutoSizeText(
+                        'percentile',
+                        style: TextStyle(color: Colors.white),
+                      )
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           ),
@@ -324,46 +322,43 @@ class _HomeViewState extends State<HomeView> {
             flex: 5,
             child: Card(
               color: Colors.redAccent,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Center(
-                  child: Column(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  AutoSizeText(
+                    "Weight-for-age",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    textBaseline: TextBaseline.alphabetic,
                     children: <Widget>[
-                      Text(
-                        "Weight-for-age",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                      AutoSizeText.rich(
+                        TextSpan(
+                            text: weightPercentile,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text:
+                                      ' ${weightPercentile == '-' ? '-' : getPercentileText(weightPercentile)}',
+                                  style: TextStyle(fontSize: 15.0))
+                            ]),
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: <Widget>[
-                          RichText(
-                            text: TextSpan(
-                                text: weightPercentile,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.bold),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text:
-                                          ' ${weightPercentile == '-' ? '-' : getPercentileText(weightPercentile)}',
-                                      style: TextStyle(fontSize: 15.0))
-                                ]),
-                          ),
-                          Text(
-                            'percentile',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ],
-                      ),
+                      AutoSizeText(
+                        'percentile',
+                        style: TextStyle(color: Colors.white),
+                      )
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           ),
@@ -413,9 +408,12 @@ class _HomeViewState extends State<HomeView> {
       _scheduleText = null;
     }
     return Expanded(
-      child: Container(
+          child: Container(
+        // height: MediaQuery.of(context).size.height * 0.15,
         margin: EdgeInsets.only(right: 5.0, left: 5.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(
               flex: 5,
