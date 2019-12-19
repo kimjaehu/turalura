@@ -27,7 +27,7 @@ class _CountryViewState extends State<CountryView> {
       body: Container(
         width: width,
         height: height,
-        color: Colors.orangeAccent,
+        color: Colors.orange,
         child: SafeArea(
             child: Column(
           children: <Widget>[
@@ -52,7 +52,6 @@ class _CountryViewState extends State<CountryView> {
             SizedBox(
               height: height * 0.3,
             ),
-
             ClipOval(
               child: Material(
                 color: Colors.white, // button color
@@ -77,25 +76,6 @@ class _CountryViewState extends State<CountryView> {
                 ),
               ),
             )
-
-            // RaisedButton(
-            //   onPressed: () async {
-            //     final uid = await Provider.of(context).auth.getCurrentUID();
-            //     await db
-            //         .collection("users")
-            //         .document(uid)
-            //         .setData({'country': country, 'currentBaby': null, 'dob': null});
-
-            //     Navigator.of(context).pushReplacementNamed('/add');
-
-            //   },
-            //   color: Colors.white,
-            //   textColor: Colors.amber[800],
-            //   child: Padding(
-            //     padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
-            //     child: Text("Save"),
-            //   ),
-            // )
           ],
         )),
       ),
@@ -116,18 +96,22 @@ class _CountryViewState extends State<CountryView> {
             selectedColor: Colors.amber[800],
             borderRadius: BorderRadius.circular(5.0),
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  'US',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: Center(
+                  child: Text(
+                    'US',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  'Canada',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: Center(
+                  child: Text(
+                    'Canada',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ],
@@ -142,7 +126,6 @@ class _CountryViewState extends State<CountryView> {
                     country = "us";
                   }
                 }
-                print("$isSelected, $country");
               });
             },
             isSelected: isSelected,

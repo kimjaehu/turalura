@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
+import 'package:turalura/models/Ads.dart';
 
 class OnboardView extends StatefulWidget {
   @override
@@ -60,13 +61,14 @@ class _OnboardViewState extends State<OnboardView> {
 
   void onDonePress() {
     // Do what you want
-    Navigator.of(context).pushReplacementNamed('/country');
+    Navigator.of(context).pushReplacementNamed('/add');
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.only(bottom:50.0),
+      padding: EdgeInsets.only(bottom: Ads.getMargin(screenHeight)),
       child: new IntroSlider(
         slides: this.slides,
         onDonePress: this.onDonePress,

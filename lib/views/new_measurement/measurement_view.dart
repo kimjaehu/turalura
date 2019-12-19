@@ -213,18 +213,22 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
             selectedColor: Colors.white,
             borderRadius: BorderRadius.circular(5.0),
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  'Metric',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: Center(
+                  child: Text(
+                    'Metric',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  'Imperial',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: Center(
+                  child: Text(
+                    'Imperial',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ],
@@ -239,7 +243,6 @@ class _NewMeasurementViewState extends State<NewMeasurementView> {
                     unit = "metric";
                   }
                 }
-                print("$isSelected, $unit");
               });
             },
             isSelected: isSelected,

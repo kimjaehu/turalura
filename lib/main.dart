@@ -12,16 +12,15 @@ import 'package:turalura/widgets/provider_widget.dart';
 
 void main() => runApp(MyApp());
 
-  final String appIdForAndroid = "ca-app-pub-3069349665651547~5210469006";
-  final String appIdForIOS = "ca-app-pub-3069349665651547~2584305666";
+final String appIdForAndroid = "ca-app-pub-3069349665651547~5210469006";
+final String appIdForIOS = "ca-app-pub-3069349665651547~2584305666";
 
-  final String adUnitIDForAndroid = "ca-app-pub-3069349665651547/7645044745";
-  final String adUnitIDForIOS = "ca-app-pub-3069349665651547/3514228043";
+final String adUnitIDForAndroid = "ca-app-pub-3069349665651547/7645044745";
+final String adUnitIDForIOS = "ca-app-pub-3069349665651547/3514228043";
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     String adUnit = adUnitIDForAndroid;
 
     if (Platform.isAndroid) {
@@ -33,62 +32,63 @@ class MyApp extends StatelessWidget {
     }
 
     MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-      keywords: <String>['baby', 'life'],
+      keywords: <String>['insurance', 'loans', 'mortgage'],
       contentUrl: 'https://flutter.io',
       childDirected: false,
-      testDevices: <String>["8916E7F6511D794B8A9DE7869C837372"], // Android emulators are considered test devices
+      testDevices: <String>[
+        "8916E7F6511D794B8A9DE7869C837372"
+      ], // Android emulators are considered test devices
     );
 
-  
+    BannerAd myBanner = BannerAd(
+      // Replace the testAdUnitId with an ad unit id from the AdMob dash.
+      // https://developers.google.com/admob/android/test-ads
+      // https://developers.google.com/admob/ios/test-ads
+      adUnitId: adUnit,
+      size: AdSize.smartBanner,
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event) {
+        print("BannerAd event is $event");
+      },
+    );
 
-BannerAd myBanner = BannerAd(
-  // Replace the testAdUnitId with an ad unit id from the AdMob dash.
-  // https://developers.google.com/admob/android/test-ads
-  // https://developers.google.com/admob/ios/test-ads
-  adUnitId: adUnit,
-  size: AdSize.smartBanner,
-  targetingInfo: targetingInfo,
-  listener: (MobileAdEvent event) {
-    print("BannerAd event is $event");
-  },
-);
-
-InterstitialAd myInterstitial = InterstitialAd(
-  // Replace the testAdUnitId with an ad unit id from the AdMob dash.
-  // https://developers.google.com/admob/android/test-ads
-  // https://developers.google.com/admob/ios/test-ads
-  adUnitId: InterstitialAd.testAdUnitId,
-  targetingInfo: targetingInfo,
-  listener: (MobileAdEvent event) {
-    print("InterstitialAd event is $event");
-  },
-);
+    InterstitialAd myInterstitial = InterstitialAd(
+      // Replace the testAdUnitId with an ad unit id from the AdMob dash.
+      // https://developers.google.com/admob/android/test-ads
+      // https://developers.google.com/admob/ios/test-ads
+      adUnitId: InterstitialAd.testAdUnitId,
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event) {
+        print("InterstitialAd event is $event");
+      },
+    );
 
     myBanner
-    // typically this happens well before the ad is shown
-    ..load()
-    ..show(
-      // Positions the banner ad 60 pixels from the bottom of the screen
-      anchorOffset: 0.0,
-      // Positions the banner ad 10 pixels from the center of the screen to the right
-      horizontalCenterOffset: 0.0,
-      // Banner Position
-      anchorType: AnchorType.bottom,
-    );
+      // typically this happens well before the ad is shown
+      ..load()
+      ..show(
+        // Positions the banner ad 60 pixels from the bottom of the screen
+        anchorOffset: 0.0,
+        // Positions the banner ad 10 pixels from the center of the screen to the right
+        horizontalCenterOffset: 0.0,
+        // Banner Position
+        anchorType: AnchorType.bottom,
+      );
 
     return Provider(
       auth: AuthService(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: "Turalura",
         theme: ThemeData(
-          primaryColor: Colors.white,
+          primaryColor: Colors.blueGrey[900],
         ),
         // theme: new ThemeData(brightness: Brightness.light),
         // darkTheme: new ThemeData(brightness: Brightness.dark),
         home: HomeController(),
         routes: <String, WidgetBuilder>{
           '/home': (BuildContext context) => HomeController(),
-          '/country': (BuildContext context) => CountryView(),
+          // '/country': (BuildContext context) => CountryView(),
           '/add': (BuildContext context) => AddView(),
         },
       ),
@@ -120,17 +120,16 @@ class UserInfoController extends StatelessWidget {
     return StreamBuilder(
       stream: auth.getUserInfoSnapshot(),
       builder: (context, snapshot) {
-        if (snapshot.hasData){
-          if (!snapshot.data.exists) { 
+        if (snapshot.hasData) {
+          if (!snapshot.data.exists) {
             return OnboardView();
           }
           if (snapshot.data["currentBaby"] == null) {
             return AddView();
-          } 
-          else {
+          } else {
             return Home();
           }
-        }  
+        }
         return circularProgress();
       },
     );

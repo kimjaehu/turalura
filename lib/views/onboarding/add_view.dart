@@ -25,7 +25,7 @@ class _AddViewState extends State<AddView> {
     super.initState();
     isSelected = [true, false];
     _dateValidator = true;
-    _nameValidator = false;
+    _nameValidator = true;
     _dateOfBirth = _date;
   }
 
@@ -97,41 +97,55 @@ class _AddViewState extends State<AddView> {
     );
   }
 
-    milestoneMonthNum(dob) async {
+  milestoneMonthNum(dob) async {
     int monthSince;
-      // DateTime dobStr = DateTime.parse(dob.toDate().toString());
-      DateTime toDate = DateTime.now();
-      int dateDifference = toDate.difference(dob).inDays;
-      if ((dateDifference / 30.4375) >= 0 && (dateDifference / 30.4375) < 4) {
-        monthSince = 2;
-      } else if ((dateDifference / 30.4375) >= 4 &&
-          (dateDifference / 30.4375) < 6) {
-        monthSince = 4;
-      } else if ((dateDifference / 30.4375) >= 6 &&
-          (dateDifference / 30.4375) < 9) {
-        monthSince = 6;
-      } else if ((dateDifference / 30.4375) >= 9 &&
-          (dateDifference / 30.4375) < 12) {
-        monthSince = 9;
-      } else if ((dateDifference / 30.4375) >= 12 &&
-          (dateDifference / 30.4375) < 18) {
-        monthSince = 12;
-      } else if ((dateDifference / 30.4375) >= 18 &&
-          (dateDifference / 30.4375) < 24) {
-        monthSince = 18;
-      } else if ((dateDifference / 30.4375) >= 24 &&
-          (dateDifference / 30.4375) < 36) {
-        monthSince = 24;
-      } else if ((dateDifference / 30.4375) >= 36 &&
-          (dateDifference / 30.4375) < 48) {
-        monthSince = 36;
-      } else if ((dateDifference / 30.4375) >= 48 &&
-          (dateDifference / 30.4375) < 60) {
-        monthSince = 48;
-      } else {
-        monthSince = 60;
-      }
-      return monthSince.toString();
+    // DateTime dobStr = DateTime.parse(dob.toDate().toString());
+    DateTime toDate = DateTime.now();
+    int dateDifference = toDate.difference(dob).inDays;
+    if ((dateDifference / 30.4375) >= 0 && (dateDifference / 30.4375) < 4) {
+      monthSince = 2;
+    } else if ((dateDifference / 30.4375) >= 4 &&
+        (dateDifference / 30.4375) < 6) {
+      monthSince = 4;
+    } else if ((dateDifference / 30.4375) >= 6 &&
+        (dateDifference / 30.4375) < 9) {
+      monthSince = 6;
+    } else if ((dateDifference / 30.4375) >= 9 &&
+        (dateDifference / 30.4375) < 12) {
+      monthSince = 9;
+    } else if ((dateDifference / 30.4375) >= 12 &&
+        (dateDifference / 30.4375) < 18) {
+      monthSince = 12;
+    } else if ((dateDifference / 30.4375) >= 18 &&
+        (dateDifference / 30.4375) < 24) {
+      monthSince = 18;
+    } else if ((dateDifference / 30.4375) >= 24 &&
+        (dateDifference / 30.4375) < 36) {
+      monthSince = 24;
+    } else if ((dateDifference / 30.4375) >= 36 &&
+        (dateDifference / 30.4375) < 48) {
+      monthSince = 36;
+    } else if ((dateDifference / 30.4375) >= 48 &&
+        (dateDifference / 30.4375) < 60) {
+      monthSince = 48;
+    } else {
+      monthSince = 60;
+    }
+    return monthSince.toString();
+  }
+
+  Future<Null> selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(1954),
+      lastDate: _date,
+    );
+    if (picked != null && picked != _date) {
+      setState(() {
+        _date = picked;
+      });
+    }
   }
 
   @override
@@ -142,7 +156,7 @@ class _AddViewState extends State<AddView> {
         title: Text('New Baby'),
       ),
       body: SingleChildScrollView(
-              child: GestureDetector(
+        child: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
           },
@@ -173,7 +187,8 @@ class _AddViewState extends State<AddView> {
                       decoration: InputDecoration(
                           // labelText: "My Baby's Name",
                           alignLabelWithHint: false,
-                          errorText: _nameValidator ? 'Name can\'t be empty' : null,
+                          errorText:
+                              _nameValidator ? null : 'Name can\'t be empty',
                           labelStyle: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20.0),
                           enabledBorder: UnderlineInputBorder(
@@ -201,16 +216,22 @@ class _AddViewState extends State<AddView> {
                         color: Colors.deepPurple),
                   ),
                 ),
+                // IconButton(icon: Icon(Icons.alarm),
+                //   onPressed: () {
+                //     selectDate(context);
+                //   },
+                // ),
+
+                // Cupertino Date Picker not working
                 Container(
-                  height: height * 0.15,
+                  height: height * 0.2,
                   child: CupertinoDatePicker(
                     initialDateTime: _date,
-                    minimumDate: _date,
-                    maximumDate: _date,
-                    maximumYear: _date.year,
+                    // minimumDate: _date,
+                    // maximumDate: _date,
+                    // maximumYear: _date.year,
                     mode: CupertinoDatePickerMode.date,
                     onDateTimeChanged: (pickedDate) {
-                      print("$pickedDate, $_date");
                       if (pickedDate.isBefore(_date)) {
                         setState(() {
                           _dateValidator = true;
@@ -246,13 +267,13 @@ class _AddViewState extends State<AddView> {
                       onTap: () async {
                         setState(() {
                           _nameController.text.isEmpty
-                              ? _nameValidator = true
-                              : _nameValidator = false;
+                              ? _nameValidator = false
+                              : _nameValidator = true;
                         });
 
                         monthNum = await milestoneMonthNum(_dateOfBirth);
 
-                        if (_dateValidator || _nameValidator) {
+                        if (_dateValidator && _nameValidator) {
                           final uid =
                               await Provider.of(context).auth.getCurrentUID();
                           await db
@@ -266,9 +287,16 @@ class _AddViewState extends State<AddView> {
                             'timestamp': _date,
                           });
                           // 1) update user info
-                          await db.collection("users").document(uid).updateData({
+
+                          // await db.collection("users").document(uid).updateData({
+                          //   'currentBaby': _nameController.text,
+                          //   'dob': _dateOfBirth,
+                          // });
+
+                          // 1) create user info
+                          await db.collection("users").document(uid).setData({
                             'currentBaby': _nameController.text,
-                            'dob': _dateOfBirth,
+                            'dob': _dateOfBirth
                           });
 
                           // 2) create summaries
@@ -648,7 +676,8 @@ class _AddViewState extends State<AddView> {
                       },
                     ),
                   ),
-                ),SizedBox(
+                ),
+                SizedBox(
                   height: 60.0,
                 ),
               ],

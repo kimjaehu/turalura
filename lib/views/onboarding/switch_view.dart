@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:turalura/views/onboarding/add_view.dart';
+import 'package:turalura/widgets/progress_indicator.dart';
 import 'package:turalura/widgets/provider_widget.dart';
 
 class SwitchView extends StatelessWidget {
@@ -14,20 +15,24 @@ class SwitchView extends StatelessWidget {
       appBar: AppBar(
         title: Text('My baby'),
       ),
-      body: StreamBuilder(
-        stream: getUserBabyListStreamSnapshots(context),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) return babyCard(context, null, 0);
-          return new GridView.builder(
-            itemCount: snapshot.data.documents.length + 1,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              return babyCard(context, snapshot, index);
-            },
-          );
-        },
+      body: Container(
+        color: Colors.white,
+        child: StreamBuilder(
+          stream: getUserBabyListStreamSnapshots(context),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            // if (!snapshot.hasData) return babyCard(context, null, 0);
+            if (!snapshot.hasData) return circularProgress();
+            return new GridView.builder(
+              itemCount: snapshot.data.documents.length + 1,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return babyCard(context, snapshot, index);
+              },
+            );
+          },
+        ),
       ),
     );
   }
@@ -36,7 +41,6 @@ class SwitchView extends StatelessWidget {
     if (index == 0) {
       return GestureDetector(
         onTap: () {
-          print('add button');
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AddView()),
@@ -45,9 +49,11 @@ class SwitchView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Card(
+            color: Colors.blueGrey[700],
             child: Icon(
               Icons.add,
               size: 100.0,
+              color: Colors.white,
             ),
           ),
         ),
@@ -64,7 +70,6 @@ class SwitchView extends StatelessWidget {
             .document(uid)
             .updateData({'currentBaby': babyName, 'dob': dob});
         Navigator.of(context).pushReplacementNamed('/home');
-        print('switch button');
       },
       child: Padding(
         padding: const EdgeInsets.all(20.0),

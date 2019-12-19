@@ -151,11 +151,8 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
     if (!widget.summarySnapshot.hasData) {
       return circularProgress();
     }
-    print('dob ${widget.summarySnapshot.data['dob']}');
     DateTime dob =
         DateTime.parse(widget.summarySnapshot.data['dob'].toDate().toString());
-
-    print(dob);
 
     return Scaffold(
       appBar: AppBar(
@@ -170,16 +167,16 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                 height: MediaQuery.of(context).size.height * 0.5,
                 child: CupertinoDatePicker(
                   initialDateTime: _date,
-                  minimumDate: dob,
-                  minimumYear: dob.year,
-                  maximumDate: _date,
-                  maximumYear: _date.year,
+                  // minimumDate: dob,
+                  // minimumYear: dob.year,
+                  // maximumDate: _date,
+                  // maximumYear: _date.year,
                   mode: CupertinoDatePickerMode.date,
                   onDateTimeChanged: (pickedDate) {
-                    print("$pickedDate, $_date");
+                    print('picked date $pickedDate');
                     if (pickedDate.isBefore(_date) &&
                         pickedDate.isAfter(dob.subtract(new Duration(days: 1)))) {
-                      int dateDifference = pickedDate.difference(dob).inDays;
+                      // int dateDifference = pickedDate.difference(dob).inDays;
                       setState(() {
                         _dateValidator = true;
                         widget.measurement.measureDate = pickedDate;
@@ -194,91 +191,93 @@ class _NewMeasurementViewState extends State<NewMeasurementDateView> {
                   },
                 ),
               ),
-              ClipOval(
-                child: Material(
-                  color:_dateValidator ? Colors.deepPurple : Colors.grey[400],// button color
-                  child: InkWell(
-                    splashColor: Colors.white, // inkwell color
-                    child: SizedBox(
-                      width: 65,
-                      height: 65,
-                      child: Icon(_dateValidator?
-                        Icons.check : Icons.clear,
-                        size: 35,
-                        color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ClipOval(
+                  child: Material(
+                    color:_dateValidator ? Colors.deepPurple : Colors.grey[400],// button color
+                    child: InkWell(
+                      splashColor: Colors.white, // inkwell color
+                      child: SizedBox(
+                        width: 65,
+                        height: 65,
+                        child: Icon(_dateValidator?
+                          Icons.check : Icons.clear,
+                          size: 35,
+                          color: Colors.white,
+                        ),
                       ),
+                      onTap: () async {
+                        int dateDifference =
+                          widget.measurement.measureDate.difference(dob).inDays;
+                    String babyGender =
+                          widget.summarySnapshot.data['gender'];
+                      double heightPercentile = await calculatePercentile(
+                              babyGender,
+                              "height",
+                              dateDifference,
+                              widget.measurement.height,
+                              widget.measurement.unit)
+                          .catchError((onError) {
+                        print(onError);
+                      });
+                      double weightPercentile = await calculatePercentile(
+                              babyGender,
+                              "weight",
+                             dateDifference,
+                              widget.measurement.weight,
+                              widget.measurement.unit)
+                          .catchError((onError) {
+                        print(onError);
+                      });
+
+                    setState(() {
+                      widget.measurement.day = dateDifference;
+                      widget.measurement.heightPercentile = heightPercentile;
+                      widget.measurement.weightPercentile = weightPercentile;
+                    });
+
+                    if (_dateValidator) {
+                      final uid = await Provider.of(context).auth.getCurrentUID();
+                      final userInfo = await Firestore.instance
+                          .collection('users')
+                          .document(uid)
+                          .get();
+                      String userBaby = userInfo.data['currentBaby'].toString();
+                      
+
+                      await db
+                          .collection("measurements")
+                          .document(uid)
+                          .collection(userBaby.toLowerCase())
+                          .document(DateFormat('yyyyMMdd')
+                              .format(widget.measurement.measureDate))
+                          .setData(widget.measurement.toJson());
+
+                      final latestMeasure = await db.collection("measurements")
+                          .document(uid)
+                          .collection(userBaby.toLowerCase()).orderBy("measureDate", descending: true).limit(1).getDocuments();
+                      
+                      await db
+                          .collection("summaries")
+                          .document(uid)
+                          .collection(userBaby.toLowerCase())
+                          .document('summary')
+                          .updateData({
+                        'height': latestMeasure.documents[0].data["height"],
+                        'weight': latestMeasure.documents[0].data["weight"],
+                        'lastUpdated': latestMeasure.documents[0].data["measureDate"],
+                        'unit': latestMeasure.documents[0].data["unit"],
+                        'heightPercentile': latestMeasure.documents[0].data["heightPercentile"],
+                        'weightPercentile': latestMeasure.documents[0].data["weightPercentile"]
+                      });
+                      
+                      Navigator.of(context).pushReplacementNamed('/home');
+                    } else {
+                      Text('');
+                    }
+                      },
                     ),
-                    onTap: () async {
-                      int dateDifference =
-                        widget.measurement.measureDate.difference(dob).inDays;
-                  String babyGender =
-                        widget.summarySnapshot.data['gender'];
-                  print('babygender: $babyGender');
-                    double heightPercentile = await calculatePercentile(
-                            babyGender,
-                            "height",
-                            dateDifference,
-                            widget.measurement.height,
-                            widget.measurement.unit)
-                        .catchError((onError) {
-                      print(onError);
-                    });
-                    double weightPercentile = await calculatePercentile(
-                            babyGender,
-                            "weight",
-                           dateDifference,
-                            widget.measurement.weight,
-                            widget.measurement.unit)
-                        .catchError((onError) {
-                      print(onError);
-                    });
-
-                  setState(() {
-                    widget.measurement.day = dateDifference;
-                    widget.measurement.heightPercentile = heightPercentile;
-                    widget.measurement.weightPercentile = weightPercentile;
-                  });
-
-                  if (_dateValidator) {
-                    final uid = await Provider.of(context).auth.getCurrentUID();
-                    final userInfo = await Firestore.instance
-                        .collection('users')
-                        .document(uid)
-                        .get();
-                    String userBaby = userInfo.data['currentBaby'].toString();
-                    
-
-                    await db
-                        .collection("measurements")
-                        .document(uid)
-                        .collection(userBaby.toLowerCase())
-                        .document(DateFormat('yyyyMMdd')
-                            .format(widget.measurement.measureDate))
-                        .setData(widget.measurement.toJson());
-
-                    final latestMeasure = await db.collection("measurements")
-                        .document(uid)
-                        .collection(userBaby.toLowerCase()).orderBy("measureDate", descending: true).limit(1).getDocuments();
-                    
-                    await db
-                        .collection("summaries")
-                        .document(uid)
-                        .collection(userBaby.toLowerCase())
-                        .document('summary')
-                        .updateData({
-                      'height': latestMeasure.documents[0].data["height"],
-                      'weight': latestMeasure.documents[0].data["weight"],
-                      'lastUpdated': latestMeasure.documents[0].data["measureDate"],
-                      'unit': latestMeasure.documents[0].data["unit"],
-                      'heightPercentile': latestMeasure.documents[0].data["heightPercentile"],
-                      'weightPercentile': latestMeasure.documents[0].data["weightPercentile"]
-                    });
-                    
-                    Navigator.of(context).pushReplacementNamed('/home');
-                  } else {
-                    Text('');
-                  }
-                    },
                   ),
                 ),
               ),

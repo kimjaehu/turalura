@@ -1226,7 +1226,6 @@ class _MilestoneViewState extends State<MilestoneView> {
       builder: (context, summarySnapshot) {
         if (!summarySnapshot.hasData || summarySnapshot.data == null)
           return circularProgress();
-        print(summarySnapshot.data);
         String currentBaby =
             summarySnapshot.data["name"].toString().toLowerCase();
         if (monthNum == null) return circularProgress();
@@ -1236,90 +1235,126 @@ class _MilestoneViewState extends State<MilestoneView> {
           builder: (context, snapshot) {
             if (!snapshot.hasData) return circularProgress();
             selectedCount = 0;
-            return Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: monthsList.length,
-                      itemBuilder: (context, index) {
-                        String buttonText;
-                        if (int.parse(monthsList[index]) % 12 == 0) {
-                          buttonText =
-                              '${(int.parse(monthsList[index]) / 12).toStringAsFixed(0)} yr.';
-                        } else {
-                          buttonText = '${monthsList[index]} mo.';
-                        }
-                        return Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: RaisedButton(
-                              onPressed: () {
-                                setState(() {
-                                  monthNum = monthsList[index].toString();
-                                });
-                              },
-                              color: monthNum == monthsList[index]
-                                  ? Colors.deepPurple
-                                  : initMonth < int.parse(monthsList[index])
-                                      ? Colors.grey
-                                      : Colors.deepPurple[200],
-                              child: Center(
-                                child: AutoSizeText(
-                                  buttonText,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
+            return Container(
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: <Widget>[
-                        milestoneHeading("Social/Emotional", Colors.blue),
-                        getMilestoneCards(snapshot, monthNum,
-                            "Social/Emotional", Colors.blue, currentBaby),
-                        milestoneHeading(
-                            "Language/Communication", Colors.green),
-                        getMilestoneCards(
-                            snapshot,
-                            monthNum,
-                            "Language/Communication",
-                            Colors.green,
-                            currentBaby),
-                        milestoneHeading(
-                            "Cognitive (learning, thinking, problem-solving)",
-                            Colors.orange),
-                        getMilestoneCards(
-                            snapshot,
-                            monthNum,
-                            "Cognitive (learning, thinking, problem-solving)",
-                            Colors.orange,
-                            currentBaby),
-                        milestoneHeading(
-                            "Movement/Physical Development", Colors.blue),
-                        getMilestoneCards(
-                            snapshot,
-                            monthNum,
-                            "Movement/Physical Development",
-                            Colors.indigo,
-                            currentBaby),
+                        AutoSizeText(
+                          "Developmental Milestones",
+                          style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey[800]),
+                          maxLines: 1,
+                        ),
+                        Align(
+                            alignment: Alignment.bottomRight,
+                            child: AutoSizeText(
+                              "Materials developed by CDC",
+                              style: TextStyle(
+                                  fontSize: 8.0, color: Colors.blueGrey[800]),
+                              maxLines: 1,
+                            ))
                       ],
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: monthsList.length,
+                        itemBuilder: (context, index) {
+                          String buttonText;
+                          if (int.parse(monthsList[index]) % 12 == 0) {
+                            buttonText =
+                                '${(int.parse(monthsList[index]) / 12).toStringAsFixed(0)} yr.';
+                          } else {
+                            buttonText = '${monthsList[index]} mo.';
+                          }
+                          return Container(
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: FlatButton(
+                                onPressed: () {
+                                  setState(() {
+                                    monthNum = monthsList[index].toString();
+                                  });
+                                },
+                                color: monthNum == monthsList[index]
+                                    ? Colors.deepPurple
+                                    : initMonth < int.parse(monthsList[index])
+                                        ? Colors.grey
+                                        : Colors.deepPurple[200],
+                                child: Center(
+                                  child: AutoSizeText(
+                                    buttonText,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    //     color: monthNum == monthsList[index]
+                                    // ? Colors.orange[700]
+                                    // : initMonth < int.parse(monthsList[index])
+                                    //     ? Colors.grey
+                                    //     : Colors.orange,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              milestoneHeading("Social/Emotional", Colors.blue),
+                              getMilestoneCards(snapshot, monthNum,
+                              "Social/Emotional", Colors.blue, currentBaby),
+                            ],
+                          ),
+                          
+                          milestoneHeading(
+                              "Language/Communication", Colors.green),
+                          getMilestoneCards(
+                              snapshot,
+                              monthNum,
+                              "Language/Communication",
+                              Colors.green,
+                              currentBaby),
+                          milestoneHeading(
+                              "Cognitive (learning, thinking, problem-solving)",
+                              Colors.orange),
+                          getMilestoneCards(
+                              snapshot,
+                              monthNum,
+                              "Cognitive (learning, thinking, problem-solving)",
+                              Colors.orange,
+                              currentBaby),
+                          milestoneHeading(
+                              "Movement/Physical Development", Colors.blue),
+                          getMilestoneCards(
+                              snapshot,
+                              monthNum,
+                              "Movement/Physical Development",
+                              Colors.indigo,
+                              currentBaby),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           },
         );
@@ -1329,22 +1364,20 @@ class _MilestoneViewState extends State<MilestoneView> {
 
   Widget milestoneHeading(String headText, Color color) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 0.0),
-      child: Card(
+      padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 0.0),
+      child: Container(
         color: color,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
-            child: Center(
-              child: AutoSizeText(
-                headText,
-                maxLines: 1,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold),
-              ),
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 12.0),
+          child: Center(
+            child: AutoSizeText(
+              headText,
+              maxLines: 1,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -1363,117 +1396,116 @@ class _MilestoneViewState extends State<MilestoneView> {
         return milestoneList[monthNum][index]["category"] != category
             ? SizedBox()
             : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Material(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    child: Card(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: AutoSizeText(
-                                  milestoneList[monthNum][index]["id"],
-                                  style: TextStyle(
-                                      color: int.parse(monthNum) <= initMonth
-                                          ? cardColor
-                                          : Colors.grey,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                  maxLines: 1,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 9,
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  // color: Colors.blueGrey[800],
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  child: Card(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 2,
+                          child: Center(
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: AutoSizeText(
-                                milestoneList[monthNum][index]["milestone"],
+                                milestoneList[monthNum][index]["id"],
                                 style: TextStyle(
                                     color: int.parse(monthNum) <= initMonth
                                         ? cardColor
                                         : Colors.grey,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
-                                maxLines: 2,
+                                maxLines: 1,
                               ),
                             ),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Center(
-                              child: int.parse(monthNum) <= initMonth
-                                  ? IconButton(
-                                      icon: Icon(snapshot.data[monthNum]
-                                              [milestoneNum]
-                                          ? Icons.check_box
-                                          : Icons.check_box_outline_blank),
-                                      iconSize: 40,
-                                      color: cardColor,
-                                      onPressed: () async {
-                                        final uid = await Provider.of(context)
-                                            .auth
-                                            .getCurrentUID();
-
-                                        await Firestore.instance
-                                            .collection("milestones")
-                                            .document(uid)
-                                            .setData({
-                                          monthNum: {
-                                            milestoneNum:
-                                                snapshot.data[monthNum]
-                                                        [milestoneNum]
-                                                    ? false
-                                                    : true
-                                          }
-                                        }, merge: true);
-                                        int milestonesCount;
-                                        int selectedMilestones = 0;
-                                        await Firestore.instance
-                                            .collection("milestones")
-                                            .document(uid)
-                                            .get()
-                                            .then((doc) => {
-                                                  milestonesCount =
-                                                      doc.data[monthNum].length,
-                                                  doc.data[monthNum].forEach(
-                                                      (index, milestone) => {
-                                                            milestone
-                                                                ? selectedMilestones++
-                                                                : null
-                                                          })
-                                                });
-
-                                        await Firestore.instance
-                                            .collection("summaries")
-                                            .document(uid)
-                                            .collection(currentBaby)
-                                            .document("summary")
-                                            .updateData({
-                                          'monthNum': monthNum,
-                                          'milestonesCompleted':
-                                              selectedMilestones,
-                                          'milestonesCount': milestonesCount,
-                                        });
-                                      },
-                                    )
-                                  : IconButton(
-                                      icon: Icon(Icons.check_box_outline_blank),
-                                      iconSize: 40,
-                                      color: Colors.grey,
-                                      onPressed: () async {},
-                                    ),
+                        ),
+                        Expanded(
+                          flex: 9,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: AutoSizeText(
+                              milestoneList[monthNum][index]["milestone"],
+                              style: TextStyle(
+                                  color: int.parse(monthNum) <= initMonth
+                                      ? cardColor
+                                      : Colors.grey,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                              maxLines: 2,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Center(
+                            child: int.parse(monthNum) <= initMonth
+                                ? IconButton(
+                                    icon: Icon(snapshot.data[monthNum]
+                                            [milestoneNum]
+                                        ? Icons.check_box
+                                        : Icons.check_box_outline_blank),
+                                    iconSize: 40,
+                                    color: cardColor,
+                                    onPressed: () async {
+                                      final uid = await Provider.of(context)
+                                          .auth
+                                          .getCurrentUID();
+
+                                      await Firestore.instance
+                                          .collection("milestones")
+                                          .document(uid)
+                                          .setData({
+                                        monthNum: {
+                                          milestoneNum:
+                                              snapshot.data[monthNum]
+                                                      [milestoneNum]
+                                                  ? false
+                                                  : true
+                                        }
+                                      }, merge: true);
+                                      int milestonesCount;
+                                      int selectedMilestones = 0;
+                                      await Firestore.instance
+                                          .collection("milestones")
+                                          .document(uid)
+                                          .get()
+                                          .then((doc) => {
+                                                milestonesCount =
+                                                    doc.data[monthNum].length,
+                                                doc.data[monthNum].forEach(
+                                                    (index, milestone) => {
+                                                          milestone
+                                                              ? selectedMilestones++
+                                                              : null
+                                                        })
+                                              });
+
+                                      await Firestore.instance
+                                          .collection("summaries")
+                                          .document(uid)
+                                          .collection(currentBaby)
+                                          .document("summary")
+                                          .updateData({
+                                        'monthNum': monthNum,
+                                        'milestonesCompleted':
+                                            selectedMilestones,
+                                        'milestonesCount': milestonesCount,
+                                      });
+                                    },
+                                  )
+                                : IconButton(
+                                    icon: Icon(Icons.check_box_outline_blank),
+                                    iconSize: 40,
+                                    color: Colors.grey,
+                                    onPressed: () async {},
+                                  ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

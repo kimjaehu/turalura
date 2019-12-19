@@ -37,137 +37,139 @@ class MeasurementCard extends StatelessWidget {
       lastUpdated = null;
     }
     return Container(
-      margin: EdgeInsets.only(right: 5.0, left: 5.0),
       height: MediaQuery.of(context).size.height * 0.10,
-      child: Card(
-        color: Colors.orange,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 4,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    AutoSizeText(
-                      "Last updated",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01,
-                    ),
-                    AutoSizeText(
-                      lastUpdated == null
-                          ? "No data yet"
-                          : new DateFormat('MMM. d, yyyy').format(lastUpdated),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+      // child: Card(
+          
+          color: Colors.blue,
+          child: Row(
+      children: <Widget>[
+        Expanded(
+          flex: 4,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                AutoSizeText(
+                  "Last updated",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-              ),
-            ),
-            VerticalDivider(
-              color: Colors.white,
-              indent: 5.0,
-              endIndent: 5.0,
-            ),
-            Expanded(
-              flex: 3,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    AutoSizeText(
-                      "Height",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01,
-                    ),
-                    AutoSizeText(
-                      height,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
-              ),
-            ),
-            VerticalDivider(
-              color: Colors.white,
-              indent: 5.0,
-              endIndent: 5.0,
-            ),
-            Expanded(
-              flex: 3,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    AutoSizeText(
-                      "Weight",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01,
-                    ),
-                    AutoSizeText(
-                      weight,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                AutoSizeText(
+                  lastUpdated == null
+                      ? "No data yet"
+                      : new DateFormat('MMM. d, yyyy').format(lastUpdated),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold),
                 ),
-              ),
+              ],
             ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Card(
-                  child: InkWell(
-                    splashColor: Colors.orange, // splash color
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NewMeasurementView(
-                            measurement: newMeasurement,
-                            summarySnapshot: summarySnapshot,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.straighten,
-                          color: Colors.orange,
-                          size: 30.0,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+        VerticalDivider(
+          color: Colors.white,
+          indent: 5.0,
+          endIndent: 5.0,
+        ),
+        Expanded(
+          flex: 3,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                AutoSizeText(
+                  "Height",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
+                AutoSizeText(
+                  height,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ),
+        VerticalDivider(
+          color: Colors.white,
+          indent: 5.0,
+          endIndent: 5.0,
+        ),
+        Expanded(
+          flex: 3,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                AutoSizeText(
+                  "Weight",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
+                AutoSizeText(
+                  weight,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Card(
+              color: Colors.white,
+              child: InkWell(
+                splashColor: Colors.blue, // splash color
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NewMeasurementView(
+                        measurement: newMeasurement,
+                        summarySnapshot: summarySnapshot,
+                      ),
+                    ),
+                  );
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.straighten,
+                      color: Colors.blue,
+                      size: 36.0,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+          ),
+        // ),
     );
   }
 }

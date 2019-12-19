@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:turalura/models/Measurement.dart';
-import 'package:turalura/views/onboarding/switch_view.dart';
+import 'package:turalura/views/teething_view.dart';
 import 'package:turalura/widgets/measurement_card.dart';
 import 'package:turalura/widgets/progress_indicator.dart';
 import 'package:turalura/widgets/provider_widget.dart';
@@ -11,6 +11,13 @@ class HomeView extends StatefulWidget {
   @override
   _HomeViewState createState() => _HomeViewState();
 }
+
+Color backgroundColor = Colors.white;
+Color focusTextColor = Colors.blueGrey[800];
+Color primaryTextColor = Colors.white;
+Color primaryCardColor = Colors.orange[700];
+Color secondaryCardColor = Colors.orange;
+Color tertiaryCardColor = Colors.orange[400];
 
 class _HomeViewState extends State<HomeView> {
   final newMeasurement =
@@ -36,7 +43,8 @@ class _HomeViewState extends State<HomeView> {
               DateTime toDate = DateTime.now();
               double monthDifference =
                   (toDate.difference(dob).inDays) / 30.4375;
-              return SafeArea(
+              return Container(
+                color: backgroundColor,
                 child: Column(
                   children: <Widget>[
                     babyCard(context, userSnapshot),
@@ -62,39 +70,22 @@ class _HomeViewState extends State<HomeView> {
     }
     String currentBaby = userSnapshot.data['currentBaby'];
     return Container(
-      height: MediaQuery.of(context).size.height * 0.1,
-      margin: EdgeInsets.all(5.0),
+      height: MediaQuery.of(context).size.height * 0.07,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SwitchView()),
-                  );
-                },
-                child:
-                    Icon(Icons.menu, size: 50.0, color: Colors.blueGrey[700]),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.all(12.0),
-                child: AutoSizeText(
-                  currentBaby,
-                  maxLines: 2,
-                  style: TextStyle(
-                      color: Colors.grey[700],
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold),
+          Center(
+            child: Padding(
+              padding: EdgeInsets.all(4.0),
+              child: AutoSizeText(
+                currentBaby,
+                maxLines: 1,
+                style: TextStyle(
+                  color: focusTextColor,
+                  fontSize: 60.0,
+                  fontFamily: 'Lobster',
+                  // fontWeight: FontWeight.bold
                 ),
               ),
             ),
@@ -124,28 +115,27 @@ class _HomeViewState extends State<HomeView> {
             : '-';
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.15,
-      margin: EdgeInsets.only(right: 5.0, left: 5.0),
+      height: MediaQuery.of(context).size.height * 0.19,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
             flex: 5,
-            child: Card(
-              color: Colors.blue,
+            child: Container(
+              color: primaryCardColor,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  AutoSizeText(
-                    "Days Since birth",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
+                  // AutoSizeText(
+                  //   "Days Since birth",
+                  //   style: TextStyle(
+                  //       color: Colors.white, fontWeight: FontWeight.bold),
+                  // ),
+                  // SizedBox(
+                  //   height: MediaQuery.of(context).size.height * 0.02,
+                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -154,8 +144,9 @@ class _HomeViewState extends State<HomeView> {
                       AutoSizeText(
                         dateDifference.toString(),
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30.0,
+                            fontFamily: 'Lobster',
+                            color: primaryTextColor,
+                            fontSize: 40.0,
                             fontWeight: FontWeight.bold),
                       ),
                       Padding(
@@ -163,7 +154,7 @@ class _HomeViewState extends State<HomeView> {
                         child: AutoSizeText(
                           "days old",
                           style: TextStyle(
-                              color: Colors.white,
+                              color: primaryTextColor,
                               fontSize: 15.0,
                               fontWeight: FontWeight.bold),
                         ),
@@ -176,16 +167,16 @@ class _HomeViewState extends State<HomeView> {
           ),
           Expanded(
             flex: 5,
-            child: Card(
-              color: Colors.teal,
+            child: Container(
+              color: secondaryCardColor,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   AutoSizeText(
-                    "$milestoneMonthNum mo. milestone",
+                    "$milestoneMonthNum mo. milestones",
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                        color: primaryTextColor, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
@@ -198,34 +189,35 @@ class _HomeViewState extends State<HomeView> {
                       AutoSizeText(
                         milestonesCompleted,
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30.0,
+                            fontFamily: 'Lobster',
+                            color: primaryTextColor,
+                            fontSize: 40.0,
                             fontWeight: FontWeight.bold),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 5.0),
+                        padding: EdgeInsets.only(left: 4.0, right: 4.0),
                         child: AutoSizeText(
                           "/",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.0,
+                              color: primaryTextColor,
+                              fontSize: 18.0,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                       AutoSizeText(
                         milestonesCount,
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.0,
+                            color: primaryTextColor,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       ),
-                      AutoSizeText(
-                        " completed",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      // AutoSizeText(
+                      //   " completed",
+                      //   style: TextStyle(
+                      //       color: Colors.white,
+                      //       fontSize: 15.0,
+                      //       fontWeight: FontWeight.bold),
+                      // ),
                     ],
                   ),
                 ],
@@ -268,16 +260,15 @@ class _HomeViewState extends State<HomeView> {
       weightPercentile = '-';
     }
     return Container(
-      height: MediaQuery.of(context).size.height * 0.175,
-      margin: EdgeInsets.only(right: 5.0, left: 5.0),
+      height: MediaQuery.of(context).size.height * 0.2,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
             flex: 5,
-            child: Card(
-              color: Colors.deepPurple,
+            child: Container(
+              color: secondaryCardColor,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -288,7 +279,7 @@ class _HomeViewState extends State<HomeView> {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
+                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -298,8 +289,9 @@ class _HomeViewState extends State<HomeView> {
                         TextSpan(
                             text: heightPercentile,
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30.0,
+                                fontFamily: 'Lobster',
+                                color: primaryTextColor,
+                                fontSize: 40.0,
                                 fontWeight: FontWeight.bold),
                             children: <TextSpan>[
                               TextSpan(
@@ -320,8 +312,8 @@ class _HomeViewState extends State<HomeView> {
           ),
           Expanded(
             flex: 5,
-            child: Card(
-              color: Colors.redAccent,
+            child: Container(
+              color: primaryCardColor,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -332,7 +324,7 @@ class _HomeViewState extends State<HomeView> {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
+                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -342,8 +334,9 @@ class _HomeViewState extends State<HomeView> {
                         TextSpan(
                             text: weightPercentile,
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30.0,
+                                fontFamily: 'Lobster',
+                                color: primaryTextColor,
+                                fontSize: 40.0,
                                 fontWeight: FontWeight.bold),
                             children: <TextSpan>[
                               TextSpan(
@@ -368,105 +361,113 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget teethingCard(context, monthDifference) {
-    String _assetName;
-    String _scheduleText;
+    String assetName;
+    String scheduleText;
     if (monthDifference < 6) {
-      _assetName = 'assets/images/teething/zerotosix.svg';
-      _scheduleText = null;
+      assetName = 'assets/images/teething/zerotosix.svg';
+      scheduleText = '0 to 6 months';
     } else if (monthDifference >= 6 && monthDifference < 8) {
-      _assetName = 'assets/images/teething/sixtoten.svg';
-      _scheduleText = '6 to 10 months';
+      assetName = 'assets/images/teething/sixtoten.svg';
+      scheduleText = '6 to 10 months';
     } else if (monthDifference >= 8 && monthDifference < 9) {
-      _assetName = 'assets/images/teething/eighttotwelve.svg';
-      _scheduleText = '8 to 12 months';
+      assetName = 'assets/images/teething/eighttotwelve.svg';
+      scheduleText = '8 to 12 months';
     } else if (monthDifference >= 9 && monthDifference < 10) {
-      _assetName = 'assets/images/teething/ninetothirteen.svg';
-      _scheduleText = '9 to 13 months';
+      assetName = 'assets/images/teething/ninetothirteen.svg';
+      scheduleText = '9 to 13 months';
     } else if (monthDifference >= 10 && monthDifference < 13) {
-      _assetName = 'assets/images/teething/tentosixteen.svg';
-      _scheduleText = '10 to 13 months';
+      assetName = 'assets/images/teething/tentosixteen.svg';
+      scheduleText = '10 to 13 months';
     } else if (monthDifference >= 13 && monthDifference < 14) {
-      _assetName = 'assets/images/teething/thirteentonineteen.svg';
-      _scheduleText = '13 to 19 months';
+      assetName = 'assets/images/teething/thirteentonineteen.svg';
+      scheduleText = '13 to 19 months';
     } else if (monthDifference >= 14 && monthDifference < 16) {
-      _assetName = 'assets/images/teething/fourteentoeighteen.svg';
-      _scheduleText = '14 to 18 months';
+      assetName = 'assets/images/teething/fourteentoeighteen.svg';
+      scheduleText = '14 to 18 months';
     } else if (monthDifference >= 16 && monthDifference < 17) {
-      _assetName = 'assets/images/teething/sixteentotwentytwo.svg';
-      _scheduleText = '16 to 22 months';
+      assetName = 'assets/images/teething/sixteentotwentytwo.svg';
+      scheduleText = '16 to 22 months';
     } else if (monthDifference >= 17 && monthDifference < 23) {
-      _assetName = 'assets/images/teething/seventeentotwentythree.svg';
-      _scheduleText = '17 to 23 months';
+      assetName = 'assets/images/teething/seventeentotwentythree.svg';
+      scheduleText = '17 to 23 months';
     } else if (monthDifference >= 23 && monthDifference < 25) {
-      _assetName = 'assets/images/teething/twentythreetothirtyone.svg';
-      _scheduleText = '23 to 31 months';
+      assetName = 'assets/images/teething/twentythreetothirtyone.svg';
+      scheduleText = '23 to 31 months';
     } else if (monthDifference >= 25 && monthDifference < 33) {
-      _assetName = 'assets/images/teething/twentyfivetothirtythree.svg';
-      _scheduleText = '25 to 33 months';
+      assetName = 'assets/images/teething/twentyfivetothirtythree.svg';
+      scheduleText = '25 to 33 months';
     } else {
-      _assetName = 'assets/images/teething/twentyfivetothirtythree.svg';
-      _scheduleText = null;
+      assetName = 'assets/images/teething/twentyfivetothirtythree.svg';
+      scheduleText = null;
     }
     return Expanded(
-          child: Container(
-        // height: MediaQuery.of(context).size.height * 0.15,
-        margin: EdgeInsets.only(right: 5.0, left: 5.0),
+      child: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              flex: 5,
-              child: Card(
-                color: Colors.yellow,
+              flex: 3,
+              child: Container(
+                color: Colors.blueGrey[100],
                 child: Column(
                   children: <Widget>[
-                    // AutoSizeText(
-                    //   "Teething Chart",
-                    //   style: TextStyle(
-                    //       fontSize: 20.0,
-                    //       fontWeight: FontWeight.bold,
-                    //       color: Colors.brown),
-                    // ),
                     Expanded(
-                      child: Stack(
-                        alignment: AlignmentDirectional.center,
-                        children: <Widget>[
-                          SvgPicture.asset(_assetName,
-                              semanticsLabel: 'Baby Teething Chart'),
-                          Positioned(
-                            child: Container(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: AutoSizeText(
-                                      "Teething Chart",
-                                      style: TextStyle(
-                                          fontSize: 12.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.brown),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: _scheduleText != null
-                                        ? AutoSizeText(
-                                            _scheduleText,
-                                            style: TextStyle(
-                                                fontSize: 8.0,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.brown),
-                                          )
-                                        : null,
-                                  )
-                                ],
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TeethingView(
+                                assetName: assetName,
+                                scheduleText: scheduleText,
                               ),
                             ),
+                          );
+                        },
+                        child: Container(
+                          child: Stack(
+                            alignment: AlignmentDirectional.center,
+                            children: <Widget>[
+                              SvgPicture.asset(assetName,
+                                  semanticsLabel: 'Baby Teething Chart'),
+                              Positioned(
+                                child: Container(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: AutoSizeText(
+                                          "Teething",
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blueGrey[700]),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: scheduleText != null
+                                            ? AutoSizeText(
+                                                scheduleText,
+                                                style: TextStyle(
+                                                    fontFamily: 'Lobster',
+                                                    fontSize: 8.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: focusTextColor),
+                                              )
+                                            : null,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ],
@@ -474,24 +475,76 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             Expanded(
-                flex: 5,
-                child: GestureDetector(
+              flex: 3,
+              child: InkWell(
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => TeethingView(
+                  //       assetName: assetName,
+                  //       scheduleText: scheduleText,
+                  //     ),
+                  //   ),
+                  // );
+                },
+                child: Container(
+                  color: Colors.blueGrey[300],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Icon(
+                        Icons.airline_seat_individual_suite,
+                        size: 32,
+                        color: primaryTextColor,
+                      ),
+                      AutoSizeText(
+                        getSleepText(monthDifference),
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontFamily: 'Lobster',
+                            fontSize: 16.0,
+                            color: primaryTextColor,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+                flex: 3,
+                child: InkWell(
                   onTap: () {
-                    // FlutterWebBrowser.openWebPage(
-                    //     url: "https://www.paypal.me/turalurababy/",
-                    //     androidToolbarColor: Colors.orange);
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => TeethingView(
+                    //       assetName: assetName,
+                    //       scheduleText: scheduleText,
+                    //     ),
+                    //   ),
+                    // );
                   },
-                  child: Card(
-                    color: Colors.cyan,
+                  child: Container(
+                    color: Colors.blueGrey[700],
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Icon(
-                          Icons.child_friendly,
-                          size: 75,
-                          color: Colors.white,
+                          Icons.restaurant,
+                          size: 32,
+                          color: primaryTextColor,
                         ),
-                        // AutoSizeText("Support Turalura!", style: TextStyle(fontFamily: 'Lobster', fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.bold),)
+                        AutoSizeText(
+                          getFoodText(monthDifference),
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontFamily: 'Lobster',
+                              fontSize: 16.0,
+                              color: primaryTextColor,
+                              fontWeight: FontWeight.bold),
+                        )
                       ],
                     ),
                   ),
@@ -504,17 +557,25 @@ class _HomeViewState extends State<HomeView> {
 
   String getSleepText(double monthDifference) {
     if (monthDifference > 0 && monthDifference < 4) {
-      return '14-17 hrs';
+      return 'Sleep 14-17 hrs';
     }
     if (monthDifference >= 4 && monthDifference < 12) {
-      return '12–16 hrs';
+      return 'Sleep 12–16 hrs';
     }
     if (monthDifference >= 12 && monthDifference < 24) {
-      return '11–14 hrs';
+      return 'Sleep 11–14 hrs';
     }
-    if (monthDifference >= 24 && monthDifference < 60) {
-      return '10–13 hrs';
+    return 'Sleep 10–13 hrs';
+  }
+
+  String getFoodText(double monthDifference) {
+    if (monthDifference > 0 && monthDifference < 6) {
+      return 'Breastfeeding/Formula';
     }
+    if (monthDifference >= 6 && monthDifference < 12) {
+      return 'begin adding solid foods';
+    }
+    return 'regular meals and snacks';
   }
 
   // Widget buildGearsCard(BuildContext context, int index) {

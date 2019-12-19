@@ -22493,7 +22493,7 @@ class _GrowthChartState extends State<GrowthChart> {
           : _girlWeightFifthData(dateDifference),
       isCurved: true,
       colors: [
-        Colors.red[100],
+        Colors.redAccent[100],
       ],
       barWidth: 4,
       isStrokeCapRound: true,
@@ -22545,30 +22545,45 @@ class _GrowthChartState extends State<GrowthChart> {
       spots: widget.category == 'height'
           ? _actualHeightData()
           : _actualWeightData(),
-      isCurved: true,
+      isCurved: false,
+      // curveSmoothness: 0.1,
       colors: [
-        Colors.teal,
+        Colors.blueGrey[800],
       ],
       barWidth: 4,
       isStrokeCapRound: true,
-      dotData: FlDotData(show: true, dotSize: 2),
+      dotData: FlDotData(show: false),
       belowBarData: BarAreaData(
         show: false,
       ),
     );
+
+    if (widget.measurementSnapshot.data.documents.length != 0) {
+      return widget.summarySnapshot.data["gender"] == 'boy'
+          ? [
+              boyFifth,
+              boyFiftieth,
+              boyNinetyfifth,
+              actualData,
+            ]
+          : [
+              girlFifth,
+              girlFiftieth,
+              girlNinetyfifth,
+              actualData,
+            ];
+    }
 
     return widget.summarySnapshot.data["gender"] == 'boy'
         ? [
             boyFifth,
             boyFiftieth,
             boyNinetyfifth,
-            actualData,
           ]
         : [
             girlFifth,
             girlFiftieth,
             girlNinetyfifth,
-            actualData,
           ];
   }
 
@@ -22599,8 +22614,8 @@ class _GrowthChartState extends State<GrowthChart> {
           show: true,
           border: Border(
             bottom: BorderSide(
-              color: const Color(0xff4e4965),
-              width: 4,
+              color: Colors.blueGrey[700],
+              width: 2,
             ),
             left: BorderSide(
               color: Colors.transparent,
@@ -22622,49 +22637,50 @@ class _GrowthChartState extends State<GrowthChart> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 8.0, right: 8.0),
-        child: Card(
-          child: Center(
-            child: Stack(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      AutoSizeText(
-                        '95th percentile',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green[300],
-                        ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    AutoSizeText(
+                      '95th',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
                       ),
-                      AutoSizeText(
-                        '50th percentile',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey[400],
-                        ),
+                    ),
+                    AutoSizeText(
+                      '50th',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[400],
                       ),
-                      AutoSizeText(
-                        '5th percentile',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red[300],
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                    AutoSizeText(
+                      '5th',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    )
+                  ],
                 ),
-                !widget.measurementSnapshot.hasData
-                    ? circularProgress()
-                    : Container(
-                        child: LineChart(_growthChartData()),
-                      )
-              ],
-            ),
+              ),
+              !widget.measurementSnapshot.hasData
+                  ? circularProgress()
+                  : Container(
+                      child: LineChart(_growthChartData()),
+                    )
+            ],
           ),
         ),
-      );
+      ],
+    );
   }
 }

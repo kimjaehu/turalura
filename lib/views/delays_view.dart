@@ -543,69 +543,95 @@ class _DelaysViewState extends State<DelaysView> {
               return circularProgress();
             }
             selectedCount = 0;
-            return Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: monthsList.length,
-                      itemBuilder: (context, index) {
-                        String buttonText;
-                        if (int.parse(monthsList[index]) % 12 == 0) {
-                          buttonText =
-                              '${(int.parse(monthsList[index]) / 12).toStringAsFixed(0)} yr.';
-                        } else {
-                          buttonText = '${monthsList[index]} mo.';
-                        }
-                        return Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: RaisedButton(
-                              onPressed: () {
-                                setState(() {
-                                  monthNum = monthsList[index].toString();
-                                });
-                              },
-                              color: monthNum == monthsList[index]
-                                  ? Colors.red
-                                  : initMonth < int.parse(monthsList[index])
-                                      ? Colors.grey
-                                      : Colors.red[200],
-                              child: Center(
-                                child: AutoSizeText(
-                                  buttonText,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
+            return Container(
+              color: Colors.red[50],
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: <Widget>[
-                        delaysHeading("Signs of possible developmental delay",
-                            Colors.red),
-                        getdelaysCards(
-                            snapshot,
-                            monthNum,
-                            "Signs of possible developmental delay",
-                            Colors.red),
+                        AutoSizeText(
+                          "Signs of possible developmental delay",
+                          style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey[700]),
+                          maxLines: 1,
+                        ),
+                        Align(
+                            alignment: Alignment.bottomRight,
+                            child: AutoSizeText(
+                              "Materials developed by CDC",
+                              style: TextStyle(
+                                  fontSize: 8.0, color: Colors.blueGrey[600]),
+                              maxLines: 1,
+                            ))
                       ],
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: monthsList.length,
+                        itemBuilder: (context, index) {
+                          String buttonText;
+                          if (int.parse(monthsList[index]) % 12 == 0) {
+                            buttonText =
+                                '${(int.parse(monthsList[index]) / 12).toStringAsFixed(0)} yr.';
+                          } else {
+                            buttonText = '${monthsList[index]} mo.';
+                          }
+                          return Container(
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: RaisedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    monthNum = monthsList[index].toString();
+                                  });
+                                },
+                                color: monthNum == monthsList[index]
+                                    ? Colors.red
+                                    : initMonth < int.parse(monthsList[index])
+                                        ? Colors.grey
+                                        : Colors.red[200],
+                                child: Center(
+                                  child: AutoSizeText(
+                                    buttonText,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          delaysHeading("Signs of possible developmental delay",
+                              Colors.red),
+                          getdelaysCards(
+                              snapshot,
+                              monthNum,
+                              "Signs of possible developmental delay",
+                              Colors.red),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           },
         );
@@ -615,13 +641,13 @@ class _DelaysViewState extends State<DelaysView> {
 
   Widget delaysHeading(String headText, Color color) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 0.0),
       child: Card(
         color: color,
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 12.0),
             child: Center(
               child: AutoSizeText(
                 headText,
@@ -648,7 +674,7 @@ class _DelaysViewState extends State<DelaysView> {
         return delaysList[monthNum][index]["category"] != category
             ? SizedBox()
             : Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Material(
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.1,
@@ -685,7 +711,7 @@ class _DelaysViewState extends State<DelaysView> {
                                     color: int.parse(monthNum) <= initMonth
                                         ? cardColor
                                         : Colors.grey,
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold),
                                 maxLines: 2,
                               ),

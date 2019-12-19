@@ -24,14 +24,12 @@ class ProgressView extends StatelessWidget {
               builder: (context, measurementSnapshot) {
                 if (!measurementSnapshot.hasData) return circularProgress();
                 return Container(
+                  color: Colors.white,
                   child: Column(
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: MeasurementCard(
+                      MeasurementCard(
                             summarySnapshot: summarySnapshot,
                             newMeasurement: newMeasurement),
-                      ),
                       Expanded(
                         child: DefaultTabController(
                           length: 3,
@@ -39,9 +37,12 @@ class ProgressView extends StatelessWidget {
                           child: Column(
                             children: <Widget>[
                               TabBar(
+                                labelColor: Colors.orange,
+                                unselectedLabelColor: Colors.blueGrey,
+                                indicatorColor: Colors.orange,
                                 labelStyle: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,),
                                 tabs: <Widget>[
                                   Tab(
                                     text: 'Height',
@@ -77,7 +78,7 @@ class ProgressView extends StatelessWidget {
                                     Column(
                                       children: <Widget>[
                                         Container(
-                                          color: Colors.blue[50],
+                                          color: Colors.cyan[800],
                                           height: MediaQuery.of(context).size.height * 0.075,
                                           child: Row(
                                             children: <Widget>[
@@ -95,7 +96,7 @@ class ProgressView extends StatelessWidget {
                                                       style: TextStyle(
                                                           fontSize: 16.0,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                              FontWeight.bold, color: Colors.white),
                                                     ),
                                                   ),
                                                 ),
@@ -104,7 +105,7 @@ class ProgressView extends StatelessWidget {
                                                 flex: 2,
                                                 child: Align(
                                                   alignment:
-                                                      Alignment.centerLeft,
+                                                      Alignment.center,
                                                   child: Padding(
                                                     padding:
                                                         EdgeInsets.all(8.0),
@@ -114,7 +115,7 @@ class ProgressView extends StatelessWidget {
                                                       style: TextStyle(
                                                           fontSize: 16.0,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                              FontWeight.bold, color: Colors.white),
                                                     ),
                                                   ),
                                                 ),
@@ -132,7 +133,7 @@ class ProgressView extends StatelessWidget {
                                                       style: TextStyle(
                                                           fontSize: 16.0,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                              FontWeight.bold, color: Colors.white),
                                                     ),
                                                   ),
                                                 ),
@@ -150,7 +151,7 @@ class ProgressView extends StatelessWidget {
                                                       style: TextStyle(
                                                           fontSize: 16.0,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                              FontWeight.bold, color: Colors.white),
                                                     ),
                                                   ),
                                                 ),
@@ -169,7 +170,7 @@ class ProgressView extends StatelessWidget {
                                                       style: TextStyle(
                                                           fontSize: 16.0,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                              FontWeight.bold, color: Colors.white),
                                                     ),
                                                   ),
                                                 ),
@@ -187,7 +188,7 @@ class ProgressView extends StatelessWidget {
                                                       style: TextStyle(
                                                           fontSize: 16.0,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                              FontWeight.bold, color: Colors.white),
                                                     ),
                                                   ),
                                                 ),
@@ -257,7 +258,7 @@ class ProgressView extends StatelessWidget {
                   child: AutoSizeText(
                     new DateFormat('MMM. d, yyyy').format(_measureDate),
                     maxLines: 1,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey[800]),
                   ),
                 ),
               ),
@@ -265,12 +266,13 @@ class ProgressView extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: AutoSizeText(
                     _day.toString(),
                     maxLines: 1,
+                    style: TextStyle(color: Colors.blueGrey[800]),
                   ),
                 ),
               ),
@@ -284,6 +286,7 @@ class ProgressView extends StatelessWidget {
                   child: AutoSizeText(
                     _heightText,
                     maxLines: 1,
+                    style: TextStyle(color: Colors.blueGrey[800]),
                   ),
                 ),
               ),
@@ -297,6 +300,7 @@ class ProgressView extends StatelessWidget {
                   child: AutoSizeText(
                     '${_heightPercentile.toStringAsFixed(0)}${getPercentileText(_heightPercentile.toStringAsFixed(0))}',
                     maxLines: 1,
+                    style: TextStyle(color: Colors.blueGrey[800]),
                   ),
                 ),
               ),
@@ -310,6 +314,7 @@ class ProgressView extends StatelessWidget {
                   child: AutoSizeText(
                     _weightText,
                     maxLines: 1,
+                    style: TextStyle(color: Colors.blueGrey[800]),
                   ),
                 ),
               ),
@@ -323,6 +328,7 @@ class ProgressView extends StatelessWidget {
                   child: AutoSizeText(
                     '${_weightPercentile.toStringAsFixed(0)}${getPercentileText(_weightPercentile.toStringAsFixed(0))}',
                     maxLines: 1,
+                    style: TextStyle(color: Colors.blueGrey[800]),
                   ),
                 ),
               ),
@@ -412,7 +418,6 @@ class ProgressView extends StatelessWidget {
     if (oneDigitChecker == 3 && twoDigitChecker != 13) {
       return 'rd';
     }
-
     return 'th';
   }
 

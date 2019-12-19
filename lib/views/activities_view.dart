@@ -9,7 +9,8 @@ class ActivitiesView extends StatefulWidget {
   _ActivitiesViewState createState() => _ActivitiesViewState();
 }
 
-class _ActivitiesViewState extends State<ActivitiesView> {
+class _ActivitiesViewState extends State<ActivitiesView>
+    with AutomaticKeepAliveClientMixin<ActivitiesView> {
   int selectedCount;
   String monthNum;
   int initMonth;
@@ -245,34 +246,50 @@ class _ActivitiesViewState extends State<ActivitiesView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (monthNum == null) return circularProgress();
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 10.0),
-          child: AutoSizeText(
-            "Help Your Baby Learn and Grow",
-            style: TextStyle(
-                color: Colors.deepPurple,
-                fontSize: 25.0,
-                fontWeight: FontWeight.bold),
-            maxLines: 1,
+    return Container(
+      color: Colors.white,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                AutoSizeText(
+                  "Help Your Baby Learn and Grow",
+                  style: TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey[700]),
+                  maxLines: 1,
+                ),
+                Align(
+                    alignment: Alignment.bottomRight,
+                    child: AutoSizeText(
+                      "Materials developed by CDC",
+                      style:
+                          TextStyle(fontSize: 8.0, color: Colors.blueGrey[600]),
+                      maxLines: 1,
+                    ))
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          // you may want to use an aspect ratio here for tablet support
-          child: PageView.builder(
-            // itemCount: activitiesList[monthNum].length,
-            // store this controller in a State to save the carousel scroll position
-            controller: PageController(viewportFraction: 1.0),
-            itemBuilder: (BuildContext context, int index) {
-              return _buildCarouselItem(
-                  context, index % activitiesList[monthNum].length);
-            },
-          ),
-        )
-      ],
+          Expanded(
+            // you may want to use an aspect ratio here for tablet support
+            child: PageView.builder(
+              // itemCount: activitiesList[monthNum].length,
+              // store this controller in a State to save the carousel scroll position
+              controller: PageController(viewportFraction: 0.9),
+              itemBuilder: (BuildContext context, int index) {
+                return _buildCarouselItem(
+                    context, index % activitiesList[monthNum].length);
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -281,7 +298,7 @@ class _ActivitiesViewState extends State<ActivitiesView> {
       padding: EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.orange[400],
+          color: Colors.orange,
           borderRadius: BorderRadius.all(Radius.circular(4.0)),
         ),
         child: Column(
@@ -308,4 +325,6 @@ class _ActivitiesViewState extends State<ActivitiesView> {
       ),
     );
   }
+
+  bool get wantKeepAlive => true;
 }

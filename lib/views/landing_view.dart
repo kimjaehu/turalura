@@ -27,7 +27,7 @@ class _LandingViewState extends State<LandingView> {
       body: Container(
         width: width,
         height: height,
-        color: Colors.orangeAccent[200],
+        color: Colors.orange,
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

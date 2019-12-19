@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:turalura/models/Ads.dart';
 import 'package:turalura/views/activities_view.dart';
 import 'package:turalura/views/delays_view.dart';
 import 'package:turalura/views/home_view.dart';
 import 'package:turalura/views/milestone_view.dart';
 import 'package:turalura/views/progress_view.dart';
+
+import 'onboarding/switch_view.dart';
 
 // final String appIdForAndroid = "ca-app-pub-3069349665651547~5210469006";
 // final String appIdForIOS = "ca-app-pub-3069349665651547~2584305666";
@@ -19,15 +22,31 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _currentIndex = 0;
-  final List<Widget> _children = [
-    HomeView(),
-    ProgressView(),
-    MilestoneView(),
-    DelaysView(),
-    ActivitiesView(),
-    // Gears(),
-  ];
+  // int _currentIndex = 0;
+
+  PageController _pageController;
+  int _pageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  // final List<Widget> _children = [
+  //   HomeView(),
+  //   ProgressView(),
+  //   MilestoneView(),
+  //   DelaysView(),
+  //   ActivitiesView(),
+  //   // Gears(),
+  // ];
 
   // MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
   //   keywords: <String>['baby', 'health'],
@@ -78,63 +97,114 @@ class _HomeState extends State<Home> {
   //   super.dispose();
   // }
 
+  _onPageChanged(int pageIndex) {
+    setState(() {
+      this._pageIndex = pageIndex;
+    });
+  }
+
+  onTap(int pageIndex) {
+    _pageController.animateToPage(
+      pageIndex,
+      duration: Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          color: Colors.blueGrey[800],
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SwitchView()),
+            );
+          },
+        ),
         title: Text(
           "Turalura",
-          style: TextStyle(color: Colors.amber[800]),
+          style: TextStyle(
+            color: Colors.orange,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Lobster',
+          ),
         ),
       ),
-      body: _children[_currentIndex],
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 50.0),
-        child: BottomNavigationBar(
-          selectedItemColor: Colors.amber[800],
-          unselectedItemColor: Colors.grey,
-          onTap: onTabTapped,
-          currentIndex: _currentIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: new Icon(
-                Icons.child_care,
+      // body: _children[_currentIndex],
+      body: PageView(
+        children: <Widget>[
+          HomeView(),
+          ProgressView(),
+          MilestoneView(),
+          DelaysView(),
+          ActivitiesView(),
+        ],
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
+      ),
+      bottomNavigationBar: new Theme(
+        data: Theme.of(context).copyWith(
+          // sets the background color of the `BottomNavigationBar`
+          canvasColor: Colors.blueGrey[800],
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(bottom: Ads.getMargin(screenHeight)),
+          child: BottomNavigationBar(
+            selectedItemColor: Colors.orangeAccent,
+            unselectedItemColor: Colors.grey,
+            onTap: onTap,
+            currentIndex: _pageIndex,
+            items: [
+              BottomNavigationBarItem(
+                icon: new Icon(
+                  Icons.child_care,
+                ),
+                title: new Text("home"),
               ),
-              title: new Text("home"),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.show_chart),
-              title: new Text("Progress"),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.check_circle_outline),
-              title: new Text("Milestones"),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(
-                Icons.new_releases,
-                color: Colors.red,
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.show_chart),
+                title: new Text("Progress"),
               ),
-              title: new Text("Important"),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.extension),
-              title: new Text("Activities"),
-            ),
-            // BottomNavigationBarItem(
-            //   icon: new Icon(Icons.child_friendly),
-            //   title: new Text("Gears"),
-            // ),
-          ],
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.check_circle_outline),
+                title: new Text("Milestones"),
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(
+                  Icons.new_releases,
+                  color: Colors.red,
+                ),
+                title: new Text("Important"),
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.extension),
+                title: new Text("Activities"),
+              ),
+              // BottomNavigationBarItem(
+              //   icon: new Icon(Icons.child_friendly),
+              //   title: new Text("Gears"),
+              // ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+  // void onTabTapped(int index) {
+  //   setState(() {
+  //     _currentIndex = index;
+  //   });
+  // }
 }
