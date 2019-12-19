@@ -445,7 +445,7 @@ class _HomeViewState extends State<HomeView> {
                                           style: TextStyle(
                                               fontSize: 14.0,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blueGrey[700]),
+                                              color: focusTextColor),
                                         ),
                                       ),
                                       Padding(

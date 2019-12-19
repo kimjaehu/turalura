@@ -53,7 +53,7 @@ class TeethingView extends StatelessWidget {
                   child: Container(
                     child: AutoSizeText(
                       "Directly massage an irritated, swollen gum with your finger for a couple of minutes. Massaging the gum with a clean, wet cloth that has been chilled in the refrigerator also works well.",
-                      style: TextStyle(fontSize: 24, color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                 ),
@@ -65,7 +65,7 @@ class TeethingView extends StatelessWidget {
                   child: Container(
                     child: AutoSizeText(
                       "Babies massage their own gums by chewing on hard, smooth objects. Give them a teething ring, or a wet cloth that has been chilled.",
-                      style: TextStyle(fontSize: 24, color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                 ),
@@ -77,7 +77,7 @@ class TeethingView extends StatelessWidget {
                   child: Container(
                     child: AutoSizeText(
                       "Give your child a piece of chilled banana. Avoid hard foods like raw carrots that could cause choking.",
-                      style: TextStyle(fontSize: 24, color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                 ),
@@ -89,7 +89,7 @@ class TeethingView extends StatelessWidget {
                   child: Container(
                     child: AutoSizeText(
                       "If these suggestions don\'t seem to help, an infant\'s dose of acetaminophen (over-thecounter pain reliever) can be given for one day. Over-the-counter gels for teething should not be used unless advised by your doctor.",
-                      style: TextStyle(fontSize: 24, color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                 ),
