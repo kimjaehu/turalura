@@ -28,6 +28,11 @@ class AuthService {
     return (await _firebaseAuth.signInWithCredential(credential)).user.uid;
   }
 
+  // Sign in anonymous User
+  Future signInAnonymously() {
+    return _firebaseAuth.signInAnonymously();
+  }
+
   //Sign Out
   signOut() {
     return _firebaseAuth.signOut();
@@ -36,13 +41,14 @@ class AuthService {
   // Get user information
 
   Stream<DocumentSnapshot> getUserInfoSnapshot() async* {
-  String uid = (await _firebaseAuth.currentUser()).uid;
-  yield* Firestore.instance.collection('users').document(uid).snapshots();
-}
-
-Stream<DocumentSnapshot> getUserBabySummaryStreamSnapshots() async* {
     String uid = (await _firebaseAuth.currentUser()).uid;
-    DocumentSnapshot users = await Firestore.instance.collection('users').document(uid).get();
+    yield* Firestore.instance.collection('users').document(uid).snapshots();
+  }
+
+  Stream<DocumentSnapshot> getUserBabySummaryStreamSnapshots() async* {
+    String uid = (await _firebaseAuth.currentUser()).uid;
+    DocumentSnapshot users =
+        await Firestore.instance.collection('users').document(uid).get();
     String currentBaby = users.data['currentBaby'];
     yield* Firestore.instance
         .collection('summaries')
@@ -56,5 +62,4 @@ Stream<DocumentSnapshot> getUserBabySummaryStreamSnapshots() async* {
     String uid = (await _firebaseAuth.currentUser()).uid;
     return await Firestore.instance.collection('users').document(uid).get();
   }
-
 }

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:turalura/services/auth_service.dart';
 import 'package:turalura/views/onboarding/add_view.dart';
 import 'package:turalura/widgets/progress_indicator.dart';
 import 'package:turalura/widgets/provider_widget.dart';
@@ -11,27 +12,55 @@ class SwitchView extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('My baby'),
       ),
       body: Container(
-        color: Colors.white,
-        child: StreamBuilder(
-          stream: getUserBabyListStreamSnapshots(context),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            // if (!snapshot.hasData) return babyCard(context, null, 0);
-            if (!snapshot.hasData) return circularProgress();
-            return new GridView.builder(
-              itemCount: snapshot.data.documents.length + 1,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: height * 0.1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.undo),
+                    onPressed: () async {
+                      try {
+                        AuthService auth = Provider.of(context).auth;
+                        await auth.signOut();
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
+                  )
+                ],
               ),
-              itemBuilder: (BuildContext context, int index) {
-                return babyCard(context, snapshot, index);
-              },
-            );
-          },
+            ),
+            Expanded(
+              child: Container(
+                child: StreamBuilder(
+                  stream: getUserBabyListStreamSnapshots(context),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    // if (!snapshot.hasData) return babyCard(context, null, 0);
+                    if (!snapshot.hasData) return circularProgress();
+                    return new GridView.builder(
+                      itemCount: snapshot.data.documents.length + 1,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        return babyCard(context, snapshot, index);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -61,7 +90,7 @@ class SwitchView extends StatelessWidget {
     }
     String babyName = snapshot.data.documents[index - 1]['name'];
     String gender = snapshot.data.documents[index - 1]['gender'];
-    Timestamp dob = snapshot.data.documents[index -1]['dob'];
+    Timestamp dob = snapshot.data.documents[index - 1]['dob'];
     return GestureDetector(
       onTap: () async {
         final uid = await Provider.of(context).auth.getCurrentUID();

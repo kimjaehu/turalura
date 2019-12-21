@@ -18,6 +18,12 @@ class _LandingViewState extends State<LandingView> {
     }
   }
 
+  Future submitAnonymous() async {
+    final auth = Provider.of(context).auth;
+    await auth.signInAnonymously();
+    Navigator.of(context).pushReplacementNamed('/home');
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -87,17 +93,12 @@ class _LandingViewState extends State<LandingView> {
                 onPressed: submit,
                 color: Colors.white,
               ),
-              // RaisedButton(
-              //   child: Padding(
-              //       padding: EdgeInsets.fromLTRB(8.5, 5.0, 8.5, 5.0),
-              //       child: Text(
-              //         "Sign in with Facebook",
-              //         style:
-              //             TextStyle(fontSize: 20.0, color: Colors.orangeAccent),
-              //       )),
-              //   onPressed: () {},
-              //   color: Colors.white,
-              // ),
+              FlatButton(
+                  child: Text(
+                    "Try without signing in",
+                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                  onPressed: submitAnonymous)
             ],
           ),
         ),

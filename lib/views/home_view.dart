@@ -144,7 +144,7 @@ class _HomeViewState extends State<HomeView> {
                       AutoSizeText(
                         dateDifference.toString(),
                         style: TextStyle(
-                            fontFamily: 'Lobster',
+                            fontFamily: 'Righteous',
                             color: primaryTextColor,
                             fontSize: 40.0,
                             fontWeight: FontWeight.bold),
@@ -189,7 +189,7 @@ class _HomeViewState extends State<HomeView> {
                       AutoSizeText(
                         milestonesCompleted,
                         style: TextStyle(
-                            fontFamily: 'Lobster',
+                            fontFamily: 'Righteous',
                             color: primaryTextColor,
                             fontSize: 40.0,
                             fontWeight: FontWeight.bold),
@@ -289,7 +289,7 @@ class _HomeViewState extends State<HomeView> {
                         TextSpan(
                             text: heightPercentile,
                             style: TextStyle(
-                                fontFamily: 'Lobster',
+                                fontFamily: 'Righteous',
                                 color: primaryTextColor,
                                 fontSize: 40.0,
                                 fontWeight: FontWeight.bold),
@@ -334,7 +334,7 @@ class _HomeViewState extends State<HomeView> {
                         TextSpan(
                             text: weightPercentile,
                             style: TextStyle(
-                                fontFamily: 'Lobster',
+                                fontFamily: 'Righteous',
                                 color: primaryTextColor,
                                 fontSize: 40.0,
                                 fontWeight: FontWeight.bold),
@@ -454,9 +454,8 @@ class _HomeViewState extends State<HomeView> {
                                             ? AutoSizeText(
                                                 scheduleText,
                                                 style: TextStyle(
-                                                    fontFamily: 'Lobster',
+                                                    fontFamily: 'Righteous',
                                                     fontSize: 8.0,
-                                                    fontWeight: FontWeight.bold,
                                                     color: focusTextColor),
                                               )
                                             : null,
@@ -491,21 +490,25 @@ class _HomeViewState extends State<HomeView> {
                 child: Container(
                   color: Colors.blueGrey[300],
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Icon(
                         Icons.airline_seat_individual_suite,
-                        size: 32,
+                        size: 28,
                         color: primaryTextColor,
                       ),
-                      AutoSizeText(
-                        getSleepText(monthDifference),
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontFamily: 'Lobster',
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AutoSizeText(
+                          getSleepText(monthDifference),
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontFamily: 'Righteous',
                             fontSize: 16.0,
                             color: primaryTextColor,
-                            fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       )
                     ],
                   ),
@@ -513,42 +516,48 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             Expanded(
-                flex: 3,
-                child: InkWell(
-                  onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => TeethingView(
-                    //       assetName: assetName,
-                    //       scheduleText: scheduleText,
-                    //     ),
-                    //   ),
-                    // );
-                  },
-                  child: Container(
-                    color: Colors.blueGrey[700],
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Icon(
-                          Icons.restaurant,
-                          size: 32,
-                          color: primaryTextColor,
-                        ),
-                        AutoSizeText(
+              flex: 3,
+              child: InkWell(
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => TeethingView(
+                  //       assetName: assetName,
+                  //       scheduleText: scheduleText,
+                  //     ),
+                  //   ),
+                  // );
+                },
+                child: Container(
+                  color: Colors.blueGrey[700],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.restaurant,
+                        size: 28,
+                        color: primaryTextColor,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AutoSizeText(
                           getFoodText(monthDifference),
-                          maxLines: 1,
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontFamily: 'Lobster',
-                              fontSize: 16.0,
-                              color: primaryTextColor,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
+                            fontFamily: 'Righteous',
+                            fontSize: 16.0,
+                            color: primaryTextColor,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                ))
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -570,7 +579,7 @@ class _HomeViewState extends State<HomeView> {
 
   String getFoodText(double monthDifference) {
     if (monthDifference > 0 && monthDifference < 6) {
-      return 'Breastfeeding/Formula';
+      return 'Breastfeeding or Formula';
     }
     if (monthDifference >= 6 && monthDifference < 12) {
       return 'begin adding solid foods';
