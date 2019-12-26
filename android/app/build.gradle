@@ -25,17 +25,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-   def keystoreProperties = new Properties()
-   def keystorePropertiesFile = rootProject.file('key.properties')
-   if (keystorePropertiesFile.exists()) {
-       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-   }
+    def keystoreProperties = new Properties()
+    def keystorePropertiesFile = rootProject.file('key.properties')
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    }
 
-   android {
-    compileSdkVersion 28
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+    android {
+        compileSdkVersion 28
+        sourceSets {
+            main.java.srcDirs += 'src/main/kotlin'
     }
 
     lintOptions {
@@ -47,25 +46,26 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
         applicationId "com.kosmicdust.turalura"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0.1"
+        versionCode 4
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //TODO: find a better solution to dex file
         multiDexEnabled true
     }
 
-       signingConfigs {
-       release {
+    signingConfigs {
+        release {
            keyAlias keystoreProperties['keyAlias']
            keyPassword keystoreProperties['keyPassword']
            storeFile file(keystoreProperties['storeFile'])
            storePassword keystoreProperties['storePassword']
-       }
+        }
    }
+
    buildTypes {
-       release {
+        release {
            signingConfig signingConfigs.release
-       }
+        }
    }
 }
 

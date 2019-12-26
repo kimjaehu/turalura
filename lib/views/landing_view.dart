@@ -93,6 +93,25 @@ class _LandingViewState extends State<LandingView> {
                 onPressed: submit,
                 color: Colors.white,
               ),
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Divider(
+                    color: Colors.white,
+                    indent: 40.0,
+                    endIndent: 40.0,
+                  ),
+                  Container(
+                      color: Colors.orange,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "or",
+                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        ),
+                      )),
+                ],
+              ),
               FlatButton(
                   child: Text(
                     "Try without signing in",

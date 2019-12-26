@@ -11,7 +11,8 @@ class SwitchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+
+    AuthService auth = Provider.of(context).auth;
 
     return Scaffold(
       appBar: AppBar(
@@ -20,26 +21,26 @@ class SwitchView extends StatelessWidget {
       body: Container(
         child: Column(
           children: <Widget>[
-            Container(
-              height: height * 0.1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.undo),
-                    onPressed: () async {
-                      try {
-                        AuthService auth = Provider.of(context).auth;
-                        await auth.signOut();
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                  )
-                ],
-              ),
-            ),
+            // Container(
+            //   height: height * 0.1,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: <Widget>[
+            //       IconButton(
+            //         icon: Icon(Icons.undo),
+            //         onPressed: () async {
+            //           try {
+            //             await auth.signOut();
+            //             Navigator.of(context).pushReplacementNamed('/home');
+            //           } catch (e) {
+            //             print(e);
+            //           }
+            //         },
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Expanded(
               child: Container(
                 child: StreamBuilder(

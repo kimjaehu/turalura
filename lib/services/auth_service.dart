@@ -16,6 +16,11 @@ class AuthService {
     return (await _firebaseAuth.currentUser()).uid;
   }
 
+  // Get anonymous user true/false
+  Future<bool> getAnonymous() async {
+    return (await _firebaseAuth.currentUser()).isAnonymous;
+  }
+
   // Google sign in
   Future<String> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -26,6 +31,19 @@ class AuthService {
       idToken: googleAuth.idToken,
     );
     return (await _firebaseAuth.signInWithCredential(credential)).user.uid;
+  }
+
+  // Convert anonymous user
+  Future convertWithGoogle() async {
+    final currentUser = await _firebaseAuth.currentUser();
+    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    await currentUser.linkWithCredential(credential);
   }
 
   // Sign in anonymous User

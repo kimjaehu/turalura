@@ -5,16 +5,10 @@ import 'package:turalura/views/delays_view.dart';
 import 'package:turalura/views/home_view.dart';
 import 'package:turalura/views/milestone_view.dart';
 import 'package:turalura/views/progress_view.dart';
+import 'package:turalura/widgets/progress_indicator.dart';
+import 'package:turalura/widgets/provider_widget.dart';
 
 import 'onboarding/switch_view.dart';
-
-// final String appIdForAndroid = "ca-app-pub-3069349665651547~5210469006";
-// final String appIdForIOS = "ca-app-pub-3069349665651547~2584305666";
-
-// final String adUnitIDForAndroid = "ca-app-pub-3069349665651547/7645044745";
-// final String adUnitIDForIOS = "ca-app-pub-3069349665651547/3514228043";
-
-// String adUnit = adUnitIDForAndroid;
 
 class Home extends StatefulWidget {
   @override
@@ -22,7 +16,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // int _currentIndex = 0;
   PageController _pageController;
   int _pageIndex = 0;
 
@@ -37,64 +30,6 @@ class _HomeState extends State<Home> {
     _pageController.dispose();
     super.dispose();
   }
-
-  // final List<Widget> _children = [
-  //   HomeView(),
-  //   ProgressView(),
-  //   MilestoneView(),
-  //   DelaysView(),
-  //   ActivitiesView(),
-  //   // Gears(),
-  // ];
-
-  // MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-  //   keywords: <String>['baby', 'health'],
-  //   contentUrl: 'https://flutter.io',
-  //   childDirected: false,
-  //   testDevices: <String>[
-  //     "8916E7F6511D794B8A9DE7869C837372"
-  //   ], // Android emulators are considered test devices
-  // );
-
-  // BannerAd _bannerAd;
-
-  // BannerAd createBannerAd() {
-  //   return BannerAd(
-  //       // Replace the testAdUnitId with an ad unit id from the AdMob dash.
-  //       // https://developers.google.com/admob/android/test-ads
-  //       // https://developers.google.com/admob/ios/test-ads
-  //       adUnitId: adUnit,
-  //       size: AdSize.smartBanner,
-  //       targetingInfo: targetingInfo,
-  //       listener: (MobileAdEvent event) {
-  //         print("BannerAd event is $event");
-  //       });
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   if (Platform.isAndroid) {
-  //     FirebaseAdMob.instance.initialize(appId: appIdForAndroid);
-  //     adUnit = adUnitIDForAndroid;
-  //   } else if (Platform.isIOS) {
-  //     FirebaseAdMob.instance.initialize(appId: appIdForIOS);
-  //     adUnit = adUnitIDForIOS;
-  //   }
-  //   _bannerAd = createBannerAd()
-  //     ..load()
-  //     ..show(
-  //       anchorOffset: 0.0,
-  //       horizontalCenterOffset: 0.0,
-  //       anchorType: AnchorType.bottom,
-  //     );
-  // }
-
-  // @override
-  // void dispose() {
-  //   _bannerAd.dispose();
-  //   super.dispose();
-  // }
 
   _onPageChanged(int pageIndex) {
     setState(() {
@@ -130,13 +65,57 @@ class _HomeState extends State<Home> {
             );
           },
         ),
-        title: Text(
-          "Turalura",
-          style: TextStyle(
-            color: Colors.orange,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Lobster',
-          ),
+        title: FutureBuilder(
+          future: Provider.of(context).auth.getAnonymous(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            print('snapshot data ${snapshot.data}');
+
+            if (!snapshot.hasData) return circularProgress();
+            return snapshot.data
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "Turalura: Trial",
+                            style: TextStyle(
+                              color: Colors.orange,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Lobster',
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4.0,
+                          ),
+                          Icon(
+                            Icons.error,
+                            color: Colors.red,
+                            size: 16.0,
+                          )
+                        ],
+                      ),
+                      RaisedButton(
+                        color: Colors.orange,
+                        onPressed: () {
+                          showAlertDialog(context);
+                        },
+                        child: Text(
+                          "Sign in",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    ],
+                  )
+                : Text(
+                    "Turalura",
+                    style: TextStyle(
+                      color: Colors.orange,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Lobster',
+                    ),
+                  );
+          },
         ),
       ),
       // body: _children[_currentIndex],
@@ -201,9 +180,89 @@ class _HomeState extends State<Home> {
     );
   }
 
-  // void onTabTapped(int index) {
-  //   setState(() {
-  //     _currentIndex = index;
-  //   });
-  // }
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = RaisedButton(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+        child: RichText(
+          text: TextSpan(
+            text: 'Sign in with ',
+            style: TextStyle(fontSize: 20.0, color: Colors.orange),
+            children: <TextSpan>[
+              TextSpan(
+                  text: 'G',
+                  style: TextStyle(
+                      color: Colors.blueAccent, fontWeight: FontWeight.bold)),
+              TextSpan(
+                  text: 'o',
+                  style: TextStyle(
+                      color: Colors.red, fontWeight: FontWeight.bold)),
+              TextSpan(
+                  text: 'o',
+                  style: TextStyle(
+                      color: Colors.yellow, fontWeight: FontWeight.bold)),
+              TextSpan(
+                  text: 'g',
+                  style: TextStyle(
+                      color: Colors.blueAccent, fontWeight: FontWeight.bold)),
+              TextSpan(
+                  text: 'l',
+                  style: TextStyle(
+                      color: Colors.green, fontWeight: FontWeight.bold)),
+              TextSpan(
+                  text: 'e',
+                  style: TextStyle(
+                      color: Colors.red, fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ),
+      ),
+      onPressed: submit,
+      color: Colors.white,
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+        backgroundColor: Colors.orange,
+        title: Text("Sign In For Free Account"),
+        titleTextStyle: TextStyle(
+            color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
+        content: Text(
+            "With an account, your data will be securely saved, allowing you to access it from multiple devices."),
+        contentTextStyle: TextStyle(
+            fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.bold),
+        actions: [
+          ButtonBar(
+            alignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              okButton,
+            ],
+          )
+        ]
+        // [
+        //   okButton,
+        // ],
+        );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  void submit() async {
+    try {
+      final auth = Provider.of(context).auth;
+      String uid = await auth.convertWithGoogle();
+      print("signed in with google: $uid");
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed('/home');
+    } catch (e) {
+      print(e);
+    }
+  }
 }

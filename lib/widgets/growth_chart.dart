@@ -22406,7 +22406,8 @@ class _GrowthChartState extends State<GrowthChart> {
   }
 
   List<FlSpot> _actualHeightData() {
-    return widget.measurementSnapshot.data.documents.length != 0
+    return widget.measurementSnapshot.data.documents.length != 0 ||
+            widget.measurementSnapshot.data.documents.length != null
         ? widget.measurementSnapshot.data.documents
             .map<FlSpot>((snapshot) =>
                 new FlSpot(snapshot["day"].toDouble(), snapshot["height"]))
@@ -22417,7 +22418,8 @@ class _GrowthChartState extends State<GrowthChart> {
   }
 
   List<FlSpot> _actualWeightData() {
-    return widget.measurementSnapshot.data.documents.length != 0
+    return widget.measurementSnapshot.data.documents.length != 0 ||
+            widget.measurementSnapshot.data.documents.length != null
         ? widget.measurementSnapshot.data.documents
             .map<FlSpot>((snapshot) =>
                 new FlSpot(snapshot["day"].toDouble(), snapshot["weight"]))
@@ -22432,7 +22434,9 @@ class _GrowthChartState extends State<GrowthChart> {
         DateTime.parse(widget.summarySnapshot.data['dob'].toDate().toString());
     DateTime toDate = DateTime.now();
     int dateDifference = toDate.difference(dob).inDays;
-
+    if (dateDifference == 0) {
+      dateDifference = 365;
+    }
     LineChartBarData boyFifth = LineChartBarData(
       spots: (widget.category == 'height')
           ? _boyHeightFifthData(dateDifference)
@@ -22558,32 +22562,33 @@ class _GrowthChartState extends State<GrowthChart> {
       ),
     );
 
-    if (widget.measurementSnapshot.data.documents.length != 0) {
+    print(widget.measurementSnapshot.data.documents.length);
+    if (widget.measurementSnapshot.data.documents.length == 0 ||
+        widget.measurementSnapshot.data.documents.length == null) {
       return widget.summarySnapshot.data["gender"] == 'boy'
           ? [
               boyFifth,
               boyFiftieth,
               boyNinetyfifth,
-              actualData,
             ]
           : [
               girlFifth,
               girlFiftieth,
               girlNinetyfifth,
-              actualData,
             ];
     }
-
     return widget.summarySnapshot.data["gender"] == 'boy'
         ? [
             boyFifth,
             boyFiftieth,
             boyNinetyfifth,
+            actualData,
           ]
         : [
             girlFifth,
             girlFiftieth,
             girlNinetyfifth,
+            actualData,
           ];
   }
 
